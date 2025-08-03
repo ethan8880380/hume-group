@@ -34,3 +34,17 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Mapbox Setup
+
+This project uses Mapbox GL for the interactive map. To set up the map:
+
+1. Get a Mapbox access token from [https://account.mapbox.com/access-tokens/](https://account.mapbox.com/access-tokens/)
+2. Create a `.env.local` file in the root directory
+3. Add your access token to the file:
+   ```
+   NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your_mapbox_access_token_here
+   ```
+4. Restart your development server
+
+The map is centered on Tacoma, WA and shows the surrounding area with navigation controls.
