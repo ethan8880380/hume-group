@@ -6,35 +6,63 @@ import Image from 'next/image';
 import { format } from 'date-fns';
 import { GhostPost, GhostTag } from '@/lib/ghost';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ArrowUpRight } from 'lucide-react';
 
 interface BlogContentProps {
   posts: GhostPost[];
   tags: GhostTag[];
+  featuredPostId?: string;
 }
 
-export function BlogContent({ posts, tags }: BlogContentProps) {
+function getCategoryDotColor(category: string) {
+  switch (category.toLowerCase()) {
+    case 'market updates':
+      return 'bg-blue-600'
+    case 'sellers':
+      return 'bg-green-600'
+    case 'buyers':
+      return 'bg-purple-600'
+    case 'real estate':
+      return 'bg-orange-600'
+    case 'tips':
+      return 'bg-teal-600'
+    default:
+      return 'bg-gray-600'
+  }
+}
+
+export function BlogContent({ posts, tags, featuredPostId }: BlogContentProps) {
   const [selectedTag, setSelectedTag] = useState<string>('all');
 
-  // Filter posts based on selected tag
+  // Filter posts based on selected tag and exclude featured post
   const filteredPosts = useMemo(() => {
-    if (selectedTag === 'all') {
-      return posts;
+    let filtered = posts;
+    
+    // Exclude the featured post
+    if (featuredPostId) {
+      filtered = filtered.filter(post => post.id !== featuredPostId);
     }
-    return posts.filter(post => 
-      post.tags?.some(tag => tag.slug === selectedTag)
-    );
-  }, [posts, selectedTag]);
+    
+    // Filter by tag
+    if (selectedTag !== 'all') {
+      filtered = filtered.filter(post => 
+        post.tags?.some(tag => tag.slug === selectedTag)
+      );
+    }
+    
+    return filtered;
+  }, [posts, selectedTag, featuredPostId]);
 
   return (
-    <div className="bg-gray-50 py-16">
-      <div className="container mx-auto px-6">
+    <div className="py-16">
+      <div className="container mx-auto flex flex-col px-6">
         {/* Category Tabs */}
-        <div className="mb-12">
+        <div className="mb-12 flex flex-col items-start sticky top-20 z-10">
           <Tabs value={selectedTag} onValueChange={setSelectedTag} className="w-full">
-            <div className="flex justify-center mb-8">
-              <TabsList className="grid w-fit grid-cols-auto bg-white shadow-sm">
+            <div className="flex justify-start">
+              <TabsList className="bg-[#FAFBFD]/70 border-primary/10 border backdrop-blur-sm">
                 <TabsTrigger value="all" className="px-6 py-2">
-                  View all
+                  All Posts
                 </TabsTrigger>
                 {tags.slice(0, 6).map((tag) => (
                   <TabsTrigger key={tag.slug} value={tag.slug} className="px-6 py-2">
@@ -49,10 +77,10 @@ export function BlogContent({ posts, tags }: BlogContentProps) {
         {/* Blog Posts Grid */}
         {filteredPosts.length === 0 ? (
           <div className="text-center py-16">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+            <h2 className="text-2xl font-semibold text-foreground mb-4">
               No posts found
             </h2>
-            <p className="text-gray-600">
+            <p className="text-foreground/70">
               {selectedTag === 'all' 
                 ? 'Check back soon for our latest insights and updates.'
                 : `No posts found for the selected category.`
@@ -60,7 +88,7 @@ export function BlogContent({ posts, tags }: BlogContentProps) {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 col-span-4 gap-8 mx-auto">
             {filteredPosts.map((post) => (
               <BlogPostCard key={post.id} post={post} />
             ))}
@@ -73,68 +101,57 @@ export function BlogContent({ posts, tags }: BlogContentProps) {
 
 function BlogPostCard({ post }: { post: GhostPost }) {
   const publishedDate = new Date(post.published_at);
+  const primaryTag = post.tags?.[0];
 
   return (
-    <article className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200 border border-gray-100">
-      {post.feature_image && (
-        <Link href={`/blog/${post.slug}`}>
-          <div className="relative h-64 w-full">
+    <Link href={`/blog/${post.slug}`}>
+      <article className="group cursor-pointer bg-white overflow-hidden transition-all duration-300">
+        {/* Image */}
+        <div className="relative aspect-video overflow-hidden rounded-lg">
+          {post.feature_image ? (
             <Image
               src={post.feature_image}
               alt={post.title}
               fill
-              className="object-cover"
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
-          </div>
-        </Link>
-      )}
-      
-      <div className="p-6">
-        {/* Category and Date */}
-        <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
-          {post.tags && post.tags.length > 0 && (
-            <span className="text-primary font-medium">
-              {post.tags[0].name}
-            </span>
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+              <span className="text-gray-500 text-lg font-medium">
+                The Hume Group
+              </span>
+            </div>
           )}
-          <time dateTime={post.published_at}>
-            {format(publishedDate, 'MMM dd, yyyy')}
-          </time>
         </div>
 
-        <Link href={`/blog/${post.slug}`} className="group">
-          <h2 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-primary transition-colors line-clamp-2">
-            {post.title}
-          </h2>
-        </Link>
+        {/* Content */}
+        <div className="pt-6">
+          {/* Category and Read Time */}
+          <div className="flex items-center gap-2 p-0.5 pr-2 border w-fit rounded-lg mb-3">
+            <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-background border text-sm font-medium text-foreground">
+              <span className={`w-2 h-2 rounded-full mr-2 ring-2 ring-current/20 ${getCategoryDotColor(primaryTag?.name || 'default')}`}></span>
+              {primaryTag?.name || 'Blog'}
+            </span>
+            <span className="text-sm text-foreground/70">
+              {post.reading_time ? `${post.reading_time} min read` : format(publishedDate, 'MMM dd')}
+            </span>
+          </div>
 
-        {post.excerpt && (
-          <p className="text-gray-600 mb-6 line-clamp-3 text-sm leading-relaxed">
-            {post.excerpt}
+          {/* Title with Arrow */}
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-2xl font-semibold text-foreground transition-colors line-clamp-2">
+              {post.title}
+            </h3>
+            <ArrowUpRight className="w-5 h-5 text-foreground group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 flex-shrink-0 ml-2" />
+          </div>
+
+          {/* Description */}
+          <p className="text-base text-foreground/70 leading-relaxed line-clamp-3">
+            {post.excerpt || 'Read more to discover insights and tips from The Hume Group team.'}
           </p>
-        )}
-
-        <Link
-          href={`/blog/${post.slug}`}
-          className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors text-sm"
-        >
-          Read more
-          <svg
-            className="ml-1 w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </Link>
-      </div>
-    </article>
-  );
+        </div>
+      </article>
+    </Link>
+  )
 }

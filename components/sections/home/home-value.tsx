@@ -14,14 +14,14 @@ export function HomeValueSection() {
   };
 
   return (
-    <section className="w-full py-16">
+    <section className="w-full pb-16">
       <div className="container mx-auto px-4">
-        <div className="relative overflow-hidden bg-primary/10 rounded-2xl shadow-lg">
-          <div className="flex flex-col lg:flex-row justify-between">
+        <div className="relative overflow-hidden bg-primary/[0.03] border border-primary/10 rounded-lg">
+          <div className="grid grid-cols-1 lg:grid-cols-3">
             {/* Left Section - Text and Input */}
-            <div className="px-16 py-24">
-              <div className="">
-                <h2 className="text-3xl lg:text-5xl font-medium mb-4 leading-tight">
+            <div className="px-12">
+              <div className="flex flex-col justify-center h-full">
+                <h2 className="text-3xl font-medium mb-1 leading-tight">
                   How Much is Your Tacoma
                   <br />
                   Home Worth?
@@ -31,32 +31,16 @@ export function HomeValueSection() {
                   <br />
                   home's value in today's market.
                 </p>
+                <Button size="lg" className="w-fit text-background cursor-pointer">Get Your Free Valuation</Button>
                 
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <Input
-                    type="text"
-                    placeholder="Home Address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    className="bg-white border-gray-300 focus:border-blue-600 focus:ring-blue-600 h-10"
-                  />
-                  <Button
-                    size="lg"
-                    onClick={handleValuation}
-                  >
-                    Get Your Free Valuation
-                  </Button>
-                </div>
               </div>
             </div>
 
             {/* Right Section - House Image */}
-            <div className="absolute right-0 top-0 w-full h-full bottom-0 -z-10">
-              <div className="absolute inset-0"></div>
-              <div className="relative h-full w-full">
-                {/* Victorian House Image */}
-                <Image src="/images/house.png" alt="Victorian House" fill className="object-contain object-right" />
-              </div>
+            <div className="col-span-2 p-4 pl-2">
+              <div className="relative aspect-[4/3] border border-primary/10 rounded-md">
+              <Image src="/images/value.jpg" alt="Victorian House" fill className="object-cover rounded-md" />
+            </div>
             </div>
           </div>
         </div>

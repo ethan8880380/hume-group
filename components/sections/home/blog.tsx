@@ -27,11 +27,11 @@ export async function Blog() {
   const posts = await getPosts(3);
 
   return (
-    <section className="py-16 px-6 container mx-auto">
+    <section className="pb-24 px-6 container mx-auto">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-12">
         <div>
-          <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
+          <h2 className="text-3xl font-medium text-foreground mb-4">
             Latest Around Tacoma
           </h2>
           <p className="text-muted-foreground max-w-2xl">

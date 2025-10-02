@@ -8,6 +8,8 @@ import { MailIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/sections/navigation/footer';
+import CTA from '@/components/sections/home/cta';
+import { Blog } from '@/components/sections/home/blog';
 
 interface BlogPostPageProps {
   params: {
@@ -55,14 +57,26 @@ function processImageLinks(html: string): string {
   );
 }
 
-// Function to extract the first paragraph before a figure as description
+// Function to extract the first paragraph as description
 function extractDescriptionFromHtml(html: string): string | null {
-  // Look for a <p> tag that comes directly before a <figure> tag
-  const match = html.match(/<p[^>]*>(.*?)<\/p>\s*<figure/i);
+  // First, try to find a <p> tag that comes directly before a <figure> tag
+  let match = html.match(/<p[^>]*>(.*?)<\/p>\s*<figure/i);
   if (match) {
     // Strip HTML tags and return clean text
     return match[1].replace(/<[^>]*>/g, '').trim();
   }
+  
+  // If no paragraph before figure, just extract the first paragraph
+  match = html.match(/<p[^>]*>(.*?)<\/p>/i);
+  if (match) {
+    // Strip HTML tags and return clean text
+    const text = match[1].replace(/<[^>]*>/g, '').trim();
+    // Only return if it has substantial content (more than 20 characters)
+    if (text.length > 20) {
+      return text;
+    }
+  }
+  
   return null;
 }
 
@@ -91,10 +105,17 @@ function extractFirstFigure(html: string): { src: string; alt: string; caption?:
   return null;
 }
 
-// Function to remove the first figure from HTML content
-function removeFirstFigure(html: string): string {
-  // Remove the first figure tag and any preceding paragraph that was used as description
-  return html.replace(/<p[^>]*>[\s\S]*?<\/p>\s*<figure[^>]*class="[^"]*kg-image-card[^"]*"[^>]*>[\s\S]*?<\/figure>/i, '');
+// Function to remove the first paragraph and figure from HTML content
+function removeFirstParagraphAndFigure(html: string): string {
+  // First remove the first paragraph and figure if they exist together
+  let result = html.replace(/<p[^>]*>[\s\S]*?<\/p>\s*<figure[^>]*class="[^"]*kg-image-card[^"]*"[^>]*>[\s\S]*?<\/figure>/i, '');
+  
+  // If that didn't remove anything (no figure), just remove the first paragraph
+  if (result === html) {
+    result = html.replace(/<p[^>]*>.*?<\/p>/i, '');
+  }
+  
+  return result;
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -109,33 +130,33 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const processedHtml = processImageLinks(post.html);
   const extractedDescription = extractDescriptionFromHtml(post.html);
   const extractedFigure = extractFirstFigure(processedHtml);
-  const contentWithoutFirstFigure = extractedFigure ? removeFirstFigure(processedHtml) : processedHtml;
+  const contentWithoutFirstParagraphAndFigure = removeFirstParagraphAndFigure(processedHtml);
 
   return (
     <div className="min-h-screen bg-background">
       {/* Article Header */}
-      <header className="bg-primary px-4 sm:px-6 lg:px-8 mb-8">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12 pt-48 -mt-24">
+      <header className="px-6 mb-8">
+        <div className="container mx-auto px-6 pb-12 pt-48 -mt-24">
           <div className="text-left">
-           <h1 className="text-4xl md:text-5xl font-medium text-background mb-6 leading-tight font-sans">
+           <h1 className="text-4xl md:text-5xl font-medium text-foreground mb-6 leading-tight font-sans">
              {post.title}
            </h1>
 
            {extractedDescription && (
-             <p className="text-xl text-background/70 mb-12 leading-relaxed font-sans max-w-3xl">
+             <p className="text-xl text-foreground/70 mb-8 leading-relaxed font-sans max-w-3xl">
                {extractedDescription}
              </p>
            )}
 
-           <div className='h-[1px] bg-background/10 w-12 mb-12'></div>
+           <div className='h-[1px] bg-muted-foreground/10 w-12 mb-12'></div>
 
            {extractedFigure && (
-             <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mb-8">
+             <div className="relative w-full aspect-[2/1] rounded-lg overflow-hidden mb-8">
                <Image
                  src={extractedFigure.src}
                  alt={extractedFigure.alt || post.title}
                  fill
-                 className="object-cover aspect-video"
+                 className="object-cover"
                  quality={100}
                  priority
                />
@@ -189,7 +210,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
 
         {post.feature_image && (
-          <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8">
+          <div className="relative w-full aspect-[2/1] rounded-lg overflow-hidden mb-8">
             <Image
               src={post.feature_image}
               alt={post.title}
@@ -230,51 +251,61 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <div className="flex flex-row gap-4 container mx-auto font-sans mb-24">
       {/* Article Content */}
       <article className="max-w-4xl mr-auto sm:px-6 lg:px-8">
-        <h3 className="text-2xl font-bold mb-4 font-sans">Introduction</h3>
         <div 
           className="prose prose-lg prose-blue max-w-none font-sans
-                     prose-headings:text-gray-900 prose-headings:font-bold prose-headings:leading-tight prose-headings:font-sans
-                     prose-h1:!text-4xl prose-h1:!mb-6 prose-h1:!mt-8 prose-h1:!font-sans
-                     prose-h2:!text-3xl prose-h2:!mb-4 prose-h2:!mt-8 prose-h2:!font-sans
-                     prose-h3:!text-2xl prose-h3:!mb-3 prose-h3:!mt-6 prose-h3:!font-sans
-                     prose-h4:!text-xl prose-h4:!mb-2 prose-h4:!mt-4 prose-h4:!font-sans
-                     prose-h5:!text-lg prose-h5:!mb-2 prose-h5:!mt-4 prose-h5:!font-sans
+                     prose-headings:text-foreground prose-headings:font-medium prose-headings:leading-tight prose-headings:font-sans
+                     prose-h1:!text-xl prose-h1:!mt-8 prose-h1:!font-sans
+                     prose-h2:!text-xl prose-h2:!mt-8 prose-h2:!font-sans
+                     prose-h3:!text-xl prose-h3:!mt-6 prose-h3:!font-sans
+                     prose-h4:!text-xl prose-h4:!mt-4 prose-h4:!font-sans
+                     prose-h5:!text-xl prose-h5:!mt-4 prose-h5:!font-sans
                      prose-h6:!text-base prose-h6:!mb-2 prose-h6:!mt-4 prose-h6:!font-sans
-                     prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:font-sans
-                     prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-a:font-sans
-                     prose-strong:text-gray-900 prose-strong:font-sans
-                     prose-code:text-blue-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:rounded prose-code:font-mono
-                     prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:font-mono
-                     prose-blockquote:border-blue-500 prose-blockquote:text-gray-700 prose-blockquote:font-sans
+                     prose-p:text-foreground/80 prose-p:text-lg prose-p:leading-relaxed prose-p:font-sans
+                     prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-sans
+                     prose-strong:!text-foreground prose-strong:font-medium prose-strong:font-sans
+                     prose-code:text-primary prose-code:bg-muted prose-code:px-1 prose-code:rounded prose-code:font-mono
+                     prose-pre:bg-foreground prose-pre:text-background prose-pre:font-mono
+                     prose-blockquote:border-primary prose-blockquote:text-foreground/70 prose-blockquote:font-sans
                      prose-img:rounded-lg prose-img:shadow-md
-                     [&>h1]:!text-4xl [&>h1]:!font-bold [&>h1]:!mb-6 [&>h1]:!mt-8 [&>h1]:!font-sans
-                     [&>h2]:!text-3xl [&>h2]:!font-bold [&>h2]:!mb-4 [&>h2]:!mt-8 [&>h2]:!font-sans
-                     [&>h3]:!text-2xl [&>h3]:!font-bold [&>h3]:!mb-3 [&>h3]:!mt-6 [&>h3]:!font-sans
-                     [&>h4]:!text-xl [&>h4]:!font-bold [&>h4]:!mb-2 [&>h4]:!mt-4 [&>h4]:!font-sans
-                     [&>h5]:!text-lg [&>h5]:!font-bold [&>h5]:!mb-2 [&>h5]:!mt-4 [&>h5]:!font-sans
-                     [&>h6]:!text-base [&>h6]:!font-bold [&>h6]:!mb-2 [&>h6]:!mt-4 [&>h6]:!font-sans
-                     [&_h1]:!text-4xl [&_h1]:!font-bold [&_h1]:!mb-6 [&_h1]:!mt-8 [&_h1]:!font-sans
-                     [&_h2]:!text-3xl [&_h2]:!font-bold [&_h2]:!mb-4 [&_h2]:!mt-8 [&_h2]:!font-sans
-                     [&_h3]:!text-2xl [&_h3]:!font-bold [&_h3]:!mb-3 [&_h3]:!mt-6 [&_h3]:!font-sans
-                     [&_h4]:!text-xl [&_h4]:!font-bold [&_h4]:!mb-2 [&_h4]:!mt-4 [&_h4]:!font-sans
-                     [&_h5]:!text-lg [&_h5]:!font-bold [&_h5]:!mb-2 [&_h5]:!mt-4 [&_h5]:!font-sans
-                     [&_h6]:!text-base [&_h6]:!font-bold [&_h6]:!mb-2 [&_h6]:!mt-4 [&_h6]:!font-sans
-                     [&>p]:!font-sans [&_p]:!font-sans [&>*]:!font-sans [&_*]:!font-sans"
-          dangerouslySetInnerHTML={{ __html: contentWithoutFirstFigure }}
+                     prose-ul:text-foreground/80 prose-ul:text-xl prose-ol:text-foreground/80 prose-ol:text-xl
+                     prose-li:text-foreground/80 prose-li:text-xl
+                     [&>h1]:!text-xl [&>h1]:!font-medium [&>h1]:!mb-6 [&>h1]:!mt-8 [&>h1]:!font-sans [&>h1]:!text-foreground
+                     [&>h2]:!text-xl [&>h2]:!font-medium [&>h2]:!mb-0 [&>h2]:!mt-8 [&>h2]:!font-sans [&>h2]:!text-foreground
+
+                     [&>h3]:!text-xl [&>h3]:!font-medium [&>h3]:!mb-0 [&>h3]:!mt-6 [&>h3]:!font-sans [&>h3]:!text-foreground
+                     [&>h4]:!text-xl [&>h4]:!font-medium [&>h4]:!mb-2 [&>h4]:!mt-4 [&>h4]:!font-sans [&>h4]:!text-foreground
+                     [&>h5]:!text-xl [&>h5]:!font-medium [&>h5]:!mb-2 [&>h5]:!mt-4 [&>h5]:!font-sans [&>h5]:!text-foreground
+                     [&>h6]:!text-xl [&>h6]:!font-medium [&>h6]:!mb-2 [&>h6]:!mt-4 [&>h6]:!font-sans [&>h6]:!text-foreground
+                     [&_h1]:!text-xl [&_h1]:!font-medium [&_h1]:!mb-0 [&_h1]:!mt-8 [&_h1]:!font-sans [&_h1]:!text-foreground
+                     [&_h2]:!text-xl [&_h2]:!font-medium [&_h2]:!mb-0 [&_h2]:!mt-8 [&_h2]:!font-sans [&_h2]:!text-foreground
+                     [&_h3]:!text-xl [&_h3]:!font-medium [&_h3]:!mb-0 [&_h3]:!mt-6 [&_h3]:!font-sans [&_h3]:!text-foreground
+                     [&_h4]:!text-xl [&_h4]:!font-medium [&_h4]:!mb-0 [&_h4]:!mt-4 [&_h4]:!font-sans [&_h4]:!text-foreground
+                     [&_h5]:!text-xl [&_h5]:!font-medium [&_h5]:!mb-0 [&_h5]:!mt-4 [&_h5]:!font-sans [&_h5]:!text-foreground
+                     [&_h6]:!text-xl [&_h6]:!font-medium [&_h6]:!mb-0 [&_h6]:!mt-4 [&_h6]:!font-sans [&_h6]:!text-foreground
+                     [&>p]:!font-sans [&>p]:!text-xl [&>p]:!text-foreground/80 [&>p]:!leading-relaxed [&>p]:!mb-8
+                     [&_p]:!font-sans [&_p]:!text-xl [&_p]:!text-foreground/80 [&_p]:!leading-relaxed
+                     [&_strong]:!text-foreground [&_strong]:!font-medium
+                     [&_b]:!text-foreground [&_b]:!font-medium
+                     [&_li]:!text-lg [&_li]:!text-foreground/80
+                     [&>*]:!font-sans [&_*]:!font-sans"
+          dangerouslySetInnerHTML={{ __html: contentWithoutFirstParagraphAndFigure }}
         />
       </article>
         {/* newsletter signup */}
         <div className="flex flex-col gap-4 bg-muted/50 border p-6 rounded-lg h-fit sticky top-24">
-          <MailIcon className="w-12 h-12 p-3 border rounded-md text-primary" />
-          <p className="text-lg font-medium">Stay Informed</p>
-          <p className="text-sm text-muted-foreground">Get expert insights, market trends, and valuable tips for buyers and sellers.</p>
+          <MailIcon className="w-12 h-12 p-3 border rounded-md bg-background text-primary" />
+          <p className="text-lg font-medium text-foreground">Stay Informed</p>
+          <p className="text-base text-foreground/70">Get expert insights, market trends, and valuable tips for buyers and sellers.</p>
           <div className="flex flex-col gap-4">
             <Input type="email" placeholder="Enter your email" className="w-full bg-background" />
             <Button className="w-full">Subscribe</Button> 
           </div>
         </div>
       </div>
-
+      <div className="my-12 pt-12">
+        <Blog />
+        <CTA />
+      </div>
       {/* Article Footer */}
       <Footer />
     </div>

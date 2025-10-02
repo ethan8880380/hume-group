@@ -25,34 +25,26 @@ export default function MapSection() {
           style={{ width: "100%", height: "100%" }}
           mapStyle="mapbox://styles/mapbox/streets-v12"
           mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
+          scrollZoom={false}
         >
           <NavigationControl />
         </Map>
       </div>
       
-      <div className="absolute top-8 left-8 z-10">
-        <Card className="w-80 bg-white/60 backdrop-blur-sm shadow-lg">
-          <CardContent className="p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+      <div className="absolute top-3 left-3 z-10">
+        <Card className="w-80 rounded-md bg-white/10 backdrop-blur-xs border-primary/10 shadow-lg">
+          <CardContent>
+            <h3 className="text-xl font-medium text-foreground mb-1">
               Our Recent Sales
             </h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-foreground/80 mb-6">
               Over 200 Sales in the last month!
             </p>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+            <Button size="lg" className="w-full cursor-pointer">
               Get Top Dollar — Book a Call Now
             </Button>
           </CardContent>
         </Card>
-      </div>
-      
-      <div className="absolute bottom-4 left-4 z-10">
-        <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3 text-sm text-gray-600">
-          <div className="font-medium text-gray-800 mb-1">Tacoma Area</div>
-          <div className="text-xs text-gray-500">
-            Explore our service area
-          </div>
-        </div>
       </div>
       </section>
     </div>

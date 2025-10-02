@@ -28,13 +28,13 @@ const teamMembers: TeamMember[] = [
 
 export default function Team() {
   return (
-    <div className="py-24">
+    <div className="pb-24">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-medium mb-6">
+        <div className="text-left mb-16">
+          <h2 className="text-3xl font-medium mb-4">
             Meet your Tacoma Real Estate Experts
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+          <p className="text-lg text-muted-foreground max-w-3xl mb-12">
             At The Hume Group, we blend deep local knowledge with unparalleled dedication to exceed your expectations in buying and selling.
           </p>
           <Button 

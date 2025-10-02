@@ -1,117 +1,73 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
-import { Star } from "lucide-react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "@/components/ui/carousel";
-import { Button } from "@/components/ui/button";
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Star } from "lucide-react";
 
-interface ImageProps {
-  src: string;
-  alt?: string;
-}
-
-interface Testimonial {
-  numberOfStars: number;
-  quote: string;
-  image: ImageProps;
+interface Review {
+  text: string;
   name: string;
-  position: string;
-  companyName: string;
-  logo: ImageProps;
+  location: string;
+  image?: string;
 }
 
 interface ReviewsProps {
-  testimonials: Testimonial[];
+  reviews?: Review[];
 }
 
-export function Reviews({ testimonials }: ReviewsProps) {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-    setCurrent(api.selectedScrollSnap() + 1);
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
-
+export function Reviews({ reviews = defaultReviews }: ReviewsProps) {
   return (
-    <section className="overflow-hidden container mx-auto px-6 py-12">
-      <div className="container">
-        <Carousel
-          setApi={setApi}
-          opts={{
-            loop: true,
-            align: "start",
-          }}
-          className="overflow-hidden"
-        >
-          <div className="relative pt-20 md:pb-20 md:pt-0">
-            <CarouselContent className="ml-0">
-              {testimonials.map((testimonial, index) => (
-                <CarouselItem key={index} className="pl-0">
-                  <TestimonialCard testimonial={testimonial} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="absolute top-0 flex w-full items-start justify-between md:bottom-0 md:top-auto md:items-end">
-              <div className="mt-2.5 flex w-full items-start justify-start md:mb-2.5 md:mt-0">
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => api?.scrollTo(index)}
-                    className={cn("mx-[3px] inline-block size-2 rounded-full", {
-                      "bg-black": current === index + 1,
-                      "bg-neutral-300": current !== index + 1,
-                    })}
-                  />
-                ))}
-              </div>
-              <div className="flex items-end justify-end gap-2 md:gap-4">
-                <CarouselPrevious className="static right-0 top-0 size-12 -translate-y-0" />
-                <CarouselNext className="static right-0 top-0 size-12 -translate-y-0" />
-              </div>
-            </div>
+    <section className="py-16 md:py-24">
+      <div className="container mx-auto px-6">
+        {/* Header */}
+        <div className="mb-12 md:mb-16">
+          <div className="flex gap-1 mb-3">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-5 h-5 text-primary mb-3" />
+            ))}
           </div>
-        </Carousel>
+          <h2 className="text-3xl font-medium text-gray-foreground mb-4">
+            The Best Sellers in Tacoma
+          </h2>
+          <p className="text-lg text-gray-foreground/80 max-w-3xl">
+            Hundreds of 5 start reviews confirm there&apos;s no one better to sell your home.
+          </p>
+        </div>
+
+        {/* Reviews Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {reviews.map((review, index) => (
+            <ReviewCard key={index} review={review} />
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
-function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+function ReviewCard({ review }: { review: Review }) {
+  const initials = review.name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
+
   return (
-    <Card className="border-0 shadow-none">
-      <CardContent className="p-0">
-        <div className="grid w-full auto-cols-fr grid-cols-1 items-center justify-center gap-12 md:grid-cols-2 md:gap-10 lg:gap-x-20">
-          <div className="order-last md:order-last">
-            <img
-              src={testimonial.image.src}
-              alt={testimonial.image.alt}
-              className="aspect-square w-full object-cover rounded-lg"
-            />
-          </div>
-          <div className="flex flex-col items-start">
-            <div className="mb-6 flex md:mb-8">
-              {Array(testimonial.numberOfStars)
-                .fill(null)
-                .map((_, starIndex) => (
-                  <Star key={starIndex} className="size-6 fill-yellow-400 text-yellow-400" />
-                ))}
-            </div>
-            <blockquote className="text-xl font-medium md:text-3xl">{testimonial.quote}</blockquote>
+    <Card className="border border-primary/10 bg-primary/[0.03] shadow-none h-full">
+      <CardContent className="flex flex-col justify-between h-full">
+        <p className="text-gray-700 leading-relaxed mb-6">
+          {review.text}
+        </p>
+        
+        <div className="flex items-center gap-3 mt-auto">
+          <Avatar className="h-12 w-12">
+            <AvatarImage src={review.image} alt={review.name} />
+            <AvatarFallback className="bg-blue-900 text-white">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <p className="font-semibold text-gray-900">{review.name}</p>
+            <p className="text-sm text-gray-500">{review.location}</p>
           </div>
         </div>
       </CardContent>
@@ -119,22 +75,42 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   );
 }
 
-// Default testimonial data
-const testimonial = {
-  numberOfStars: 5,
-  quote:
-    '"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat."',
-  image: {
-    src: "/images/hero.png",
-    alt: "Testimonial image 1",
+// Default review data
+const defaultReviews: Review[] = [
+  {
+    text: "I contacted Matt Hume to help me buy my north Tacoma home and I could not be any happier! Matt helped guide me through the entire process. He showed me many homes and we found the right one. He negotiated on my behalf and had good referrals from home inspectors to lenders and even contractors post closing.",
+    name: "John and Lisa",
+    location: "Proctor District",
+    image: "https://placekitten.com/100/100",
   },
-  name: "Name Surname",
-  position: "Position",
-  companyName: "Company name",
-  logo: {
-    src: "/images/hero.png",
-    alt: "Company logo 1",
+  {
+    text: "Working with The Hume Group was easy, and they made my home-buying dreams come true! We directly worked with Tom, a personable and friendly individual who demonstrated a genuine desire to help us achieve our goals. Tom is attentive, easy to get in touch with, and on top of the market - more agile and caring than some of the larger firms I've worked with.",
+    name: "John and Lisa",
+    location: "Proctor District",
+    image: "https://placekitten.com/101/101",
   },
-};
-
-export const defaultTestimonials: Testimonial[] = [testimonial, testimonial];
+  {
+    text: "Best Realtor EVER! Matt Hume's expertise and negotiation skills are truly top notch. His knowledge of North Tacoma and the University Of Puget Sound area are also top notch. His guidance throughout the process made our listing nothing short of exceptional. We are truly grateful for the great and super smooth experience we've had with The Hume Group.",
+    name: "John and Lisa",
+    location: "Proctor District",
+    image: "https://placekitten.com/102/102",
+  },
+  {
+    text: "I contacted Matt Hume to help me buy my north Tacoma home and I could not be any happier! Matt helped guide me through the entire process. He showed me many homes and we found the right one. He negotiated on my behalf and had good referrals from home inspectors to lenders and even contractors post closing.",
+    name: "John and Lisa",
+    location: "Proctor District",
+    image: "https://placekitten.com/103/103",
+  },
+  {
+    text: "Working with The Hume Group was easy, and they made my home-buying dreams come true! We directly worked with Tom, a personable and friendly individual who demonstrated a genuine desire to help us achieve our goals. Tom is attentive, easy to get in touch with, and on top of the market - more agile and caring than some of the larger firms I've worked with.",
+    name: "John and Lisa",
+    location: "Proctor District",
+    image: "https://placekitten.com/104/104",
+  },
+  {
+    text: "Best Realtor EVER! Matt Hume's expertise and negotiation skills are truly top notch. His knowledge of North Tacoma and the University Of Puget Sound area are also top notch. His guidance throughout the process made our listing nothing short of exceptional. We are truly grateful for the great and super smooth experience we've had with The Hume Group.",
+    name: "John and Lisa",
+    location: "Proctor District",
+    image: "https://placekitten.com/105/105",
+  },
+];

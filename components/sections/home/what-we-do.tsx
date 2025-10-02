@@ -21,14 +21,13 @@ const whatWeDo = [
 
 export default function WhatWeDo() {
   return (
-    <div className="bg-primary/10 py-24">
+    <div className="pb-24">
       <div className="container mx-auto px-6">
-        <p className="text-primary text-sm font-bold text-center mb-2">The Hume Group</p>
-        <h2 className="text-3xl font-medium text-foreground text-center mb-4">Everything You Need to Sell With Confidence</h2>
-        <p className="text-lg text-muted-foreground text-center mb-12">We help Tacoma homeowners sell faster, smarter, and with less stress.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <h2 className="text-3xl font-medium text-foreground text-left mb-4">Everything You Need to Sell With Confidence</h2>
+        <p className="text-lg text-muted-foreground text-left mb-12">We help Tacoma homeowners sell faster, smarter, and with less stress.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {whatWeDo.map((item) => (
-            <Card key={item.title} className="bg-gradient-to-b from-transparent to-background border-none shadow-none">
+            <Card key={item.title} className="bg-primary/[0.03] border-primary/10 shadow-none">
               <CardHeader className="flex flex-col items-left gap-4">
                 <item.icon className="w-10 h-10 text-white bg-primary rounded-md p-3 mb-12" />
                 <CardTitle className="font-medium text-lg">{item.title}</CardTitle>

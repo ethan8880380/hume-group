@@ -21,7 +21,7 @@ export default function FeaturedHomes() {
 
   if (error) {
     return (
-      <div className="bg-background py-16">
+      <div className="bg-background pb-16">
         <div className="container mx-auto px-6">
           <p className="text-primary text-sm font-bold text-center mb-2">The Hume Group</p>
           <h2 className="text-3xl font-medium text-foreground text-center mb-4">Featured Homes</h2>
@@ -38,18 +38,18 @@ export default function FeaturedHomes() {
   }
 
   return (
-    <div className="bg-background py-16">
+    <div className="bg-background pb-16">
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <p className="text-primary text-sm font-bold">The Hume Group</p>
+        <div className="flex items-start justify-left gap-2 mb-2">
+          <p className="text-primary text-sm font-bold text-left">The Hume Group</p>
         </div>
-        <h2 className="text-3xl font-medium text-foreground text-center mb-4">Featured Homes</h2>
-        <p className="text-lg text-muted-foreground text-center mb-8">Discover the latest properties in Tacoma and surrounding areas.</p>
+        <h2 className="text-3xl font-medium text-foreground text-left mb-4">Featured Homes</h2>
+        <p className="text-lg text-muted-foreground text-left mb-8">Discover the latest properties in Tacoma and surrounding areas.</p>
         
-        <div className="flex items-center justify-center gap-4 mb-8">
+        <div className="flex items-center justify-left gap-4 mb-8">
           <Tabs defaultValue="all" className="w-auto">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="all">Listings</TabsTrigger>
+            <TabsList>
+              <TabsTrigger value="all">All Listings</TabsTrigger>
               <TabsTrigger value="north-tacoma">North Tacoma</TabsTrigger>
               <TabsTrigger value="south-tacoma">South Tacoma</TabsTrigger>
               <TabsTrigger value="gig-harbor">Gig Harbor</TabsTrigger>

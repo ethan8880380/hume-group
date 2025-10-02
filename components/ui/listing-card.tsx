@@ -53,7 +53,7 @@ export function ListingCard({
   };
 
   return (
-    <div className={`group relative overflow-hidden rounded-lg transition-all duration-300 ${className}`}>
+    <div className={`group relative overflow-hidden rounded-lg p-3 pb-0 border-primary/10 border bg-primary/[0.03] transition-all duration-300 ${className}`}>
       {/* Property Image */}
       <div className="relative aspect-video overflow-hidden">
         {listing.images.length > 0 && listing.images[imageIndex] && listing.images[imageIndex].trim() !== '' && (
@@ -62,7 +62,7 @@ export function ListingCard({
               src={listing.images[imageIndex]}
               alt={`${listing.address} - ${listing.city}`}
               fill
-              className={`object-cover rounded-lg transition-all duration-500 ${
+              className={`object-cover rounded-sm transition-all duration-500 ${
                 imageLoading ? 'blur-sm' : 'blur-0'
               }`}
               onLoad={() => setImageLoading(false)}
@@ -73,7 +73,7 @@ export function ListingCard({
                 {listing.images.map((_, index) => (
                   <div
                     key={index}
-                    className={`h-2 w-2 rounded-lg transition-all ${
+                    className={`h-2 w-2 rounded-md transition-all ${
                       index === imageIndex ? 'bg-white' : 'bg-white/50'
                     }`}
                   />
@@ -85,7 +85,7 @@ export function ListingCard({
         
         {/* Fallback for no images */}
         {(!listing.images.length || !listing.images[imageIndex] || listing.images[imageIndex].trim() === '') && (
-          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+          <div className="w-full h-full bg-primary/[0.03] flex items-center justify-center">
             <div className="text-center text-gray-500">
               <div className="text-4xl mb-2">🏠</div>
               <div className="text-sm">No Image Available</div>
@@ -103,7 +103,7 @@ export function ListingCard({
           >
             <Heart
               className={`h-4 w-4 transition-colors ${
-                isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-600'
+                isFavorite ? 'fill-red-500 text-red-500' : 'text-primary/50'
               }`}
             />
           </Button>
@@ -135,7 +135,7 @@ export function ListingCard({
           </div>
 
           {/* Divider */}
-          <div className="border-t mb-3"></div>
+          <div className="border-t border-primary/10 mb-3"></div>
 
           {/* Property Details */}
           <div className="flex items-center gap-4 text-sm">

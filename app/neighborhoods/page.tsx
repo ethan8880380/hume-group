@@ -8,66 +8,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/sections/navigation/footer";
 import { HeaderWrapper } from "@/components/sections/navigation/header-wrapper";
-import { Header } from "@/components/sections/navigation/header"; 
-// Neighborhood data with images and descriptions
-const neighborhoods = [
-  {
-    id: "hilltop-downtown",
-    name: "Hilltop / Downtown",
-    description: "Short Description",
-    image: "/images/neighborhoods/1.png",
-    href: "/neighborhoods/hilltop-downtown"
-  },
-  {
-    id: "west-end-tacoma",
-    name: "West End Tacoma",
-    description: "Short Description",
-    image: "/images/neighborhoods/2.png",
-    href: "/neighborhoods/west-end-tacoma"
-  },
-  {
-    id: "university-place-fircrest",
-    name: "University Place / Fircrest",
-    description: "Short Description",
-    image: "/images/neighborhoods/3.png",
-    href: "/neighborhoods/university-place-fircrest"
-  },
-  {
-    id: "6th-ave-district",
-    name: "6th Ave District",
-    description: "Short Description",
-    image: "/images/neighborhoods/4.png",
-    href: "/neighborhoods/6th-ave-district"
-  },
-  {
-    id: "ups-tacoma-north-slope",
-    name: "UPS Tacoma / North Slope",
-    description: "Short Description",
-    image: "/images/neighborhoods/5.png",
-    href: "/neighborhoods/ups-tacoma-north-slope"
-  },
-  {
-    id: "proctor-district",
-    name: "Proctor District",
-    description: "Short Description",
-    image: "/images/neighborhoods/6.png",
-    href: "/neighborhoods/proctor-district"
-  },
-  {
-    id: "old-town-tacoma-to-ruston",
-    name: "Old Town Tacoma to Ruston",
-    description: "Short Description",
-    image: "/images/neighborhoods/7.png",
-    href: "/neighborhoods/old-town-tacoma-to-ruston"
-  },
-  {
-    id: "stadium-district",
-    name: "Stadium District",
-    description: "Short Description",
-    image: "/images/neighborhoods/8.png",
-    href: "/neighborhoods/stadium-district"
-  }
-];
+import { Header } from "@/components/sections/navigation/header";
+import { neighborhoodsData } from "@/lib/neighborhoods-data";
+
+// Transform data for use in this component
+const neighborhoods = neighborhoodsData.map((n) => ({
+  id: n.slug,
+  name: n.name,
+  description: n.shortDescription,
+  image: n.heroImage,
+  href: `/neighborhoods/${n.slug}`,
+}));
 
 export default function NeighborhoodsPage() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
