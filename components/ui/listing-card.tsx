@@ -53,27 +53,27 @@ export function ListingCard({
   };
 
   return (
-    <div className={`group relative overflow-hidden rounded-lg transition-all duration-300 hover:shadow-xl ${className}`}>
+    <div className={`group relative overflow-hidden rounded-lg transition-all duration-300 ${className}`}>
       {/* Property Image */}
-      <div className="relative aspect-[4/4] overflow-hidden">
-        {listing.images.length > 0 && (
+      <div className="relative aspect-video overflow-hidden">
+        {listing.images.length > 0 && listing.images[imageIndex] && listing.images[imageIndex].trim() !== '' && (
           <>
             <Image
               src={listing.images[imageIndex]}
               alt={`${listing.address} - ${listing.city}`}
               fill
-              className={`object-cover transition-all duration-500 ${
+              className={`object-cover rounded-lg transition-all duration-500 ${
                 imageLoading ? 'blur-sm' : 'blur-0'
               }`}
               onLoad={() => setImageLoading(false)}
               onClick={handleImageClick}
             />
             {listing.images.length > 1 && (
-              <div className="absolute bottom-2 left-2 flex gap-1">
+              <div className="absolute bottom-3 left-3 flex gap-1">
                 {listing.images.map((_, index) => (
                   <div
                     key={index}
-                    className={`h-2 w-2 rounded-full transition-all ${
+                    className={`h-2 w-2 rounded-lg transition-all ${
                       index === imageIndex ? 'bg-white' : 'bg-white/50'
                     }`}
                   />
@@ -81,6 +81,16 @@ export function ListingCard({
               </div>
             )}
           </>
+        )}
+        
+        {/* Fallback for no images */}
+        {(!listing.images.length || !listing.images[imageIndex] || listing.images[imageIndex].trim() === '') && (
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <div className="text-center text-gray-500">
+              <div className="text-4xl mb-2">🏠</div>
+              <div className="text-sm">No Image Available</div>
+            </div>
+          </div>
         )}
         
         {/* Favorite Button */}
@@ -101,8 +111,8 @@ export function ListingCard({
       </div>
 
       {/* White Overlay Card */}
-      <div className="absolute bottom-0 left-0 right-0 bg-white rounded-lg shadow-lg m-3">
-        <div className="p-4">
+      <div className="">
+        <div className="py-4">
           {/* Price */}
           <div className="text-xl font-medium text-foreground mb-2 flex justify-between">
             {formatPrice(listing.price)}

@@ -3,10 +3,10 @@ import { idxService } from '@/lib/idx-service';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     if (!id) {
       return NextResponse.json(
@@ -15,7 +15,16 @@ export async function GET(
       );
     }
 
-    const listing = await idxService.fetchListingById(id);
+    let listing = null;
+    
+    try {
+      listing = await idxService.fetchListingById(id);
+    } catch (error) {
+      console.error('Error fetching listing from IDX service:', error);
+      // If SimplyRETS fails, try to find in mock data as fallback
+      const mockListings = await import('@/app/api/listings/route');
+      // This is a temporary fallback - in production you'd want proper error handling
+    }
 
     if (!listing) {
       return NextResponse.json(

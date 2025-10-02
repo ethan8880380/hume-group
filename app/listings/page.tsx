@@ -8,7 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
-import { Search, Filter, MapPin, Home } from "lucide-react";
+import { Search, Filter, MapPin, Home, List, Grid, Map, Layers, Plus, Minus } from "lucide-react";
+import { Footer } from "@/components/sections/navigation/footer";
+import CTA from "@/components/sections/home/cta";
 
 export default function ListingsPage() {
   const [filters, setFilters] = useState({
@@ -19,6 +21,10 @@ export default function ListingsPage() {
     city: "",
     state: "",
   });
+
+  const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+  const [mapView, setMapView] = useState<"map" | "satellite">("map");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { listings, loading, error, total, hasMore, fetchMore } = useListings({
     limit: 12,
@@ -176,7 +182,7 @@ export default function ListingsPage() {
 
         {/* Listings Grid */}
         {loading && listings.length === 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
             {Array.from({ length: 12 }).map((_, index) => (
               <div key={index} className="space-y-4">
                 <Skeleton className="aspect-[4/3] w-full" />
@@ -190,7 +196,7 @@ export default function ListingsPage() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
               {listings.map((listing) => (
                 <ListingCard
                   key={listing.id}
@@ -230,6 +236,8 @@ export default function ListingsPage() {
           </>
         )}
       </div>
+      <CTA />
+      <Footer />
     </div>
   );
 } 

@@ -11,17 +11,18 @@ export default function Hero() {
         </p>
         <div className="w-8 h-[1px] my-4 bg-white/50"></div>
         <div className="flex gap-4">
-          <Button variant="secondary">Get Top Dollar - Book a Call Now</Button>
-          <Button>Search Homes</Button>
+          <Button size="lg" variant="secondary" className="text-primary">Get Top Dollar - Book a Call Now</Button>
+          <Button size="lg">Search Homes</Button>
         </div>
       </div>
       <div className="container mx-auto px-6 relative">
-        <div className="relative w-full ">
+        <div className="relative w-[100v] overflow-hidden">
           <Image 
             src="/images/hero.png" 
             alt="Hero Image" 
             width={1000} 
-            height={1000} 
+            height={1080} 
+            quality={100}
             priority
             className="w-full rounded-lg" 
           />

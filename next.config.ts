@@ -21,10 +21,61 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      // SimplyRETS S3 CDN for property images
+      {
+        protocol: 'https',
+        hostname: 's3-us-west-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
       // Add placekitten for fallback images
       {
         protocol: 'https',
         hostname: 'placekitten.com',
+        port: '',
+        pathname: '/**',
+      },
+      // Ghost CMS image domains
+      {
+        protocol: 'https',
+        hostname: 'demo.ghost.io',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'static.ghost.org',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.ghost.io',
+        port: '',
+        pathname: '/**',
+      },
+      // Your actual Ghost site domains
+      {
+        protocol: 'https',
+        hostname: 'www.thehumegroup.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'thehumegroup.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'the-hume-group.ghost.io',
         port: '',
         pathname: '/**',
       },

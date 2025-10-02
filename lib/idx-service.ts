@@ -4,7 +4,7 @@ import { Listing } from '@/app/api/listings/route';
 interface IDXConfig {
   apiKey: string;
   baseUrl: string;
-  provider: 'rets' | 'mls' | 'idx' | 'custom';
+  provider: 'rets' | 'mls' | 'idx' | 'custom' | 'simplyrets';
 }
 
 // Popular IDX providers and their configurations
@@ -94,19 +94,38 @@ export class IDXService {
   // Get a single listing by ID
   async fetchListingById(id: string): Promise<Listing | null> {
     try {
-      // Example API call:
-      // const response = await fetch(`${this.config.baseUrl}/properties/${id}`, {
-      //   headers: {
-      //     'Authorization': `Bearer ${this.config.apiKey}`,
-      //     'Content-Type': 'application/json',
-      //   }
-      // });
+      // Use SimplyRETS API if configured
+      if (this.config.provider === 'simplyrets' && this.config.apiKey) {
+        // Create base64 auth string (works in both Node.js and browser)
+        // For SimplyRETS demo, use simplyrets:simplyrets as username:password
+        const credentials = this.config.apiKey === 'simplyrets' ? 'simplyrets:simplyrets' : this.config.apiKey + ':';
+        const auth = typeof Buffer !== 'undefined' 
+          ? Buffer.from(credentials).toString('base64')
+          : btoa(credentials);
+          
+        const response = await fetch(`${this.config.baseUrl}/properties/${id}`, {
+          headers: {
+            'Authorization': `Basic ${auth}`,
+            'Content-Type': 'application/json',
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          return this.transformSimplyRETSData(data);
+        } else if (response.status === 404) {
+          return null;
+        } else {
+          throw new Error(`SimplyRETS API error: ${response.status}`);
+        }
+      }
       
-      // For development, return mock data
+      // Fall back to mock data for development
       const mockListings = this.getMockListings({});
       return mockListings.listings.find(listing => listing.id === id) || null;
     } catch (error) {
       console.error('Error fetching listing by ID:', error);
+      console.error('Config:', { provider: this.config.provider, hasApiKey: !!this.config.apiKey, baseUrl: this.config.baseUrl });
       throw new Error('Failed to fetch listing');
     }
   }
@@ -145,109 +164,92 @@ export class IDXService {
     }
   }
 
-  // SimplyRETS specific methods
-  private async fetchSimplyRETSListings(params: any): Promise<{
+
+
+  // Fetch listings from SimplyRETS API
+  private async fetchSimplyRETSListings(params: {
+    limit?: number;
+    offset?: number;
+    status?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    bedrooms?: number;
+    propertyType?: string;
+    city?: string;
+    state?: string;
+  }): Promise<{
     listings: Listing[];
     total: number;
     limit: number;
     offset: number;
     hasMore: boolean;
   }> {
-    try {
-      // Build query parameters for SimplyRETS
-      const queryParams = new URLSearchParams();
+    const queryParams = new URLSearchParams();
+    
+    if (params.limit) queryParams.append('limit', params.limit.toString());
+    if (params.offset) queryParams.append('offset', params.offset.toString());
+    if (params.status) queryParams.append('status', params.status);
+    if (params.minPrice) queryParams.append('minprice', params.minPrice.toString());
+    if (params.maxPrice) queryParams.append('maxprice', params.maxPrice.toString());
+    if (params.bedrooms) queryParams.append('minbeds', params.bedrooms.toString());
+    if (params.city) queryParams.append('city', params.city);
+    if (params.state) queryParams.append('state', params.state);
+    
+    // Create base64 auth string (works in both Node.js and browser)
+    // For SimplyRETS demo, use simplyrets:simplyrets as username:password
+    const credentials = this.config.apiKey === 'simplyrets' ? 'simplyrets:simplyrets' : this.config.apiKey + ':';
+    const auth = typeof Buffer !== 'undefined' 
+      ? Buffer.from(credentials).toString('base64')
+      : btoa(credentials);
       
-      if (params.limit) queryParams.append('limit', params.limit.toString());
-      if (params.offset) queryParams.append('offset', params.offset.toString());
-      if (params.minPrice) queryParams.append('minprice', params.minPrice.toString());
-      if (params.maxPrice) queryParams.append('maxprice', params.maxPrice.toString());
-      if (params.bedrooms) queryParams.append('minbeds', params.bedrooms.toString());
-      if (params.city) queryParams.append('city', params.city);
-      if (params.state) queryParams.append('state', params.state);
-      if (params.propertyType) queryParams.append('propertyType', params.propertyType);
-      
-      // SimplyRETS RETS uses Basic Auth with username:password
-      const authHeader = `Basic ${Buffer.from('simplyrets:simplyrets').toString('base64')}`;
-      
-      const response = await fetch(`${this.config.baseUrl}/properties?${queryParams.toString()}`, {
-        headers: {
-          'Authorization': authHeader,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`SimplyRETS API error: ${response.status} ${response.statusText}`);
+    const response = await fetch(`${this.config.baseUrl}/properties?${queryParams.toString()}`, {
+      headers: {
+        'Authorization': `Basic ${auth}`,
+        'Content-Type': 'application/json',
       }
-
-      const data = await response.json();
-      
-      // Transform SimplyRETS data to our Listing format
-      const listings = this.transformSimplyRETSData(data);
-      
-      return {
-        listings,
-        total: listings.length, // SimplyRETS doesn't provide total count in basic response
-        limit: params.limit || 10,
-        offset: params.offset || 0,
-        hasMore: listings.length === (params.limit || 10), // Simple pagination logic
-      };
-    } catch (error) {
-      console.error('Error fetching from SimplyRETS:', error);
-      throw new Error('Failed to fetch listings from SimplyRETS');
+    });
+    
+    if (!response.ok) {
+      throw new Error(`SimplyRETS API error: ${response.status}`);
     }
+    
+    const data = await response.json();
+    const listings = Array.isArray(data) ? data.map(item => this.transformSimplyRETSData(item)) : [];
+    
+    return {
+      listings,
+      total: listings.length, // SimplyRETS doesn't provide total count in basic response
+      limit: params.limit || 10,
+      offset: params.offset || 0,
+      hasMore: listings.length === (params.limit || 10) // Assume more if we got a full page
+    };
   }
 
-  private transformSimplyRETSData(data: any[]): Listing[] {
-    return data.map((item: any) => ({
-      id: item.listingId || item.id,
-      address: item.address?.full || item.address || '',
-      city: item.address?.city || item.city || '',
-      state: item.address?.state || item.state || '',
-      zipCode: item.address?.postalCode || item.zipCode || '',
-      price: parseFloat(item.listPrice || item.price || 0),
-      bedrooms: parseInt(item.property?.bedrooms || item.bedrooms || 0),
-      bathrooms: parseFloat(item.property?.bathsFull || item.bathrooms || 0),
-      squareFeet: parseInt(item.property?.area || item.squareFeet || 0),
-      lotSize: parseFloat(item.property?.lotSize || item.lotSize || 0),
-      propertyType: item.property?.type || item.propertyType || 'Unknown',
-      status: item.mls?.status || item.status || 'active',
-      images: item.photos || item.images || [],
-      description: item.remarks?.public || item.description || '',
-      yearBuilt: parseInt(item.property?.yearBuilt || item.yearBuilt || 0),
-      mlsNumber: item.listingId || item.mlsNumber || '',
-      latitude: parseFloat(item.geo?.lat || item.latitude || 0),
-      longitude: parseFloat(item.geo?.lng || item.longitude || 0),
-      features: item.features || item.amenities || [],
-      createdAt: item.listDate || item.createdAt || new Date().toISOString(),
-      updatedAt: item.modified || item.updatedAt || new Date().toISOString(),
-    }));
-  }
-
-  // Get featured/promoted listings
-  async getFeaturedListings(limit: number = 6): Promise<Listing[]> {
-    try {
-      // SimplyRETS featured listings
-      if (this.config.provider === 'simplyrets') {
-        const result = await this.fetchSimplyRETSListings({ limit });
-        return result.listings;
-      }
-
-      // Example featured listings API call:
-      // const response = await fetch(`${this.config.baseUrl}/featured?limit=${limit}`, {
-      //   headers: {
-      //     'Authorization': `Bearer ${this.config.apiKey}`,
-      //     'Content-Type': 'application/json',
-      //   }
-      // });
-
-      // For development, return mock data
-      const mockListings = this.getMockListings({ limit });
-      return mockListings.listings;
-    } catch (error) {
-      console.error('Error fetching featured listings:', error);
-      throw new Error('Failed to fetch featured listings');
-    }
+  // Transform SimplyRETS data to our Listing format
+  private transformSimplyRETSData(data: any): Listing {
+    return {
+      id: data.mlsId?.toString() || data.listingId?.toString() || '',
+      address: data.address?.full || `${data.address?.streetNumber || ''} ${data.address?.streetName || ''}`.trim(),
+      city: data.address?.city || '',
+      state: data.address?.state || '',
+      zipCode: data.address?.postalCode || '',
+      price: data.listPrice || 0,
+      bedrooms: data.property?.bedrooms || 0,
+      bathrooms: data.property?.bathrooms || 0,
+      squareFeet: data.property?.area || 0,
+      lotSize: data.property?.lotSize || 0,
+      propertyType: data.property?.type || 'Unknown',
+      status: data.listingStatus || 'active',
+      images: data.photos || [],
+      description: data.remarks || '',
+      yearBuilt: data.property?.yearBuilt || null,
+      mlsNumber: data.mlsId?.toString() || '',
+      latitude: data.geo?.lat || 0,
+      longitude: data.geo?.lng || 0,
+      features: data.property?.features || [],
+      createdAt: data.listDate || new Date().toISOString(),
+      updatedAt: data.modificationTimestamp || new Date().toISOString()
+    };
   }
 
   // Mock data for development

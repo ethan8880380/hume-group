@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { idxService } from '@/lib/idx-service';
 
 // Types for real estate listings
 export interface Listing {
@@ -125,21 +126,28 @@ export async function GET(request: NextRequest) {
 
     // Use SimplyRETS service if API key is configured, otherwise fall back to mock data
     if (process.env.SIMPLYRETS_API_KEY) {
-      const { idxService } = await import('@/lib/idx-service');
-      const result = await idxService.fetchListings({
-        limit,
-        offset,
-        status,
-        minPrice,
-        maxPrice,
-        bedrooms,
-        propertyType,
-        city,
-        state,
-      });
-      
-      return NextResponse.json(result);
-    } else {
+      try {
+        const result = await idxService.fetchListings({
+          limit,
+          offset,
+          status,
+          minPrice,
+          maxPrice,
+          bedrooms,
+          propertyType,
+          city,
+          state,
+        });
+        
+        return NextResponse.json(result);
+      } catch (error) {
+        console.error('SimplyRETS API error:', error);
+        // Fall back to mock data if SimplyRETS fails
+      }
+    }
+    
+    // Fall back to mock data for development or if SimplyRETS fails
+    {
       // Fall back to mock data for development
       let filteredListings = mockListings.filter(listing => {
         if (status && listing.status !== status) return false;

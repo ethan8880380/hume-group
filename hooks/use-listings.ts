@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Listing } from '@/app/api/listings/route';
 
 interface UseListingsOptions {
@@ -32,8 +32,17 @@ export function useListings(initialOptions: UseListingsOptions = {}): UseListing
   const [total, setTotal] = useState(0);
   const [hasMore, setHasMore] = useState(false);
   const [currentOptions, setCurrentOptions] = useState(initialOptions);
+  const lastFetchTime = useRef<number>(0);
+  const FETCH_DEBOUNCE_MS = 300; // Prevent API calls more frequent than 300ms
 
   const fetchListings = useCallback(async (options: UseListingsOptions = {}) => {
+    // Debounce rapid successive calls
+    const now = Date.now();
+    if (now - lastFetchTime.current < FETCH_DEBOUNCE_MS) {
+      return;
+    }
+    lastFetchTime.current = now;
+
     try {
       setLoading(true);
       setError(null);
@@ -49,7 +58,8 @@ export function useListings(initialOptions: UseListingsOptions = {}): UseListing
       if (options.city) params.append('city', options.city);
       if (options.state) params.append('state', options.state);
 
-      const response = await fetch(`/api/listings?${params.toString()}`);
+      const queryString = params.toString();
+      const response = await fetch(`/api/listings?${queryString}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch listings');
@@ -66,25 +76,26 @@ export function useListings(initialOptions: UseListingsOptions = {}): UseListing
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, []); // Empty dependency array is correct here since it doesn't depend on any external values
 
   const fetchMore = useCallback(async () => {
     if (!hasMore || loading) return;
 
     const newOffset = (currentOptions.offset || 0) + (currentOptions.limit || 10);
     await fetchListings({ ...currentOptions, offset: newOffset });
-  }, [hasMore, loading, currentOptions, fetchListings]);
+  }, [hasMore, loading, currentOptions]); // fetchListings is stable, so we don't need it in deps
 
   const refresh = useCallback(async () => {
     await fetchListings(currentOptions);
-  }, [fetchListings, currentOptions]);
+  }, [currentOptions]); // fetchListings is stable, so we don't need it in deps
 
   // Auto-fetch on mount if autoFetch is true
   useEffect(() => {
     if (initialOptions.autoFetch !== false) {
       fetchListings(initialOptions);
     }
-  }, [fetchListings, initialOptions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run on mount, not when initialOptions changes
 
   return {
     listings,
@@ -128,7 +139,7 @@ export function useListing(id: string) {
 
   useEffect(() => {
     fetchListing();
-  }, [fetchListing]);
+  }, [id]); // Only re-run when id changes, not when fetchListing changes
 
   return {
     listing,
@@ -166,7 +177,7 @@ export function useFeaturedListings(limit: number = 6) {
 
   useEffect(() => {
     fetchFeatured();
-  }, [fetchFeatured]);
+  }, [limit]); // Only re-run when limit changes, not when fetchFeatured changes
 
   return {
     listings,

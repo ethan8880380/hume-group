@@ -52,8 +52,8 @@ const mainLinks = [
     href: "/buying",
   },
   {
-    title: "Neighbourhoods",
-    href: "/neighbourhoods",
+    title: "Neighborhoods",
+    href: "/neighborhoods",
   },
   {
     title: "Blog",
@@ -61,13 +61,24 @@ const mainLinks = [
   }
 ]
 
-export function Header() {
+interface HeaderProps {
+  enableColorSwitching?: boolean
+}
+
+export function Header({ enableColorSwitching = true }: HeaderProps) {
   const [hasScrolled, setHasScrolled] = React.useState(false)
+  const [isClient, setIsClient] = React.useState(false)
 
   React.useEffect(() => {
+    // Mark as client-side to prevent hydration mismatch
+    setIsClient(true)
+    
     function handleScroll() {
       setHasScrolled(window.scrollY > 20)
     }
+    
+    // Set initial scroll state after hydration
+    handleScroll()
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -75,10 +86,19 @@ export function Header() {
   return (
     <div
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-700",
-        hasScrolled && "backdrop-blur bg-white/80 dark:bg-zinc-900/80 border-b border-border",
-        !hasScrolled && "bg-transparent border-transparent"
+        "sticky top-0 z-50 w-full transition-all duration-700 border-b border-border",
+        // When color switching is enabled, use transparent background at top
+        enableColorSwitching && !hasScrolled && "bg-transparent",
+        // When color switching is disabled, always use solid background
+        !enableColorSwitching && "backdrop-blur bg-white/80 dark:bg-zinc-900/80",
+        // Show background when scrolled (regardless of color switching setting)
+        hasScrolled && "backdrop-blur bg-white/80 dark:bg-zinc-900/80"
       )}
+      style={{
+        borderBottomColor: isClient && hasScrolled 
+          ? 'var(--border)' 
+          : 'transparent'
+      }}
     >
       <div className={cn(
         "container mx-auto flex justify-between items-center px-6 py-4"
@@ -95,14 +115,16 @@ export function Header() {
             xmlns="http://www.w3.org/2000/svg"
             className={cn(
               "h-5 w-auto transition-colors duration-300",
-              hasScrolled ? "text-primary" : "text-white/50"
+              // When color switching is enabled, use white at top, primary when scrolled
+              enableColorSwitching && isClient && !hasScrolled ? "text-white/50" : "text-primary"
             )}
           >
             <path d="M1 22V12L7.5 5.5L14 12V21H20V1H30.5V17H35L43.5 10L51.5 16.5V12H56.5V19L59.5 21" stroke="currentColor" strokeWidth="2"/>
           </svg>
           <div className={cn(
             "text-lg font-medium transition-colors duration-300 font-sans",
-            hasScrolled ? "text-foreground" : "text-white"
+            // When color switching is enabled, use white at top, foreground when scrolled
+            enableColorSwitching && isClient && !hasScrolled ? "text-white" : "text-foreground"
           )}>
             The Hume Group
           </div>
@@ -111,7 +133,8 @@ export function Header() {
         <NavigationMenu>
           <NavigationMenuList className={cn(
             "transition-colors duration-300 font-sans",
-            hasScrolled ? "text-foreground" : "text-white"
+            // When color switching is enabled, use white at top, foreground when scrolled
+            enableColorSwitching && isClient && !hasScrolled ? "text-white" : "text-foreground"
           )}>
           {/*<NavigationMenuItem>
             <NavigationMenuTrigger>
@@ -154,7 +177,10 @@ export function Header() {
                 className={cn(
                   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 font-sans",
                   "transition-colors duration-300",
-                  hasScrolled ? "text-foreground hover:text-foreground/80" : "text-white hover:text-white/90 hover:bg-white/10"
+                  // When color switching is enabled, use white at top with hover effects
+                  enableColorSwitching && isClient && !hasScrolled 
+                    ? "text-white hover:text-white/90 hover:bg-white/10"
+                    : "text-foreground hover:text-foreground/80"
                 )}
               >
                 {link.title}
@@ -166,10 +192,13 @@ export function Header() {
         <div className="flex items-center gap-3">
           <Link href="/faqs">
             <Button 
-              variant={hasScrolled ? "default" : "secondary"} 
+              variant={enableColorSwitching && isClient && !hasScrolled ? "secondary" : "default"} 
               className={cn(
                 "cursor-pointer transition-all duration-300 font-sans",
-                hasScrolled ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-white text-primary hover:bg-white/30 border-white/20"
+                // When color switching is enabled, use white button at top
+                enableColorSwitching && isClient && !hasScrolled 
+                  ? "bg-white text-primary hover:bg-white/30 border-white/20"
+                  : "bg-primary text-primary-foreground hover:bg-primary/90"
               )}
             >
               Contact Us
@@ -178,12 +207,6 @@ export function Header() {
         </div>
         </div>
       </div>
-      <hr
-        className={cn(
-          "absolute w-full bottom-0 left-0 transition-opacity duration-300 ease-in-out z-40",
-          hasScrolled ? "opacity-100" : "opacity-0"
-        )}
-      />
     </div>
   )
 }
