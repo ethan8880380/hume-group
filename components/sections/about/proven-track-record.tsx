@@ -38,7 +38,7 @@ export default function ProvenTrackRecord() {
         <div className="relative h-[600px] bg-gray-100 rounded-lg overflow-hidden shadow-xl">
           <Map
             {...viewState}
-            onMove={(evt: any) => setViewState(evt.viewState)}
+            onMove={(evt: { viewState: typeof viewState }) => setViewState(evt.viewState)}
             style={{ width: "100%", height: "100%" }}
             mapStyle="mapbox://styles/mapbox/light-v11"
             mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
@@ -66,7 +66,7 @@ export default function ProvenTrackRecord() {
                   Our Recent Sales
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  View every home we've sold and see why our clients trust us to deliver results.
+                  View every home we&apos;ve sold and see why our clients trust us to deliver results.
                 </p>
                 <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
                   Get Top Dollar — Book a Call Now

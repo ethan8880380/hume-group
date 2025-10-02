@@ -1,5 +1,38 @@
 import { Listing } from '@/app/api/listings/route';
 
+// SimplyRETS data structure interface
+interface SimplyRETSData {
+  mlsId?: number | string;
+  listingId?: number | string;
+  address?: {
+    full?: string;
+    streetNumber?: string;
+    streetName?: string;
+    city?: string;
+    state?: string;
+    postalCode?: string;
+  };
+  listPrice?: number;
+  property?: {
+    bedrooms?: number;
+    bathrooms?: number;
+    area?: number;
+    lotSize?: number;
+    type?: string;
+    yearBuilt?: number;
+    features?: string[];
+  };
+  listingStatus?: string;
+  photos?: string[];
+  remarks?: string;
+  geo?: {
+    lat?: number;
+    lng?: number;
+  };
+  listDate?: string;
+  modificationTimestamp?: string;
+}
+
 // Configuration for different IDX providers
 interface IDXConfig {
   apiKey: string;
@@ -143,7 +176,7 @@ export class IDXService {
   }): Promise<{
     listings: Listing[];
     total: number;
-    facets?: Record<string, any>;
+    facets?: Record<string, unknown>;
   }> {
     try {
       // Example search API call:
@@ -226,7 +259,7 @@ export class IDXService {
   }
 
   // Transform SimplyRETS data to our Listing format
-  private transformSimplyRETSData(data: any): Listing {
+  private transformSimplyRETSData(data: SimplyRETSData): Listing {
     return {
       id: data.mlsId?.toString() || data.listingId?.toString() || '',
       address: data.address?.full || `${data.address?.streetNumber || ''} ${data.address?.streetName || ''}`.trim(),
@@ -239,10 +272,10 @@ export class IDXService {
       squareFeet: data.property?.area || 0,
       lotSize: data.property?.lotSize || 0,
       propertyType: data.property?.type || 'Unknown',
-      status: data.listingStatus || 'active',
+      status: (data.listingStatus === 'pending' || data.listingStatus === 'sold' ? data.listingStatus : 'active') as 'active' | 'pending' | 'sold',
       images: data.photos || [],
       description: data.remarks || '',
-      yearBuilt: data.property?.yearBuilt || null,
+      yearBuilt: data.property?.yearBuilt || 0,
       mlsNumber: data.mlsId?.toString() || '',
       latitude: data.geo?.lat || 0,
       longitude: data.geo?.lng || 0,
@@ -253,7 +286,7 @@ export class IDXService {
   }
 
   // Mock data for development
-  private getMockListings(params: any): {
+  private getMockListings(params: { limit?: number; offset?: number }): {
     listings: Listing[];
     total: number;
     limit: number;

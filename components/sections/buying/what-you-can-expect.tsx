@@ -34,7 +34,7 @@ export default function WhatYouCanExpect() {
             What You Can Expect
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Buying a home shouldn't be stressful or confusing. We'll guide you through every step with clarity, expertise, and support when you need it most.
+            Buying a home shouldn&apos;t be stressful or confusing. We&apos;ll guide you through every step with clarity, expertise, and support when you need it most.
           </p>
         </div>
 

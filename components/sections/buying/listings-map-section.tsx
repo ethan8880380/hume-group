@@ -28,7 +28,7 @@ export default function ListingsMapSection() {
         <div className="relative h-[600px] bg-gray-100 rounded-lg overflow-hidden shadow-xl">
           <Map
             {...viewState}
-            onMove={(evt: any) => setViewState(evt.viewState)}
+            onMove={(evt: { viewState: typeof viewState }) => setViewState(evt.viewState)}
             style={{ width: "100%", height: "100%" }}
             mapStyle="mapbox://styles/mapbox/light-v11"
             mapboxAccessToken={MAPBOX_ACCESS_TOKEN}

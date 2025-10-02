@@ -52,7 +52,7 @@ export default async function BlogPage() {
               <div className="w-full aspect-video bg-white/10 flex items-center justify-center">
                 <div className="text-muted-foreground text-center">
                   <h3 className="text-2xl font-medium mb-2">Will a Price Change Help?</h3>
-                  <p>If your house isn't selling, should you drop the price? How big a change helps? Will a price drop make you look desperate?</p>
+                  <p>If your house isn&apos;t selling, should you drop the price? How big a change helps? Will a price drop make you look desperate?</p>
                 </div>
               </div>
             )}

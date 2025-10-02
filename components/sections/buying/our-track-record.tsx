@@ -32,7 +32,7 @@ export default function OurTrackRecord() {
             Our Track Record
           </h2>
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            With proven expertise in helping buyers find and secure their dream homes, we're committed to delivering exceptional results and peace of mind.
+            With proven expertise in helping buyers find and secure their dream homes, we&apos;re committed to delivering exceptional results and peace of mind.
           </p>
         </div>
 

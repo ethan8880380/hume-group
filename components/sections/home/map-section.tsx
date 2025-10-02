@@ -21,7 +21,7 @@ export default function MapSection() {
         <div className="absolute inset-0">
         <Map
           {...viewState}
-          onMove={(evt: any) => setViewState(evt.viewState)}
+          onMove={(evt: { viewState: typeof viewState }) => setViewState(evt.viewState)}
           style={{ width: "100%", height: "100%" }}
           mapStyle="mapbox://styles/mapbox/streets-v12"
           mapboxAccessToken={MAPBOX_ACCESS_TOKEN}

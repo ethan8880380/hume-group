@@ -34,7 +34,7 @@ export default function WhyBuyWithUs() {
             Why Buy With Us?
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Buying a home is one of life's biggest decisions. Our experienced team ensures you have the knowledge, resources, and support to make the right choice with confidence.
+            Buying a home is one of life&apos;s biggest decisions. Our experienced team ensures you have the knowledge, resources, and support to make the right choice with confidence.
           </p>
         </div>
 

@@ -32,7 +32,7 @@ export default function OurTrackRecord() {
             Our Track Record
           </h2>
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            With a proven track record of successful sales, we're not just here to list your home—we're here to get you results that exceed expectations.
+            With a proven track record of successful sales, we&apos;re not just here to list your home—we&apos;re here to get you results that exceed expectations.
           </p>
         </div>
 

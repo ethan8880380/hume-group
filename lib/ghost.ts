@@ -39,7 +39,7 @@ export interface GhostAuthor {
 export async function getPosts(limit: number | 'all' = 15): Promise<GhostPost[]> {
   try {
     const posts = await api.posts.browse({
-      include: 'tags,authors',
+      include: ['tags', 'authors'] as const,
       limit: limit,
       order: 'published_at DESC'
     });
@@ -55,7 +55,7 @@ export async function getSinglePost(slug: string): Promise<GhostPost | null> {
   try {
     const post = await api.posts.read(
       { slug },
-      { include: 'tags,authors' }
+      { include: ['tags', 'authors'] as const }
     );
     return post as GhostPost;
   } catch (err) {
@@ -79,9 +79,9 @@ export async function getAllPostSlugs(): Promise<string[]> {
       });
 
       if (posts && posts.length > 0) {
-        allPostSlugs.push(...posts.map((item: any) => item.slug));
+        allPostSlugs.push(...posts.map((item: { slug: string }) => item.slug));
         // Check if there are more pages
-        const meta = (posts as any).meta;
+        const meta = (posts as { meta?: { pagination?: { next: number | null } } }).meta;
         hasMore = meta?.pagination?.next !== null;
         page = meta?.pagination?.next || page + 1;
       } else {
@@ -100,7 +100,7 @@ export async function getAllPostSlugs(): Promise<string[]> {
 export async function getFeaturedPosts(limit: number = 3): Promise<GhostPost[]> {
   try {
     const posts = await api.posts.browse({
-      include: 'tags,authors',
+      include: ['tags', 'authors'] as const,
       limit: limit,
       filter: 'featured:true',
       order: 'published_at DESC'
@@ -116,7 +116,7 @@ export async function getFeaturedPosts(limit: number = 3): Promise<GhostPost[]> 
 export async function getPostsByTag(tagSlug: string, limit: number = 10): Promise<GhostPost[]> {
   try {
     const posts = await api.posts.browse({
-      include: 'tags,authors',
+      include: ['tags', 'authors'] as const,
       limit: limit,
       filter: `tag:${tagSlug}`,
       order: 'published_at DESC'

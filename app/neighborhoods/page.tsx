@@ -31,7 +31,7 @@ export default function NeighborhoodsPage() {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl">
             <h1 className="text-4xl md:text-5xl font-medium text-foreground mb-6">
-              Explore Tacoma's Most Desirable Neighborhoods
+              Explore Tacoma&apos;s Most Desirable Neighborhoods
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl">
               Find the right fit for your lifestyle. Browse our neighborhood guides to learn 

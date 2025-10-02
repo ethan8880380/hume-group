@@ -12,9 +12,9 @@ import CTA from '@/components/sections/home/cta';
 import { Blog } from '@/components/sections/home/blog';
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {

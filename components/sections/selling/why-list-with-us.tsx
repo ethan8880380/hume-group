@@ -34,7 +34,7 @@ export default function WhyListWithUs() {
             Why List With Us?
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Selling your home isn't just a transaction—it's one of the biggest financial decisions you'll ever make. That's why we go the extra mile to get you the best possible outcome.
+            Selling your home isn&apos;t just a transaction—it&apos;s one of the biggest financial decisions you&apos;ll ever make. That&apos;s why we go the extra mile to get you the best possible outcome.
           </p>
         </div>
 

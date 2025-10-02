@@ -120,9 +120,9 @@ export async function GET(request: NextRequest) {
     const minPrice = parseInt(searchParams.get('minPrice') || '0');
     const maxPrice = parseInt(searchParams.get('maxPrice') || '999999999');
     const bedrooms = parseInt(searchParams.get('bedrooms') || '0');
-    const propertyType = searchParams.get('propertyType');
-    const city = searchParams.get('city');
-    const state = searchParams.get('state');
+    const propertyType = searchParams.get('propertyType') || undefined;
+    const city = searchParams.get('city') || undefined;
+    const state = searchParams.get('state') || undefined;
 
     // Use SimplyRETS service if API key is configured, otherwise fall back to mock data
     if (process.env.SIMPLYRETS_API_KEY) {
@@ -149,7 +149,7 @@ export async function GET(request: NextRequest) {
     // Fall back to mock data for development or if SimplyRETS fails
     {
       // Fall back to mock data for development
-      let filteredListings = mockListings.filter(listing => {
+      const filteredListings = mockListings.filter(listing => {
         if (status && listing.status !== status) return false;
         if (listing.price < minPrice || listing.price > maxPrice) return false;
         if (bedrooms && listing.bedrooms < bedrooms) return false;

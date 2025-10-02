@@ -99,7 +99,7 @@ export default function ListingDetailPage({ params }: ListingDetailPageProps) {
         <div className="container mx-auto px-6">
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">Property Not Found</h1>
-            <p className="text-gray-600 mb-8">The property you're looking for doesn't exist or has been removed.</p>
+            <p className="text-gray-600 mb-8">The property you&apos;re looking for doesn&apos;t exist or has been removed.</p>
             <Button onClick={handleBack} className="bg-blue-600 hover:bg-blue-700">
               Back to Listings
             </Button>

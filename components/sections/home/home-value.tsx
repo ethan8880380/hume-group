@@ -29,7 +29,7 @@ export function HomeValueSection() {
                 <p className="text-muted-foreground text-lg mb-12 leading-relaxed">
                   Get a quick and accurate estimate of your
                   <br />
-                  home's value in today's market.
+                  home&apos;s value in today&apos;s market.
                 </p>
                 <Button size="lg" className="w-fit text-background cursor-pointer">Get Your Free Valuation</Button>
                 

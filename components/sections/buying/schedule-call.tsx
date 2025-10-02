@@ -22,7 +22,7 @@ export default function ScheduleCall() {
               Schedule a call
             </h2>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Ready to start your home search? Schedule a free consultation with one of our expert buyer's agents to discuss your needs and goals.
+              Ready to start your home search? Schedule a free consultation with one of our expert buyer&apos;s agents to discuss your needs and goals.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-3">

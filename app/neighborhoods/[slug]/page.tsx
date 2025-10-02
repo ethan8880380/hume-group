@@ -10,9 +10,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Footer } from "@/components/sections/navigation/footer";
 
 interface NeighborhoodPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -240,7 +240,7 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
             Will a Price Change Help?
           </h2>
           <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-            If the price on your dream home changes, we'll get you drop alerts on your email address.
+            If the price on your dream home changes, we&apos;ll get you drop alerts on your email address.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
             <Input

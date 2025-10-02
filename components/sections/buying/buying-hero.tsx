@@ -9,7 +9,7 @@ export default function BuyingHero() {
           Find Your Dream Home in Tacoma
         </h1>
         <p className="text-lg max-w-3xl text-white/80">
-          From first-time buyers to seasoned investors, we'll help you navigate the market with confidence and find the perfect home for your needs.
+          From first-time buyers to seasoned investors, we&apos;ll help you navigate the market with confidence and find the perfect home for your needs.
         </p>
         <div className="w-8 h-[1px] my-4 bg-white/50"></div>
         <div className="flex gap-4">
