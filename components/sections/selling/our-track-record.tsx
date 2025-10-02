@@ -25,22 +25,22 @@ const stats = [
 
 export default function OurTrackRecord() {
   return (
-    <section className="py-24 bg-primary text-white">
+    <section className="">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-medium mb-4">
+        <div className="text-left mb-8">
+          <h2 className="text-3xl font-medium mb-4">
             Our Track Record
           </h2>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl">
             With a proven track record of successful sales, we&apos;re not just here to list your home—we&apos;re here to get you results that exceed expectations.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
           {/* Image */}
-          <div className="relative h-[400px] rounded-lg overflow-hidden shadow-2xl">
+          <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
             <Image
-              src="/images/hero.png"
+              src="/images/selling/track.jpg"
               alt="Modern waterfront home"
               fill
               className="object-cover"
@@ -48,18 +48,20 @@ export default function OurTrackRecord() {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 h-full">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center sm:text-left">
-                <div className="text-5xl md:text-6xl font-bold mb-2">
+              <div key={index} className="flex flex-col justify-between text-left h-full bg-primary/[0.03] border rounded-lg shadow-none border-primary/10 p-6">
+                <div className="text-4xl text-primary font-medium mb-2">
                   {stat.value}
                 </div>
-                <div className="text-xl font-semibold mb-2 text-white/90">
-                  {stat.label}
+                <div className="flex flex-col gap-1">
+                  <div className="text-xl font-medium">
+                    {stat.label}
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {stat.description}
+                  </p>
                 </div>
-                <p className="text-white/70 leading-relaxed">
-                  {stat.description}
-                </p>
               </div>
             ))}
           </div>

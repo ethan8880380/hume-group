@@ -43,19 +43,19 @@ export const neighborhoodsData: NeighborhoodData[] = [
       {
         title: "Culture & Entertainment at Your Doorstep",
         content: "From the Museum of Glass to live performances at Tacoma Dome, Downtown offers endless entertainment options. Enjoy waterfront dining, boutique shopping, and a thriving nightlife scene that brings the city to life.",
-        image: "/images/neighborhoods/1.png",
+        image: "/images/neighborhoods/hilltop/hilltop-3.png",
         imagePosition: "right",
       },
       {
         title: "Urban Living with Scenic Views",
         content: "Downtown condos and Hilltop homes offer stunning views of Commencement Bay and Mount Rainier. Many properties feature modern amenities, walkability to work and play, and the convenience of city living without sacrificing natural beauty.",
-        image: "/images/hero.png",
+        image: "/images/neighborhoods/hilltop/hilltop-2.png",
         imagePosition: "left",
       },
       {
         title: "Walkable, Connected & Commuter-Friendly",
         content: "With access to light rail, major highways, and bike lanes, getting around is a breeze. Walk to work, restaurants, and entertainment—or hop on transit to explore the greater Puget Sound region.",
-        image: "/images/cta.png",
+        image: "/images/neighborhoods/hilltop/hilltop-1.png",
         imagePosition: "right",
       },
     ],

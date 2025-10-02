@@ -40,9 +40,6 @@ export default function FeaturedHomes() {
   return (
     <div className="bg-background pb-16">
       <div className="container mx-auto px-6">
-        <div className="flex items-start justify-left gap-2 mb-2">
-          <p className="text-primary text-sm font-bold text-left">The Hume Group</p>
-        </div>
         <h2 className="text-3xl font-medium text-foreground text-left mb-4">Featured Homes</h2>
         <p className="text-lg text-muted-foreground text-left mb-8">Discover the latest properties in Tacoma and surrounding areas.</p>
         

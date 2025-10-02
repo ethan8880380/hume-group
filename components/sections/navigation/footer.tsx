@@ -29,7 +29,7 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="bg-primary">
+    <footer className="bg-primary mt-12">
       {/* Newsletter Section */}
       <section className="bg-primary text-white">
         <div className="container mx-auto px-6 py-12">

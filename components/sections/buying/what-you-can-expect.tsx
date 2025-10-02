@@ -26,29 +26,28 @@ const steps = [
 
 export default function WhatYouCanExpect() {
   return (
-    <section className="py-24 bg-white">
+    <section className="pb-24">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-4">
-          <p className="text-primary font-semibold text-sm mb-2">Buying with Us</p>
-          <h2 className="text-4xl md:text-5xl font-medium mb-4">
+        <div className="text-left mb-4">
+          <h2 className="text-3xl font-medium mb-4">
             What You Can Expect
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl">
             Buying a home shouldn&apos;t be stressful or confusing. We&apos;ll guide you through every step with clarity, expertise, and support when you need it most.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
           {steps.map((step) => (
-            <Card key={step.title} className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-gradient-to-b from-white to-gray-50">
+            <Card key={step.title} className="bg-primary/[0.03] border-primary/10 shadow-none">
               <CardHeader>
-                <div className="w-14 h-14 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
-                  <step.icon className="w-7 h-7 text-white" />
+                <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mb-4">
+                  <step.icon className="text-white" />
                 </div>
               </CardHeader>
               <CardContent>
-                <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                <h3 className="text-xl font-medium">{step.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{step.description}</p>
               </CardContent>
             </Card>
           ))}

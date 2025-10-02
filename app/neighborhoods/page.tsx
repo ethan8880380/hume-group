@@ -1,15 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
-import Link from "next/link";
 import { Footer } from "@/components/sections/navigation/footer";
-import { HeaderWrapper } from "@/components/sections/navigation/header-wrapper";
-import { Header } from "@/components/sections/navigation/header";
 import { neighborhoodsData } from "@/lib/neighborhoods-data";
+import { NeighborhoodCard } from "@/components/ui/neighborhood-card";
 
 // Transform data for use in this component
 const neighborhoods = neighborhoodsData.map((n) => ({
@@ -21,8 +15,6 @@ const neighborhoods = neighborhoodsData.map((n) => ({
 }));
 
 export default function NeighborhoodsPage() {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-
   return (
     <>
     <main className="min-h-screen">
@@ -58,71 +50,15 @@ export default function NeighborhoodsPage() {
       <section className="pb-6 pt-8">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {neighborhoods.map((neighborhood, index) => (
-              <div
+            {neighborhoods.map((neighborhood) => (
+              <NeighborhoodCard
                 key={neighborhood.id}
-                onMouseEnter={() => setHoveredCard(neighborhood.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                className="group"
-              >
-                <Card className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-96 border-0 rounded-lg">
-                  {/* Background Image */}
-                  <Image
-                    src={neighborhood.image}
-                    alt={neighborhood.name}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  
-
-                  
-                  {/* Content positioned at the bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    {/* Title and description - animated */}
-                    <motion.div 
-                      animate={{
-                        y: hoveredCard === neighborhood.id ? -16 : 0,
-                        marginBottom: hoveredCard === neighborhood.id ? 16 : -24
-                      }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                    >
-                      <h3 className="text-2xl font-bold text-white mb-2">
-                        {neighborhood.name}
-                      </h3>
-                      <p className="text-white/90 text-sm">
-                        {neighborhood.description}
-                      </p>
-                    </motion.div>
-                    
-                    {/* Buttons - animated */}
-                    <motion.div 
-                      className="flex gap-3"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{
-                        opacity: hoveredCard === neighborhood.id ? 1 : 0,
-                        y: hoveredCard === neighborhood.id ? 0 : 20
-                      }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                    >
-                      <Link href={neighborhood.href} className="flex gap-3">
-                        <Button variant="outline">
-                          View Homes
-                        </Button>
-                      </Link>
-                      <Link href={neighborhood.href} className="flex-1">
-                        <Button 
-                          variant="outline"
-                        >
-                          Explore Neighborhood
-                        </Button>
-                      </Link>
-                    </motion.div>
-                  </div>
-                </Card>
-              </div>
+                id={neighborhood.id}
+                name={neighborhood.name}
+                description={neighborhood.description}
+                image={neighborhood.image}
+                href={neighborhood.href}
+              />
             ))}
           </div>
         </div>

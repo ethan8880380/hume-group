@@ -53,7 +53,7 @@ export function ListingCard({
   };
 
   return (
-    <div className={`group relative overflow-hidden rounded-lg p-3 pb-0 border-primary/10 border bg-primary/[0.03] transition-all duration-300 ${className}`}>
+    <div className={`group relative overflow-hidden rounded-lg pb-0 transition-all duration-300 ${className}`}>
       {/* Property Image */}
       <div className="relative aspect-video overflow-hidden">
         {listing.images.length > 0 && listing.images[imageIndex] && listing.images[imageIndex].trim() !== '' && (

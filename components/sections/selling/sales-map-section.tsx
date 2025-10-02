@@ -23,7 +23,7 @@ export default function SalesMapSection() {
   });
 
   return (
-    <section className="py-24 bg-white">
+    <section className="pb-24 bg-white">
       <div className="container mx-auto px-6">
         <div className="relative h-[600px] bg-gray-100 rounded-lg overflow-hidden shadow-xl">
           <Map

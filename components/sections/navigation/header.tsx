@@ -61,23 +61,17 @@ const mainLinks = [
   }
 ]
 
-interface HeaderProps {
-  enableColorSwitching?: boolean
-}
-
-export function Header({ enableColorSwitching = true }: HeaderProps) {
+export function Header() {
   const [hasScrolled, setHasScrolled] = React.useState(false)
   const [isClient, setIsClient] = React.useState(false)
 
   React.useEffect(() => {
-    // Mark as client-side to prevent hydration mismatch
     setIsClient(true)
     
     function handleScroll() {
       setHasScrolled(window.scrollY > 20)
     }
     
-    // Set initial scroll state after hydration
     handleScroll()
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
@@ -86,13 +80,7 @@ export function Header({ enableColorSwitching = true }: HeaderProps) {
   return (
     <div
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-700 border-b border-border",
-        // When color switching is enabled, use transparent background at top
-        enableColorSwitching && !hasScrolled && "bg-transparent",
-        // When color switching is disabled, always use solid background
-        !enableColorSwitching && "backdrop-blur bg-white/80 dark:bg-zinc-900/80",
-        // Show background when scrolled (regardless of color switching setting)
-        hasScrolled && "backdrop-blur bg-white/80 dark:bg-zinc-900/80"
+        "sticky top-0 z-50 w-full transition-all duration-700 border-b border-border backdrop-blur bg-white/80 dark:bg-zinc-900/80"
       )}
       style={{
         borderBottomColor: isClient && hasScrolled 
@@ -113,29 +101,17 @@ export function Header({ enableColorSwitching = true }: HeaderProps) {
             viewBox="0 0 61 22" 
             fill="none" 
             xmlns="http://www.w3.org/2000/svg"
-            className={cn(
-              "h-5 w-auto transition-colors duration-300",
-              // When color switching is enabled, use white at top, primary when scrolled
-              enableColorSwitching && isClient && !hasScrolled ? "text-white/50" : "text-primary"
-            )}
+            className="h-5 w-auto text-primary"
           >
             <path d="M1 22V12L7.5 5.5L14 12V21H20V1H30.5V17H35L43.5 10L51.5 16.5V12H56.5V19L59.5 21" stroke="currentColor" strokeWidth="2"/>
           </svg>
-          <div className={cn(
-            "text-lg font-medium transition-colors duration-300 font-sans",
-            // When color switching is enabled, use white at top, foreground when scrolled
-            enableColorSwitching && isClient && !hasScrolled ? "text-white" : "text-foreground"
-          )}>
+          <div className="text-lg font-medium font-sans text-foreground">
             The Hume Group
           </div>
         </Link>
         <div className="flex items-center gap-4">
         <NavigationMenu>
-          <NavigationMenuList className={cn(
-            "transition-colors duration-300 font-sans",
-            // When color switching is enabled, use white at top, foreground when scrolled
-            enableColorSwitching && isClient && !hasScrolled ? "text-white" : "text-foreground"
-          )}>
+          <NavigationMenuList className="font-sans text-foreground">
           {/*<NavigationMenuItem>
             <NavigationMenuTrigger>
               Dashboards
@@ -174,14 +150,7 @@ export function Header({ enableColorSwitching = true }: HeaderProps) {
             <NavigationMenuItem key={link.href}>
               <NavigationMenuLink
                 href={link.href}
-                className={cn(
-                  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 font-sans",
-                  "transition-colors duration-300",
-                  // When color switching is enabled, use white at top with hover effects
-                  enableColorSwitching && isClient && !hasScrolled 
-                    ? "text-white hover:text-white/90 hover:bg-white/10"
-                    : "text-foreground hover:text-foreground/80"
-                )}
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 font-sans text-foreground hover:text-foreground/80"
               >
                 {link.title}
               </NavigationMenuLink>
@@ -192,14 +161,8 @@ export function Header({ enableColorSwitching = true }: HeaderProps) {
         <div className="flex items-center gap-3">
           <Link href="/faqs">
             <Button 
-              variant={enableColorSwitching && isClient && !hasScrolled ? "secondary" : "default"} 
-              className={cn(
-                "cursor-pointer transition-all duration-300 font-sans",
-                // When color switching is enabled, use white button at top
-                enableColorSwitching && isClient && !hasScrolled 
-                  ? "bg-white text-primary hover:bg-white/30 border-white/20"
-                  : "bg-primary text-primary-foreground hover:bg-primary/90"
-              )}
+              variant="default" 
+              className="cursor-pointer font-sans bg-primary text-primary-foreground hover:bg-primary/90"
             >
               Contact Us
             </Button>

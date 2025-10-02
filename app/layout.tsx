@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import { HeaderWrapper } from "@/components/sections/navigation/header-wrapper";
+import { Header } from "@/components/sections/navigation/header";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -23,7 +23,7 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} antialiased font-sans`}
       >
-        <HeaderWrapper />
+        <Header />
         {children}
       </body>
     </html>

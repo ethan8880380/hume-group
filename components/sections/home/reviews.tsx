@@ -16,19 +16,19 @@ interface ReviewsProps {
 
 export function Reviews({ reviews = defaultReviews }: ReviewsProps) {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-24">
       <div className="container mx-auto px-6">
         {/* Header */}
-        <div className="mb-12 md:mb-16">
+        <div className="mb-8">
           <div className="flex gap-1 mb-3">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-5 h-5 text-primary mb-3" />
+              <Star key={i} className="w-5 h-5 text-primary mb-3 fill-primary" />
             ))}
           </div>
           <h2 className="text-3xl font-medium text-gray-foreground mb-4">
             The Best Sellers in Tacoma
           </h2>
-          <p className="text-lg text-gray-foreground/80 max-w-3xl">
+          <p className="text-lg text-muted-foreground max-w-3xl">
             Hundreds of 5 start reviews confirm there&apos;s no one better to sell your home.
           </p>
         </div>

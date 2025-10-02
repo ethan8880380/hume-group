@@ -2,11 +2,11 @@ import BuyingHero from "@/components/sections/buying/buying-hero";
 import WhyBuyWithUs from "@/components/sections/buying/why-buy-with-us";
 import WhatYouCanExpect from "@/components/sections/buying/what-you-can-expect";
 import OurTrackRecord from "@/components/sections/buying/our-track-record";
-import TestimonialSection from "@/components/sections/buying/testimonial-section";
 import { HomeValueSection } from "@/components/sections/home/home-value";
-import ListingsMapSection from "@/components/sections/buying/listings-map-section";
-import ScheduleCall from "@/components/sections/buying/schedule-call";
+import MapSection from "@/components/sections/home/map-section";
 import { Footer } from "@/components/sections/navigation/footer";
+import { Reviews } from "@/components/sections/home/reviews";
+import CTA from "@/components/sections/home/cta";
 
 export default function BuyingPage() {
   return (
@@ -15,10 +15,11 @@ export default function BuyingPage() {
       <WhyBuyWithUs />
       <WhatYouCanExpect />
       <OurTrackRecord />
-      <TestimonialSection />
+      <Reviews />
+      <MapSection />
+      <div className="w-full h-24"></div>
       <HomeValueSection />
-      <ListingsMapSection />
-      <ScheduleCall />
+      <CTA />
       <Footer />
     </div>
   );

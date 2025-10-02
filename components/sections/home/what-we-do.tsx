@@ -1,21 +1,21 @@
-import { Sparkle } from "lucide-react";
+import { MapPin, Compass, Trophy } from "lucide-react";
 import { Card, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 
 const whatWeDo = [
   {
     title: "Local Market Expertise",
     description: "With deep local expertise and up-to-the-minute market knowledge, committed to finding your match.",
-    icon: Sparkle,
+    icon: MapPin,
   },
   {
     title: "Personalized Guidance", 
     description: "Trusted advice that keeps you moving confidently through every step of your home journey.",
-    icon: Sparkle,
+    icon: Compass,
   },
   {
     title: "Proven Results",
     description: "Consistently successful sales, excellent happy clients, and a reputation built on trust and results.",
-    icon: Sparkle,
+    icon: Trophy,
   },
 ];
 

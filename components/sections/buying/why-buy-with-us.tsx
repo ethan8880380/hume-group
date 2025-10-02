@@ -27,52 +27,42 @@ const benefits = [
 
 export default function WhyBuyWithUs() {
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-24">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-medium mb-4">
+        <div className="text-left mb-8">
+          <h2 className="text-3xl font-medium mb-4">
             Why Buy With Us?
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl">
             Buying a home is one of life&apos;s biggest decisions. Our experienced team ensures you have the knowledge, resources, and support to make the right choice with confidence.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           {/* Benefits List */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
             {benefits.map((benefit) => (
-              <Card key={benefit.title} className="p-6 border-0 shadow-md hover:shadow-lg transition-shadow bg-white">
+              <Card key={benefit.title} className="p-6 bg-primary/[0.03] border-primary/10 justify-between shadow-none">
                 <div className="mb-4">
-                  <benefit.icon className="w-10 h-10 text-blue-600" />
+                  <benefit.icon className="w-10 h-10 text-white bg-primary rounded-md p-2" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
+                <div className="flex flex-col gap-1">
+                  <h3 className="text-xl font-medium">{benefit.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{benefit.description}</p>
+                </div>
               </Card>
             ))}
           </div>
 
-          {/* Image with Arrow Pointing */}
+          {/* Image */}
           <div className="relative">
-            <div className="relative h-[600px] rounded-lg overflow-hidden shadow-xl">
+            <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
               <Image
-                src="/images/cta.png"
+                src="/images/buying/why.jpg"
                 alt="Beautiful modern home interior"
                 fill
                 className="object-cover"
               />
-            </div>
-            {/* Decorative Arrow - you can customize this */}
-            <div className="absolute -left-12 top-20 hidden lg:block">
-              <svg width="100" height="100" viewBox="0 0 100 100" className="text-gray-400">
-                <path 
-                  d="M10,50 Q30,20 50,50 T90,50" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  fill="none"
-                  strokeDasharray="5,5"
-                />
-              </svg>
             </div>
           </div>
         </div>
