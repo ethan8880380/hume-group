@@ -67,7 +67,8 @@ export function BuyingBuddyWidget({
       }
     };
 
-    if (script.readyState === 'complete' || script.readyState === 'loaded') {
+    // Check if script is already loaded
+    if ((window as unknown as { BuyingBuddy?: unknown }).BuyingBuddy) {
       initWidget();
     } else {
       script.addEventListener('load', initWidget);
