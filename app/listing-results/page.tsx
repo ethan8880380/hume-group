@@ -3,6 +3,7 @@
 import { Footer } from "@/components/sections/navigation/footer";
 import { useEffect } from "react";
 
+
 export default function ListingResultsPage() {
   useEffect(() => {
     // Load BuyingBuddy widget script
