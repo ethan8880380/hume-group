@@ -227,29 +227,20 @@ export class IDXService {
   }
 
   // Search listings with advanced filters
-  async searchListings(_filters: {
-    query?: string;
-    location?: string;
-    priceRange?: { min: number; max: number };
-    bedrooms?: number;
-    bathrooms?: number;
-    propertyType?: string[];
-    features?: string[];
-    yearBuilt?: { min: number; max: number };
-  }): Promise<{
+  async searchListings(): Promise<{
     listings: Listing[];
     total: number;
     facets?: Record<string, unknown>;
   }> {
     try {
-      // Example search API call:
+      // Example search API call with filters:
       // const response = await fetch(`${this.config.baseUrl}/search`, {
       //   method: 'POST',
       //   headers: {
       //     'Authorization': `Bearer ${this.config.apiKey}`,
       //     'Content-Type': 'application/json',
       //   },
-      //   body: JSON.stringify(_filters)
+      //   body: JSON.stringify(filters)
       // });
 
       // For development, return mock data

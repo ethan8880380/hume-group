@@ -7,33 +7,11 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Button } from "@/components/ui/button"
-import { ShoppingCart } from "lucide-react"
-
-const dashboardLinks = [
-  {
-    title: "All Dashboards",
-    href: "/dashboards",
-    description: "All the dashboards available across IFP sorted by category and team."
-  },
-  {
-    title: "In Market Performance", 
-    href: "/dashboards?category=In%20Market%20Performance",
-    description: "The top category of dashboards available across IFP."
-  },
-  {
-    title: "Marketing",
-    href: "/dashboards?team=growthCB", 
-    description: "Dashboards specifically for the Marketing team."
-  }
-]
 
 const mainLinks = [
   {

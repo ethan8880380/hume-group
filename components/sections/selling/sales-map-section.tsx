@@ -1,10 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import SoldListingsMap from "@/components/ui/sold-listings-map";
-import { getAllSoldListings } from "@/lib/sold-listings";
-
-// Get actual sold listings data
-const salesLocations = getAllSoldListings();
 
 export default function SalesMapSection() {
   return (
