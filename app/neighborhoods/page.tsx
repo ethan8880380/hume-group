@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/sections/navigation/footer";
 import { neighborhoodsData } from "@/lib/neighborhoods-data";
 import { NeighborhoodCard } from "@/components/ui/neighborhood-card";
+import CTA from "@/components/sections/home/cta";
+import { HomeValuationDialog } from "@/components/home-valuation-dialog";
 
 // Transform data for use in this component
 const neighborhoods = neighborhoodsData.map((n) => ({
@@ -35,12 +37,16 @@ export default function NeighborhoodsPage() {
               >
                 Search Homes
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-              >
-                Free Home Valuation
-              </Button>
+              <HomeValuationDialog 
+                trigger={
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                  >
+                    Free Home Valuation
+                  </Button>
+                }
+              />
             </div>
           </div>
         </div>
@@ -64,8 +70,8 @@ export default function NeighborhoodsPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="mb-16 container mx-auto px-6">
+      {/* CTA Section - Hidden */}
+      {/* <section className="mb-16 container mx-auto px-6">
         <div className="container mx-auto px-4 text-center bg-primary py-20 rounded-lg">
           <h2 className="text-3xl md:text-4xl font-medium text-white mb-6">
             Which Tacoma Neighborhood is Right for You?
@@ -90,7 +96,10 @@ export default function NeighborhoodsPage() {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
+
+      {/* Buy/Sell CTA */}
+      <CTA />
     </main>
     <Footer />
     </>

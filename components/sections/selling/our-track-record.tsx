@@ -2,24 +2,24 @@ import Image from "next/image";
 
 const stats = [
   {
-    value: "#1",
-    label: "Top Producing Team",
-    description: "Consistently ranked as one of the top real estate teams in the Tacoma area.",
+    value: "1%",
+    label: "Top Producer in Tacoma",
+    description: "The Hume Group has been in the top 1% of real estate sales in Tacoma for decades running. Experience counts!",
   },
   {
-    value: "85%",
-    label: "List-to-Sale Ratio",
-    description: "Our homes sell for an average of 85% of list price, well above the market average.",
+    value: "100%",
+    label: "Sale to List Ratio",
+    description: "Over the past FIVE YEARS we got our sellers their asking price in negotiations. 100% sale to list ratio.",
   },
   {
     value: "12",
-    label: "Average Days to Sale",
-    description: "We sell homes 40% faster than the typical agent in our market.",
+    label: "Days on Market",
+    description: "We averaged 12 days on market over the past five years.",
   },
   {
-    value: "97%",
-    label: "Avg. Sale-to-List Price",
-    description: "Our strategic pricing and negotiation gets you top dollar every time.",
+    value: "30",
+    label: "Years Experience",
+    description: "We have been at this for three decades in the top 1% of Brokers. That is a lot of experience being put to work on your behalf.",
   },
 ];
 
@@ -29,7 +29,7 @@ export default function OurTrackRecord() {
       <div className="container mx-auto px-6">
         <div className="text-left mb-8">
           <h2 className="text-3xl font-medium mb-4">
-            Our Track Record
+            OUR TRACK RECORD
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl">
             With a proven track record of successful sales, we&apos;re not just here to list your home—we&apos;re here to get you results that exceed expectations.

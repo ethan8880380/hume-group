@@ -1,7 +1,6 @@
 import BuyingHero from "@/components/sections/buying/buying-hero";
 import WhyBuyWithUs from "@/components/sections/buying/why-buy-with-us";
 import WhatYouCanExpect from "@/components/sections/buying/what-you-can-expect";
-import OurTrackRecord from "@/components/sections/buying/our-track-record";
 import { HomeValueSection } from "@/components/sections/home/home-value";
 import MapSection from "@/components/sections/home/map-section";
 import { Footer } from "@/components/sections/navigation/footer";
@@ -14,7 +13,6 @@ export default function BuyingPage() {
       <BuyingHero />
       <WhyBuyWithUs />
       <WhatYouCanExpect />
-      <OurTrackRecord />
       <Reviews />
       <MapSection />
       <div className="w-full h-24"></div>

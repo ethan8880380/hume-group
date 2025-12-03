@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import {
@@ -36,6 +37,10 @@ const dashboardLinks = [
 
 const mainLinks = [
   {
+    title: "Home",
+    href: "/",
+  },
+  {
     title: "Listings",
     href: "/listings",
   },
@@ -64,6 +69,7 @@ const mainLinks = [
 export function Header() {
   const [hasScrolled, setHasScrolled] = React.useState(false)
   const [isClient, setIsClient] = React.useState(false)
+  const pathname = usePathname()
 
   React.useEffect(() => {
     setIsClient(true)
@@ -146,16 +152,26 @@ export function Header() {
           </NavigationMenuItem>*/}
           
           
-          {mainLinks.map((link) => (
-            <NavigationMenuItem key={link.href}>
-              <NavigationMenuLink
-                href={link.href}
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 font-sans text-foreground hover:text-foreground/80"
-              >
-                {link.title}
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          ))}
+          {mainLinks.map((link) => {
+            const isActive = link.href === "/" 
+              ? pathname === "/" 
+              : pathname === link.href || pathname.startsWith(link.href + "/")
+            return (
+              <NavigationMenuItem key={link.href}>
+                <NavigationMenuLink
+                  href={link.href}
+                  className={cn(
+                    "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 font-sans",
+                    isActive 
+                      ? "text-primary font-semibold" 
+                      : "text-foreground hover:text-foreground/80"
+                  )}
+                >
+                  {link.title}
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            )
+          })}
           </NavigationMenuList>
         </NavigationMenu>
         <div className="flex items-center gap-3">

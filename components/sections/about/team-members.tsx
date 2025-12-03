@@ -11,17 +11,17 @@ const teamMembers: TeamMember[] = [
   {
     name: "Matt Hume",
     image: "/images/team/matt.png",
-    description: "Matt has been advising his community on smart real estate since 2006 and is known for his analytical approach and fierce negotiating skills for his clients. Whether you're buying or selling, Matt's expert insight and deep local knowledge ensure you get the best outcome possible.",
+    description: "A seasoned Tacoma Realtor. Unmatched local knowledge has made Matt and The Hume Group one of Tacoma's top Realtors or teams, Matt combines strategic guidance with a confident approach. He's a savvy negotiator and a trusted advocate who consistently helps buyers and sellers achieve exceptional results.",
   },
   {
     name: "Tom Hume",
     image: "/images/team/tom.png",
-    description: "Tom founded The Hume Group and has been a licensed real estate agent in Tacoma since 1999. Known for his exceptional client service and market expertise, Tom brings three decades of experience to your corner to guide you through every step of the process.",
+    description: "Known for his calm, approachable style and deep market expertise, Tom brings creativity and clear communication to every home journey. Clients love his responsiveness, attention to detail, and genuine commitment to helping them make smart real estate decisions. Check out Tacoma Real Estate Talk with Tom Hume on YouTube! Tom is among Pierce County's best brokers due to a reputation built on trust.",
   },
   {
     name: "David Gala",
-    image: "/images/team/david.png",
-    description: "David is a third-party risk specialist deeply involved in our team's due diligence and analytical support. His extensive experience in transaction integrity helps our clients rest easier knowing every angle is covered in their favor.",
+    image: "/images/team/david.jpg",
+    description: "David is the definition of professional — proactive, prepared, and laser-focused on helping his clients realize their dreams. It would be hard not to connect with David. He is genuine and sincere at every turn and cares deeply about his clients. David has always been one of the best real estate professionals in Tacoma.",
   },
 ];
 

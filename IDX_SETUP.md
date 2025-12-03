@@ -6,7 +6,42 @@ This guide will help you integrate real IDX (Internet Data Exchange) feeds into 
 
 IDX (Internet Data Exchange) is a system that allows real estate websites to display property listings from Multiple Listing Services (MLS). It enables real estate professionals to show current property data on their websites.
 
-## 🚀 **SimplyRETS Setup (Recommended)**
+## 🚀 **BuyingBuddy Setup (Recommended - Now Default)**
+
+BuyingBuddy is a comprehensive IDX and CRM platform specifically designed for real estate agents.
+
+### **Quick Start with BuyingBuddy**
+
+1. **Sign Up**: Visit [buyingbuddy.com](https://buyingbuddy.com) and choose a plan ($49/month for agents)
+2. **Get MLS Approval**: Add your MLS credentials in the dashboard (1-3 business days approval)
+3. **Get Credentials**: Navigate to Settings > API to get your:
+   - API Key
+   - Account ID
+   - Widget ID
+4. **Configure**: Add to `.env.local`:
+   ```bash
+   BUYINGBUDDY_API_KEY=your_api_key
+   BUYINGBUDDY_ACCOUNT_ID=your_account_id
+   BUYINGBUDDY_WIDGET_ID=your_widget_id
+   NEXT_PUBLIC_BUYINGBUDDY_ACCOUNT_ID=your_account_id
+   NEXT_PUBLIC_BUYINGBUDDY_WIDGET_ID=your_widget_id
+   ```
+5. **Restart**: Run `npm run dev` and you're live!
+
+### **BuyingBuddy Features**
+
+- ✅ Built-in CRM for lead management
+- ✅ Multiple integration methods (API + Widgets)
+- ✅ Real-time MLS data sync
+- ✅ Mobile-responsive widgets
+- ✅ Lead capture forms included
+- ✅ Automated follow-ups
+
+**For detailed BuyingBuddy setup, see [BUYINGBUDDY_SETUP.md](./BUYINGBUDDY_SETUP.md)**
+
+---
+
+## 📋 **SimplyRETS Setup (Alternative)**
 
 SimplyRETS is a user-friendly IDX provider that makes it easy to get started with real estate data.
 
@@ -36,9 +71,13 @@ SimplyRETS provides a test endpoint you can use to verify your setup:
 ### **Step 5: Configure Environment Variables**
 Create a `.env.local` file in your project root:
 ```bash
-SIMPLYRETS_API_KEY=your_simplyrets_api_key_here
-SIMPLYRETS_BASE_URL=https://api.simplyrets.com
+# To use SimplyRETS instead of BuyingBuddy, comment out BuyingBuddy vars
+# and uncomment these:
+# SIMPLYRETS_API_KEY=your_simplyrets_api_key_here
+# SIMPLYRETS_BASE_URL=https://api.simplyrets.com
 ```
+
+**Note**: If both BuyingBuddy and SimplyRETS are configured, BuyingBuddy will be used by default.
 
 ## Other Popular IDX Providers
 
@@ -57,6 +96,7 @@ SIMPLYRETS_BASE_URL=https://api.simplyrets.com
 
 ### 3. **Third-Party IDX Services**
 - **Examples**:
+  - **BuyingBuddy**: IDX + CRM platform with widgets and API (Now default in this app)
   - **RealScout**: Modern IDX API with advanced features
   - **IDX Broker**: Comprehensive IDX solutions
   - **Realtyna**: WordPress and custom IDX solutions

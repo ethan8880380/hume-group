@@ -2,6 +2,7 @@ import SellingHero from "@/components/sections/selling/selling-hero";
 import WhyListWithUs from "@/components/sections/selling/why-list-with-us";
 import WhatYouCanExpect from "@/components/sections/selling/what-you-can-expect";
 import OurTrackRecord from "@/components/sections/selling/our-track-record";
+import TeamMembers from "@/components/sections/about/team-members";
 import { HomeValueSection } from "@/components/sections/home/home-value";
 import SalesMapSection from "@/components/sections/selling/sales-map-section";
 import { Footer } from "@/components/sections/navigation/footer";
@@ -16,6 +17,7 @@ export default function SellingPage() {
       <WhyListWithUs />
       <WhatYouCanExpect />
       <OurTrackRecord />
+      <TeamMembers />
       <Reviews />
       <MapSection />
       <div className="w-full h-24"></div>

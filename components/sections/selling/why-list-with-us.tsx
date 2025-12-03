@@ -5,7 +5,7 @@ import Image from "next/image";
 const benefits = [
   {
     title: "Local Market Expertise",
-    description: "We know the Tacoma market inside and out. Our deep local knowledge helps price your home competitively.",
+    description: "We know the Tacoma neighborhoods, the people and the nuances of this market on the Puget Sound like no other agent or team.",
     icon: Award,
   },
   {
@@ -34,7 +34,7 @@ export default function WhyListWithUs() {
             Why List With Us?
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl">
-            Selling your home isn&apos;t just a transaction—it&apos;s one of the biggest financial decisions you&apos;ll ever make. That&apos;s why we go the extra mile to get you the best possible outcome.
+            Selling your home isn&apos;t just a transaction! It&apos;s one of the biggest financial decisions you&apos;ll ever make. We take that seriously! Our clients trust us to apply our experience and strategic thinking to getting the best outcome.
           </p>
         </div>
 

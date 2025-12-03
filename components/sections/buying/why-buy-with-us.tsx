@@ -15,7 +15,7 @@ const benefits = [
   },
   {
     title: "Access to Listings",
-    description: "Get early access to new listings, off-market opportunities, and exclusive properties before they hit the market.",
+    description: "Get access to brand new listings the moment they become available.",
     icon: Key,
   },
   {

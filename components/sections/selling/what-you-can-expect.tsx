@@ -1,26 +1,36 @@
-import { Camera, DollarSign, FileText, UserCheck } from "lucide-react";
+import { Camera, DollarSign, FileText, UserCheck, Shield, Star } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const steps = [
   {
+    title: "White Glove Listings",
+    description: "Top shelf photography and video, staging and prep guidance and premium marketing help our listings stand out.",
+    icon: Camera,
+  },
+  {
+    title: "Skilled Negotiations",
+    description: "Our vast experience means we bring calm heads and sharp strategy to safeguard your interests every step of the way.",
+    icon: UserCheck,
+  },
+  {
     title: "Custom Pricing Strategy",
-    description: "We analyze market data and comparable sales to price your home competitively and attract serious buyers.",
+    description: "We analyze comparable sales AND current competing inventory to help you price to attract serious buyers.",
     icon: DollarSign,
   },
   {
     title: "Professional Marketing",
-    description: "Eye-catching photography, virtual tours, and targeted digital advertising that showcases your home at its best.",
-    icon: Camera,
+    description: "Eye-catching photography, virtual tours and targeted digital advertising showcases your property in its best light!",
+    icon: Star,
   },
   {
     title: "Active Communication",
-    description: "Real-time updates about showings, feedback, and market activity so you're never in the dark.",
+    description: "Real time updates on showing feedback and market activity helps you make informed decisions.",
     icon: FileText,
   },
   {
-    title: "Confident Negotiations",
-    description: "We handle all offers, counteroffers, and negotiations to get you the best possible deal with minimal stress.",
-    icon: UserCheck,
+    title: "Honesty and Integrity",
+    description: "We will give it to you straight so that you are always well informed.",
+    icon: Shield,
   },
 ];
 
@@ -30,14 +40,14 @@ export default function WhatYouCanExpect() {
       <div className="container mx-auto px-6">
         <div className="text-left mb-4">
           <h2 className="text-3xl font-medium mb-4">
-            What You Can Expect
+            Strategy
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            Buying a home shouldn&apos;t be stressful or confusing. We&apos;ll guide you through every step with clarity, expertise, and support when you need it most.
+            Our approach to marketing homes and negotiating on behalf of clients consistently gets higher prices and a smooth process.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {steps.map((step) => (
             <Card key={step.title} className="bg-primary/[0.03] border-primary/10 shadow-none">
               <CardHeader>

@@ -11,6 +11,7 @@ import { NeighborhoodListings } from "@/components/sections/neighborhoods/neighb
 import { NeighborhoodCard } from "@/components/ui/neighborhood-card";
 import { NeighborhoodBlogPosts } from "@/components/sections/neighborhoods/neighborhood-blog-posts";
 import CTA from "@/components/sections/home/cta";
+import { YouTubeEmbed } from "@/components/ui/youtube-embed";
 
 interface NeighborhoodPageProps {
   params: Promise<{
@@ -77,16 +78,24 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
               <Button variant="outline" size="lg">Contact Us</Button>
             </div>
 
-            {/* Hero Image */}
+            {/* Hero Media */}
             <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mb-8">
-              <Image
-                src={neighborhood.heroImage}
-                alt={neighborhood.name}
-                fill
-                className="object-cover"
-                quality={100}
-                priority
-              />
+              {neighborhood.heroYoutubeUrl ? (
+                <YouTubeEmbed
+                  videoUrl={neighborhood.heroYoutubeUrl}
+                  title={`${neighborhood.name} neighborhood video`}
+                  className="w-full h-full"
+                />
+              ) : (
+                <Image
+                  src={neighborhood.heroImage}
+                  alt={neighborhood.name}
+                  fill
+                  className="object-cover"
+                  quality={100}
+                  priority
+                />
+              )}
             </div>
 
             {/* Highlights 
@@ -146,17 +155,25 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
               </p>
             </div>
 
-            {/* Image */}
-            {section.image && (
+            {/* Media */}
+            {(section.youtubeUrl || section.image) && (
               <div className={`relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg ${
                 section.imagePosition === "left" ? "lg:col-start-1 lg:row-start-1 lg:col-span-2" : "lg:col-span-2"
               }`}>
-                <Image
-                  src={section.image}
-                  alt={section.title}
-                  fill
-                  className="object-cover"
-                />
+                {section.youtubeUrl ? (
+                  <YouTubeEmbed
+                    videoUrl={section.youtubeUrl}
+                    title={section.title}
+                    className="w-full h-full"
+                  />
+                ) : section.image ? (
+                  <Image
+                    src={section.image}
+                    alt={section.title}
+                    fill
+                    className="object-cover"
+                  />
+                ) : null}
               </div>
             )}
           </div>

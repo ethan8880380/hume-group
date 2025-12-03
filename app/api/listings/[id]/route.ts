@@ -21,8 +21,7 @@ export async function GET(
       listing = await idxService.fetchListingById(id);
     } catch (error) {
       console.error('Error fetching listing from IDX service:', error);
-      // If SimplyRETS fails, try to find in mock data as fallback
-      const mockListings = await import('@/app/api/listings/route');
+      // If IDX service fails, the service will fall back to mock data internally
       // This is a temporary fallback - in production you'd want proper error handling
     }
 

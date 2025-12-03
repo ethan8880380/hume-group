@@ -1,7 +1,11 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface TeamMember {
   name: string;
@@ -13,19 +17,80 @@ const teamMembers: TeamMember[] = [
   {
     name: "Matt Hume",
     image: "/images/team/matt.png",
-    description: "Quick Couple Sentence Description about who you are and what you bring to the table."
+    description: "A seasoned Tacoma Realtor. Unmatched local knowledge has made Matt and The Hume Group one of Tacoma's top Realtors or teams, Matt combines strategic guidance with a confident approach. He's a savvy negotiator and a trusted advocate who consistently helps buyers and sellers achieve exceptional results."
   },
   {
     name: "Tom Hume", 
     image: "/images/team/tom.png",
-    description: "Quick Couple Sentence Description about who you are and what you bring to the table."
+    description: "Known for his calm, approachable style and deep market expertise, Tom brings creativity and clear communication to every home journey. Clients love his responsiveness, attention to detail, and genuine commitment to helping them make smart real estate decisions. Check out Tacoma Real Estate Talk with Tom Hume on YouTube! Tom is among Pierce County's best brokers due to a reputation built on trust."
   },
   {
     name: "David Gala",
-    image: "/images/team/david.png", 
-    description: "Quick Couple Sentence Description about who you are and what you bring to the table."
+    image: "/images/team/david.jpg", 
+    description: "David is the definition of professional — proactive, prepared, and laser-focused on helping his clients realize their dreams. It would be hard not to connect with David. He is genuine and sincere at every turn and cares deeply about his clients. David has always been one of the best real estate professionals in Tacoma."
   }
 ];
+
+function TeamMemberCard({ member }: { member: TeamMember }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const descriptionRef = useRef<HTMLDivElement>(null);
+  const [descHeight, setDescHeight] = useState(0);
+
+  useEffect(() => {
+    if (descriptionRef.current) {
+      setDescHeight(descriptionRef.current.scrollHeight);
+    }
+  }, []);
+
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="group"
+    >
+      <div className="relative aspect-square overflow-hidden border-0 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+        {/* Background Image */}
+        <Image
+          src={member.image}
+          alt={member.name}
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+        
+        {/* Content positioned at the bottom */}
+        <div className="absolute bottom-0 left-0 right-0 p-6">
+          <motion.div 
+            animate={{
+              y: isHovered ? -16 : 0,
+              marginBottom: isHovered ? 0 : -(descHeight + 8)
+            }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
+            <h3 className="text-xl font-medium text-white mb-2">
+              {member.name}
+            </h3>
+            
+            {/* Description - measured and hidden with exact negative margin */}
+            <motion.div
+              ref={descriptionRef}
+              animate={{
+                opacity: isHovered ? 1 : 0
+              }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              <p className="text-white/70 text-sm leading-relaxed">
+                {member.description}
+              </p>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Team() {
   return (
@@ -38,36 +103,19 @@ export default function Team() {
           <p className="text-lg text-muted-foreground max-w-3xl mb-12">
             At The Hume Group, we blend deep local knowledge with unparalleled dedication to exceed your expectations in buying and selling.
           </p>
-          <Link href="/about">  <Button 
-            variant="default" 
-            size="lg"
-          >
-            Learn About Our Team
-          </Button> 
+          <Link href="/about">
+            <Button 
+              variant="default" 
+              size="lg"
+            >
+              Learn About Our Team
+            </Button> 
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {teamMembers.map((member, index) => (
-            <Card key={index} className="relative aspect-square overflow-hidden border-0">
-              <div className="absolute inset-0">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 top-50 bg-gradient-to-t from-black/90 to-transparent" />
-              </div>
-              <CardContent className="relative h-full flex flex-col justify-end p-3 px-6 text-left">
-                <h3 className="text-xl font-medium text-white">
-                  {member.name}
-                </h3>
-                <p className="text-white/70 leading-relaxed text-left">
-                  {member.description}
-                </p>
-              </CardContent>
-            </Card>
+            <TeamMemberCard key={index} member={member} />
           ))}
         </div>
       </div>

@@ -1,5 +1,34 @@
 import { Listing } from '@/app/api/listings/route';
 
+// BuyingBuddy data structure interface
+interface BuyingBuddyData {
+  listing_id?: number | string;
+  mls_number?: number | string;
+  address?: string;
+  street_number?: string;
+  street_name?: string;
+  city?: string;
+  state?: string;
+  zip_code?: string;
+  list_price?: number;
+  bedrooms?: number;
+  bathrooms?: number;
+  square_feet?: number;
+  lot_size?: number;
+  property_type?: string;
+  status?: string;
+  photos?: string[];
+  images?: string[];
+  description?: string;
+  remarks?: string;
+  year_built?: number;
+  latitude?: number;
+  longitude?: number;
+  features?: string[];
+  created_at?: string;
+  updated_at?: string;
+}
+
 // SimplyRETS data structure interface
 interface SimplyRETSData {
   mlsId?: number | string;
@@ -37,11 +66,20 @@ interface SimplyRETSData {
 interface IDXConfig {
   apiKey: string;
   baseUrl: string;
-  provider: 'rets' | 'mls' | 'idx' | 'custom' | 'simplyrets';
+  provider: 'rets' | 'mls' | 'idx' | 'custom' | 'simplyrets' | 'buyingbuddy';
+  accountId?: string;
+  widgetId?: string;
 }
 
 // Popular IDX providers and their configurations
 export const IDX_PROVIDERS = {
+  BUYINGBUDDY: {
+    name: 'BuyingBuddy',
+    baseUrl: process.env.BUYINGBUDDY_BASE_URL || 'https://api.buyingbuddy.com',
+    apiKey: process.env.BUYINGBUDDY_API_KEY || '',
+    accountId: process.env.BUYINGBUDDY_ACCOUNT_ID || '',
+    widgetId: process.env.BUYINGBUDDY_WIDGET_ID || '',
+  },
   SIMPLYRETS: {
     name: 'SimplyRETS',
     baseUrl: process.env.SIMPLYRETS_BASE_URL || 'https://api.simplyrets.com',
@@ -91,6 +129,11 @@ export class IDXService {
     hasMore: boolean;
   }> {
     try {
+      // BuyingBuddy API call
+      if (this.config.provider === 'buyingbuddy') {
+        return this.fetchBuyingBuddyListings(params);
+      }
+      
       // SimplyRETS API call
       if (this.config.provider === 'simplyrets') {
         return this.fetchSimplyRETSListings(params);
@@ -127,6 +170,26 @@ export class IDXService {
   // Get a single listing by ID
   async fetchListingById(id: string): Promise<Listing | null> {
     try {
+      // Use BuyingBuddy API if configured
+      if (this.config.provider === 'buyingbuddy' && this.config.apiKey) {
+        const response = await fetch(`${this.config.baseUrl}/listings/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${this.config.apiKey}`,
+            'Content-Type': 'application/json',
+            'X-Account-ID': this.config.accountId || '',
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          return this.transformBuyingBuddyData(data);
+        } else if (response.status === 404) {
+          return null;
+        } else {
+          throw new Error(`BuyingBuddy API error: ${response.status}`);
+        }
+      }
+      
       // Use SimplyRETS API if configured
       if (this.config.provider === 'simplyrets' && this.config.apiKey) {
         // Create base64 auth string (works in both Node.js and browser)
@@ -285,6 +348,89 @@ export class IDXService {
     };
   }
 
+  // Fetch listings from BuyingBuddy API
+  private async fetchBuyingBuddyListings(params: {
+    limit?: number;
+    offset?: number;
+    status?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    bedrooms?: number;
+    propertyType?: string;
+    city?: string;
+    state?: string;
+  }): Promise<{
+    listings: Listing[];
+    total: number;
+    limit: number;
+    offset: number;
+    hasMore: boolean;
+  }> {
+    const queryParams = new URLSearchParams();
+    
+    if (params.limit) queryParams.append('limit', params.limit.toString());
+    if (params.offset) queryParams.append('offset', params.offset.toString());
+    if (params.status) queryParams.append('status', params.status);
+    if (params.minPrice) queryParams.append('min_price', params.minPrice.toString());
+    if (params.maxPrice) queryParams.append('max_price', params.maxPrice.toString());
+    if (params.bedrooms) queryParams.append('bedrooms', params.bedrooms.toString());
+    if (params.propertyType) queryParams.append('property_type', params.propertyType);
+    if (params.city) queryParams.append('city', params.city);
+    if (params.state) queryParams.append('state', params.state);
+      
+    const response = await fetch(`${this.config.baseUrl}/listings?${queryParams.toString()}`, {
+      headers: {
+        'Authorization': `Bearer ${this.config.apiKey}`,
+        'Content-Type': 'application/json',
+        'X-Account-ID': this.config.accountId || '',
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`BuyingBuddy API error: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    const listings = Array.isArray(data.listings) 
+      ? data.listings.map((item: BuyingBuddyData) => this.transformBuyingBuddyData(item)) 
+      : [];
+    
+    return {
+      listings,
+      total: data.total || listings.length,
+      limit: params.limit || 10,
+      offset: params.offset || 0,
+      hasMore: data.has_more || (listings.length === (params.limit || 10))
+    };
+  }
+
+  // Transform BuyingBuddy data to our Listing format
+  private transformBuyingBuddyData(data: BuyingBuddyData): Listing {
+    return {
+      id: data.listing_id?.toString() || data.mls_number?.toString() || '',
+      address: data.address || `${data.street_number || ''} ${data.street_name || ''}`.trim(),
+      city: data.city || '',
+      state: data.state || '',
+      zipCode: data.zip_code || '',
+      price: data.list_price || 0,
+      bedrooms: data.bedrooms || 0,
+      bathrooms: data.bathrooms || 0,
+      squareFeet: data.square_feet || 0,
+      lotSize: data.lot_size || 0,
+      propertyType: data.property_type || 'Unknown',
+      status: (data.status === 'Pending' || data.status === 'Sold' ? data.status.toLowerCase() : 'active') as 'active' | 'pending' | 'sold',
+      images: data.photos || data.images || [],
+      description: data.description || data.remarks || '',
+      yearBuilt: data.year_built || 0,
+      mlsNumber: data.mls_number?.toString() || '',
+      latitude: data.latitude || 0,
+      longitude: data.longitude || 0,
+      features: data.features || [],
+      createdAt: data.created_at || new Date().toISOString(),
+      updatedAt: data.updated_at || new Date().toISOString()
+    };
+  }
+
   // Mock data for development
   private getMockListings(params: { limit?: number; offset?: number }): {
     listings: Listing[];
@@ -308,9 +454,9 @@ export class IDXService {
         propertyType: 'Single Family',
         status: 'active',
         images: [
-          'https://placekitten.com/800/600',
-          'https://placekitten.com/800/601',
-          'https://placekitten.com/800/602'
+          'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&h=600&fit=crop',
+          'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&h=600&fit=crop',
+          'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop'
         ],
         description: 'Beautiful home in the heart of Tacoma with stunning views and modern amenities.',
         yearBuilt: 1995,
@@ -335,9 +481,9 @@ export class IDXService {
         propertyType: 'Single Family',
         status: 'active',
         images: [
-          'https://placekitten.com/800/603',
-          'https://placekitten.com/800/604',
-          'https://placekitten.com/800/605'
+          'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop',
+          'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop',
+          'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop'
         ],
         description: 'Spacious family home with water views and plenty of room to grow.',
         yearBuilt: 2000,
@@ -362,9 +508,9 @@ export class IDXService {
         propertyType: 'Townhouse',
         status: 'active',
         images: [
-          'https://placekitten.com/800/606',
-          'https://placekitten.com/800/607',
-          'https://placekitten.com/800/608'
+          'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&h=600&fit=crop',
+          'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&h=600&fit=crop',
+          'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&h=600&fit=crop'
         ],
         description: 'Charming townhouse in a quiet neighborhood with low maintenance living.',
         yearBuilt: 2010,
@@ -389,9 +535,9 @@ export class IDXService {
         propertyType: 'Single Family',
         status: 'active',
         images: [
-          'https://placekitten.com/800/609',
-          'https://placekitten.com/800/610',
-          'https://placekitten.com/800/611'
+          'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&h=600&fit=crop',
+          'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800&h=600&fit=crop',
+          'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&h=600&fit=crop'
         ],
         description: 'Luxury home with premium finishes and stunning architecture.',
         yearBuilt: 2015,
@@ -472,9 +618,17 @@ export class IDXService {
   }
 }
 
-// Create a singleton instance
-export const idxService = new IDXService({
-  apiKey: process.env.SIMPLYRETS_API_KEY || '',
-  baseUrl: process.env.SIMPLYRETS_BASE_URL || 'https://api.simplyrets.com',
-  provider: 'simplyrets'
-}); 
+// Create a singleton instance - prioritize BuyingBuddy if configured
+export const idxService = new IDXService(
+  process.env.BUYINGBUDDY_API_KEY ? {
+    apiKey: process.env.BUYINGBUDDY_API_KEY,
+    baseUrl: process.env.BUYINGBUDDY_BASE_URL || 'https://api.buyingbuddy.com',
+    provider: 'buyingbuddy',
+    accountId: process.env.BUYINGBUDDY_ACCOUNT_ID,
+    widgetId: process.env.BUYINGBUDDY_WIDGET_ID,
+  } : {
+    apiKey: process.env.SIMPLYRETS_API_KEY || '',
+    baseUrl: process.env.SIMPLYRETS_BASE_URL || 'https://api.simplyrets.com',
+    provider: 'simplyrets'
+  }
+); 

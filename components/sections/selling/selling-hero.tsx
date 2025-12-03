@@ -9,7 +9,7 @@ export default function SellingHero() {
           Sell Your Home With Confidence
         </h1>
         <p className="text-lg max-w-3xl text-foreground/80">
-          Get top dollar with expert marketing, smooth negotiations, and unmatched local expertise every step of the way.
+        Why List With Us? Selling your home isn’t just a transaction! It’s one of the biggest financial decisions you’ll ever make. We take that seriously! Our clients trust us to apply our experience and strategic thinking to getting the best outcome. 
         </p>
         <div className="w-8 h-[1px] my-4 bg-primary/10"></div>
         <div className="flex gap-4">
