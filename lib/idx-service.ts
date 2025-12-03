@@ -227,7 +227,7 @@ export class IDXService {
   }
 
   // Search listings with advanced filters
-  async searchListings(filters: {
+  async searchListings(_filters: {
     query?: string;
     location?: string;
     priceRange?: { min: number; max: number };
@@ -249,7 +249,7 @@ export class IDXService {
       //     'Authorization': `Bearer ${this.config.apiKey}`,
       //     'Content-Type': 'application/json',
       //   },
-      //   body: JSON.stringify(filters)
+      //   body: JSON.stringify(_filters)
       // });
 
       // For development, return mock data

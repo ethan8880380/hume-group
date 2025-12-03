@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Button } from "./button";
-import { Heart, MapPin, Bed, Bath, Square, ArrowUpRight } from "lucide-react";
+import { Heart, MapPin, ArrowUpRight } from "lucide-react";
 import { Listing } from "@/app/api/listings/route";
 
 interface ListingCardProps {

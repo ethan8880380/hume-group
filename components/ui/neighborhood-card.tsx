@@ -17,7 +17,6 @@ interface NeighborhoodCardProps {
 }
 
 export function NeighborhoodCard({ 
-  id, 
   name, 
   description, 
   image, 
