@@ -1,6 +1,6 @@
 "use client";
 
-import { useListing, useListings } from "@/hooks/use-listings";
+import { useListing } from "@/hooks/use-listings";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";

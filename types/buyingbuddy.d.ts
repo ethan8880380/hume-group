@@ -1,15 +1,17 @@
 // TypeScript declarations for BuyingBuddy custom elements
 
-declare namespace JSX {
-  interface IntrinsicElements {
-    'bb-widget': React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLElement> & {
-        'data-type'?: 'ListingResults' | 'SearchDetails' | 'Communities' | 'MarketReports' | 'Search' | string;
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'bb-widget': {
+        'data-type'?: 'ListingResults' | 'SearchDetails' | 'Communities' | 'MarketReports' | 'Search' | 'Disclaimer' | string;
         'data-account'?: string;
         'data-widget'?: string;
-      },
-      HTMLElement
-    >;
+        children?: never;
+      };
+    }
   }
 }
+
+export {};
 

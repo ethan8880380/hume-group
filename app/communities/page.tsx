@@ -1,23 +1,7 @@
-"use client";
-
 import { Footer } from "@/components/sections/navigation/footer";
-import { useEffect } from "react";
+import { BBWidget } from "@/components/ui/bb-widget";
 
 export default function CommunitiesPage() {
-  useEffect(() => {
-    // Load BuyingBuddy widget script
-    const script = document.createElement('script');
-    script.src = 'https://cdn.buyingbuddy.com/widget.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      // Cleanup
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
-  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -33,7 +17,7 @@ export default function CommunitiesPage() {
 
       {/* BuyingBuddy Communities Widget - OPTIONAL Foundation Page */}
       <div className="container mx-auto px-6 py-8">
-        <bb-widget data-type="Communities"></bb-widget>
+        <BBWidget dataType="Communities" />
       </div>
 
       <Footer />

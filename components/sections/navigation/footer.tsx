@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { BBWidget } from "@/components/ui/bb-widget";
 import Link from "next/link";
 
 const footerLinks = {
@@ -165,6 +166,13 @@ export function Footer() {
                 </Link>
               </div>
             </div>
+          </div>
+        </div>
+        
+        {/* MLS Disclaimer - BuyingBuddy Widget */}
+        <div className="border-t border-blue-800 bg-black/10">
+          <div className="container mx-auto px-4 py-4">
+            <BBWidget dataType="Disclaimer" />
           </div>
         </div>
       </div>
