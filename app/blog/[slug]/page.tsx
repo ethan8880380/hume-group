@@ -1,8 +1,6 @@
-import { getSinglePost, getAllPostSlugs, GhostPost } from '@/lib/ghost';
+import { getSinglePost, getAllPostSlugs } from '@/lib/ghost';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
-import { format } from 'date-fns';
 import { Metadata } from 'next';
 import { MailIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -126,7 +124,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  const publishedDate = new Date(post.published_at);
   const processedHtml = processImageLinks(post.html);
   const extractedDescription = extractDescriptionFromHtml(post.html);
   const extractedFigure = extractFirstFigure(processedHtml);

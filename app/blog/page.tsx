@@ -1,8 +1,5 @@
-import { getPosts, getAllTags, GhostPost, GhostTag } from '@/lib/ghost';
-import Link from 'next/link';
+import { getPosts, getAllTags } from '@/lib/ghost';
 import Image from 'next/image';
-import { format } from 'date-fns';
-import { Button } from '@/components/ui/button';
 import { BlogContent } from './blog-content';
 import { Footer } from '@/components/sections/navigation/footer';
 import CTA from '@/components/sections/home/cta';

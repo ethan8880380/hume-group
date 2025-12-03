@@ -5,7 +5,7 @@ import { BuyingBuddyWidget } from "@/components/ui/buyingbuddy-widget";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, MapPin, Home } from "lucide-react";
+import { Search, MapPin, Home } from "lucide-react";
 import { Footer } from "@/components/sections/navigation/footer";
 import CTA from "@/components/sections/home/cta";
 

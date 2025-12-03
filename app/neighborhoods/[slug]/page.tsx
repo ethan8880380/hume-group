@@ -2,10 +2,7 @@ import { getNeighborhoodBySlug, getAllNeighborhoodSlugs, getRelatedNeighborhoods
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Metadata } from "next";
-import { Mail } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Footer } from "@/components/sections/navigation/footer";
 import { NeighborhoodListings } from "@/components/sections/neighborhoods/neighborhood-listings";
 import { NeighborhoodCard } from "@/components/ui/neighborhood-card";

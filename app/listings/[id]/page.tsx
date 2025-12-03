@@ -10,20 +10,12 @@ import {
   Bed, 
   Bath, 
   Square, 
-  Calendar, 
   Home, 
   Phone, 
   Mail, 
   Share2,
   Heart,
-  ArrowLeft,
-  Car,
-  TreePine,
-  Wifi,
-  ShowerHead,
-  Flame,
-  Snowflake,
-  Shield,
+  ArrowLeft,  
   Camera,
   ChevronLeft,
   ChevronRight
@@ -38,15 +30,9 @@ interface ListingDetailPageProps {
 export default function ListingDetailPage({ params }: ListingDetailPageProps) {
   const resolvedParams = use(params);
   const { listing, loading, error } = useListing(resolvedParams.id);
-  const { listings: similarListings } = useListings({ 
-    limit: 4, 
-    city: listing?.city,
-    autoFetch: false 
-  });
   
   const [selectedImage, setSelectedImage] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [showAllImages, setShowAllImages] = useState(false);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -194,7 +180,6 @@ export default function ListingDetailPage({ params }: ListingDetailPageProps) {
                       variant="secondary" 
                       size="sm" 
                       className="bg-white/90 hover:bg-white"
-                      onClick={() => setShowAllImages(true)}
                     >
                       <Camera className="h-4 w-4 mr-2" />
                       View All Photos

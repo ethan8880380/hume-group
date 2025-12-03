@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { format } from 'date-fns';
 import { GhostPost, GhostTag } from '@/lib/ghost';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowUpRight } from 'lucide-react';
 
 interface BlogContentProps {

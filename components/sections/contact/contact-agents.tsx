@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Mail, Phone } from "lucide-react";
@@ -112,7 +111,7 @@ export default function ContactAgents() {
         <div className="text-left mb-16">
           <h2 className="text-3xl font-medium mb-4">Our Team</h2>
           <p className="text-lg text-muted-foreground max-w-3xl">
-            Get in touch with any of our experienced agents directly. We're here to help with all your real estate needs.
+            Get in touch with any of our experienced agents directly. We&apos;re here to help with all your real estate needs.
           </p>
         </div>
 

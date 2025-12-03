@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Home, TrendingUp, MapPin } from "lucide-react";
+import { Home } from "lucide-react";
 
 interface HomeValuationDialogProps {
   trigger?: React.ReactNode;
@@ -185,7 +185,7 @@ export function HomeValuationDialog({
             <DialogHeader>
               <DialogTitle className="text-2xl">Get Your Free Home Valuation</DialogTitle>
               <DialogDescription className="text-base">
-                Enter your property address and get an instant estimate of your home's value.
+                Enter your property address and get an instant estimate of your home&apos;s value.
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4 mt-4">
