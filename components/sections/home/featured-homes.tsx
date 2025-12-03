@@ -1,15 +1,8 @@
-"use client";
-
 import { Button } from "../../ui/button";
-import { Tabs, TabsList, TabsTrigger } from "../../ui/tabs";
-import { BuyingBuddyWidget } from "../../ui/buyingbuddy-widget";
+import { BBWidget } from "../../ui/bb-widget";
+import Link from "next/link";
 
 export default function FeaturedHomes() {
-
-  const handleViewAll = () => {
-    window.location.href = '/listings';
-  };
-
   return (
     <div className="bg-background pb-16">
       <div className="container mx-auto px-6">
@@ -17,30 +10,21 @@ export default function FeaturedHomes() {
         <p className="text-lg text-muted-foreground text-left mb-8">Discover the latest properties in Tacoma and surrounding areas.</p>
         
         <div className="flex items-center justify-between gap-4 mb-8">
-          <Tabs defaultValue="all" className="w-auto">
-            <TabsList>
-              <TabsTrigger value="all">All Listings</TabsTrigger>
-              <TabsTrigger value="north-tacoma">North Tacoma</TabsTrigger>
-              <TabsTrigger value="south-tacoma">South Tacoma</TabsTrigger>
-              <TabsTrigger value="gig-harbor">Gig Harbor</TabsTrigger>
-            </TabsList>
-          </Tabs>
+          <div className="w-auto">
+            {/* Optional: Add filters or tabs here */}
+          </div>
           
-          <Button onClick={handleViewAll} size="lg" className="group">
-            View All Listings
-          </Button>
+          <Link href="/listing-results">
+            <Button size="lg" className="group">
+              View All Listings
+            </Button>
+          </Link>
         </div>
         
-        {/* BuyingBuddy Widget */}
-        <BuyingBuddyWidget
-          widgetType="featured"
-          height="600px"
-          filters={{
-            city: 'Tacoma',
-            state: 'WA',
-          }}
-          className="rounded-lg overflow-hidden"
-        />
+        {/* Official BuyingBuddy Widget - Shows MLS Listings */}
+        <div className="rounded-lg overflow-hidden min-h-[600px]">
+          <BBWidget dataType="ListingResults" />
+        </div>
       </div>
     </div>
   );

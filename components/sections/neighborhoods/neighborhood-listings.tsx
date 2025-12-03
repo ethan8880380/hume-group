@@ -57,7 +57,7 @@ export function NeighborhoodListings({
           <h2 className="text-3xl font-medium text-foreground">
             New Listings in {neighborhoodName}
           </h2>
-          <Link href="/listings">
+          <Link href="/listing-results">
             <Button size="lg">View All Homes in {neighborhoodName}</Button>
           </Link>
         </div>

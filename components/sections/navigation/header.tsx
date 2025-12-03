@@ -20,7 +20,7 @@ const mainLinks = [
   },
   {
     title: "Listings",
-    href: "/listings",
+    href: "/listing-results",
   },
   {
     title: "About",

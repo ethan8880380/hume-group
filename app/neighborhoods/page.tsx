@@ -6,6 +6,7 @@ import { neighborhoodsData } from "@/lib/neighborhoods-data";
 import { NeighborhoodCard } from "@/components/ui/neighborhood-card";
 import CTA from "@/components/sections/home/cta";
 import { HomeValuationDialog } from "@/components/home-valuation-dialog";
+import Link from "next/link";
 
 // Transform data for use in this component
 const neighborhoods = neighborhoodsData.map((n) => ({
@@ -32,11 +33,13 @@ export default function NeighborhoodsPage() {
               about local highlights, schools, real estate trends, and more.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-              >
-                Search Homes
-              </Button>
+              <Link href="/listing-results">
+                <Button 
+                  size="lg" 
+                >
+                  Search Homes
+                </Button>
+              </Link>
               <HomeValuationDialog 
                 trigger={
                   <Button 
