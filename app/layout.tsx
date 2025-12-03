@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/sections/navigation/header";
 
@@ -20,10 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        {/* Buying Buddy plugin v5.02 - DO NOT DEFER - Must load at the top */}
-        <script src="https://www.mbb2.com/version3/css/theme/acid/ghEb9eob" />
-        <script
+      <body
+        className={`${outfit.variable} antialiased font-sans`}
+      >
+        {/* Buying Buddy plugin v5.02 - beforeInteractive strategy loads before page is interactive */}
+        <Script
+          src="https://www.mbb2.com/version3/css/theme/acid/ghEb9eob"
+          strategy="beforeInteractive"
+        />
+        <Script
+          id="mbb-config"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               var MBB = {seo : "false",data:{ acid : "ghEb9eob" } };
@@ -31,14 +39,17 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* NOTE: Add your Google Maps API Key in the src below */}
-        <script src="https://maps.googleapis.com/maps/api/js?callback=mbbMapLoaded&libraries=places" />
-        <script src="https://d2w6u17ngtanmy.cloudfront.net/scripts/my-buying-buddy.5.0.js.gz" />
+        {/* NOTE: Add your Google Maps API Key by replacing YOUR_API_KEY_HERE below */}
+        <Script
+          src="https://maps.googleapis.com/maps/api/js?callback=mbbMapLoaded&libraries=places"
+          strategy="beforeInteractive"
+        />
+        <Script
+          src="https://d2w6u17ngtanmy.cloudfront.net/scripts/my-buying-buddy.5.0.js.gz"
+          strategy="beforeInteractive"
+        />
         {/* End Buying Buddy Plugin */}
-      </head>
-      <body
-        className={`${outfit.variable} antialiased font-sans`}
-      >
+
         <Header />
         {children}
       </body>
