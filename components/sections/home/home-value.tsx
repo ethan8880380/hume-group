@@ -1,17 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { useState } from "react";
 
 export function HomeValueSection() {
-  const [address, setAddress] = useState("");
-
-  const handleValuation = () => {
-    // Handle valuation logic here
-    console.log("Getting valuation for:", address);
-  };
 
   return (
     <section className="w-full pb-24">

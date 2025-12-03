@@ -20,7 +20,7 @@ const benefits = [
   },
   {
     title: "Personalized Service",
-    description: "From your first search to closing day, we're with you every step of the way with dedicated, white-glove service.",
+    description: "From your first search to closing day, we&apos;re with you every step of the way with dedicated, white-glove service.",
     icon: Heart,
   },
 ];

@@ -173,7 +173,7 @@ export default function ContactForm() {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    placeholder="Tell us more about what you're looking for..."
+                    placeholder="Tell us more about what you&apos;re looking for..."
                     rows={6}
                   />
                 </div>

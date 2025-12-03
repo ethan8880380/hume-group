@@ -16,7 +16,7 @@ const teamMembers: TeamMember[] = [
   {
     name: "Matt Hume",
     image: "/images/team/matt.png",
-    description: "A seasoned Tacoma Realtor. Unmatched local knowledge has made Matt and The Hume Group one of Tacoma's top Realtors or teams, Matt combines strategic guidance with a confident approach. He's a savvy negotiator and a trusted advocate who consistently helps buyers and sellers achieve exceptional results."
+    description: "A seasoned Tacoma Realtor. Unmatched local knowledge has made Matt and The Hume Group one of Tacoma&apos;s top Realtors or teams, Matt combines strategic guidance with a confident approach. He&apos;s a savvy negotiator and a trusted advocate who consistently helps buyers and sellers achieve exceptional results."
   },
   {
     name: "Tom Hume", 

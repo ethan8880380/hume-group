@@ -8,7 +8,7 @@ const reviews = [
     image: "https://placekitten.com/120/120",
   },
   {
-    text: "Professional, knowledgeable, and got us $50k over asking. We couldn't be happier!",
+    text: "Professional, knowledgeable, and got us $50k over asking. We couldn&apos;t be happier!",
     name: "Jennifer K.",
     location: "Proctor District",
     image: "https://placekitten.com/121/121",
