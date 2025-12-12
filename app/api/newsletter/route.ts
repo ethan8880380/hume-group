@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
           work: true
         }],
         stage: 'lead',
+        tags: ['home-connection'],
         customFields: [{
           id: 'lead-source',
           type: 'keywords',
@@ -95,7 +96,7 @@ export async function POST(request: NextRequest) {
         email,
         name: name || email.split('@')[0],
         source: source || 'Website Newsletter',
-        tags: ['Newsletter Subscriber'],
+        tags: ['Newsletter Subscriber', 'home-connection'],
         subscribed_at: new Date().toISOString(),
       };
 
@@ -147,7 +148,7 @@ export async function POST(request: NextRequest) {
             <p><strong>Subscribed:</strong> ${new Date().toLocaleString()}</p>
             <hr>
             <p>Contact: ${email}</p>
-            <p>Tags: Newsletter Subscriber, ${source || 'Website'}</p>
+            <p>Tags: Newsletter Subscriber, home-connection, ${source || 'Website'}</p>
           `
         }]
       };
