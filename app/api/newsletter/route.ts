@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
           work: true
         }],
         stage: 'lead',
-        tags: ['#home-connection'],
+        tags: ['home-connection'],
         customFields: [{
           id: 'lead-source',
           type: 'keywords',
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
         email,
         name: name || email.split('@')[0],
         source: source || 'Website Newsletter',
-        tags: ['Newsletter Subscriber', '#home-connection'],
+        tags: ['Newsletter Subscriber', 'home-connection'],
         subscribed_at: new Date().toISOString(),
       };
 
