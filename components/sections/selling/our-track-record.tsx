@@ -29,7 +29,7 @@ export default function OurTrackRecord() {
       <div className="container mx-auto px-6">
         <div className="text-left mb-8">
           <h2 className="text-3xl font-medium mb-4">
-            OUR TRACK RECORD
+            Our Track Record
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl">
             With a proven track record of successful sales, we&apos;re not just here to list your home—we&apos;re here to get you results that exceed expectations.

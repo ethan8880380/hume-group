@@ -19,7 +19,7 @@ export default function ListingResultsPage() {
       <div className="container mx-auto px-6 py-8">
       <div
       dangerouslySetInnerHTML={{
-        __html: `<bb-widget data-type="SearchFormResults"></bb-widget>`,
+        __html: `<bb-widget data-type="SearchForm" data-filter="mls_id:wa555+listing_status:active+city:tacoma"></bb-widget>`,
       }}
     />
       </div>

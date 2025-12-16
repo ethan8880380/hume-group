@@ -43,13 +43,13 @@ export default function TeamMembers() {
           {teamMembers.map((member, index) => (
             <div
               key={member.name}
-              className={`grid grid-cols-1 lg:grid-cols-3 gap-12 items-center bg-primary/[0.03] border border-primary/10 p-6 rounded-lg ${
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-primary/[0.03] border border-primary/10 p-6 rounded-lg ${
                 index % 2 === 1 ? "lg:flex-row-reverse" : ""
               }`}
             >
               {/* Image */}
               <div
-                className={`relative rounded-sm overflow-hidden lg:col-span-2 aspect-[4/3] ${
+                className={`relative rounded-sm overflow-hidden aspect-[4/3] ${
                   index % 2 === 1 ? "lg:order-2" : ""
                 }`}
               >

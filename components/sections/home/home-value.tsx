@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { HomeValuationDialog } from "@/components/home-valuation-dialog";
 
 export function HomeValueSection() {
 
@@ -17,9 +18,15 @@ export function HomeValueSection() {
                   How Much is Your Tacoma Home Worth?
                 </h2>
                 <p className="text-muted-foreground text-base md:text-lg mb-6 md:mb-12 leading-relaxed">
-                  Get a quick and accurate estimate of your home&apos;s value in today&apos;s market.
+                  Get a quick and accurate estimate of your home&apos;s value in today&apos;s market done by a real estate expert.
                 </p>
-                <Button size="lg" className="w-full sm:w-fit text-background cursor-pointer">Get Your Free Valuation</Button>
+                <HomeValuationDialog 
+                  trigger={
+                    <Button size="lg" className="w-full sm:w-fit text-background cursor-pointer">
+                      Get Your Free Valuation
+                    </Button>
+                  }
+                />
                 
               </div>
             </div>

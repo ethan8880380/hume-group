@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 export default function BuyingHero() {
   return (
@@ -13,24 +12,12 @@ export default function BuyingHero() {
         </p>
         <div className="w-8 h-[1px] my-4 bg-primary/10"></div>
         <div className="flex gap-4">
-          <Button size="lg">
-            Start Your Home Search Today
+          <Button asChild size="lg">
+            <a href="https://www.windermere.com/homes/wa/tacoma">Search Listings in Tacoma</a>
           </Button>
-          <Button size="lg" variant="ghost">
-            Schedule a Buyer Consultation
+          <Button asChild size="lg" variant="outline">
+            <a href="/contact">Contact Us</a>
           </Button>
-        </div>
-      </div>
-      <div className="container mx-auto px-6 relative">
-        <div className="relative w-full aspect-video rounded-lg overflow-hidden">
-          <Image 
-            src="/images/buying/hero.jpg" 
-            alt="Beautiful Tacoma home" 
-            fill
-            quality={100}
-            priority
-            className="object-cover" 
-          />
         </div>
       </div>
     </div>

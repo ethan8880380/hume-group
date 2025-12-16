@@ -41,11 +41,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Build the update data
-    const updateData: ClozeUpdateData = {
+    const updateData: ClozeUpdateData & { tags?: string[] } = {
       emails: [{
         value: email,
         work: true
-      }]
+      }],
+      tags: ['#home-connection']
     };
 
     // Add name if provided

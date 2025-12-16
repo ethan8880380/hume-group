@@ -1,127 +1,125 @@
 import { NextRequest, NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 
 interface ValuationRequest {
+  // Property Address
   address: string;
   city: string;
   state: string;
   zipCode: string;
-}
-
-// Try multiple free/public data sources
-async function getValuationFromAttom(address: string, city: string, state: string, zipCode: string) {
-  const apiKey = process.env.ATTOM_API_KEY;
-  if (!apiKey) return null;
-
-  try {
-    const response = await fetch(
-      `https://api.gateway.attomdata.com/propertyapi/v1.0.0/property/address?address1=${encodeURIComponent(address)}&address2=${encodeURIComponent(`${city}, ${state} ${zipCode}`)}`,
-      {
-        headers: {
-          'apikey': apiKey,
-          'Accept': 'application/json',
-        },
-      }
-    );
-
-    if (!response.ok) return null;
-    
-    const data = await response.json();
-    if (data.property && data.property[0]?.assessment?.market?.mktttlvalue) {
-      return {
-        value: data.property[0].assessment.market.mktttlvalue,
-        source: 'Attom Data',
-      };
-    }
-  } catch (error) {
-    console.error('Attom API error:', error);
-  }
-  return null;
-}
-
-// Fallback: Use Zillow's public search to estimate (web scraping alternative)
-async function getEstimatedValuation(city: string, state: string, zipCode: string) {
-  // This uses public MLS data and median home values for the area
-  // You can enhance this with your own local market data
-  
-  // Tacoma area median values (update these based on your market)
-  const medianValues: Record<string, number> = {
-    '98401': 450000,
-    '98402': 425000,
-    '98403': 380000,
-    '98404': 350000,
-    '98405': 420000,
-    '98406': 520000,
-    '98407': 340000,
-    '98408': 380000,
-    '98409': 310000,
-    '98416': 480000,
-    '98418': 360000,
-    '98465': 520000,
-    '98466': 410000,
-    '98467': 390000,
-  };
-
-  const medianValue = medianValues[zipCode] || 400000; // Default Tacoma median
-  
-  return {
-    low: Math.round(medianValue * 0.85),
-    high: Math.round(medianValue * 1.15),
-    average: medianValue,
-    source: 'Local Market Data',
-    isEstimate: true,
-  };
+  // Contact Information
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  additionalDetails?: string;
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body: ValuationRequest = await request.json();
-    const { address, city, state, zipCode } = body;
+    const {
+      address,
+      city,
+      state,
+      zipCode,
+      firstName,
+      lastName,
+      email,
+      phone,
+      additionalDetails,
+    } = body;
 
-    // Validate input
-    if (!address || !city || !state || !zipCode) {
+    // Validate required fields
+    if (!address || !city || !state || !zipCode || !firstName || !lastName || !email) {
       return NextResponse.json(
-        { success: false, error: 'All fields are required' },
+        { success: false, error: 'Missing required fields' },
         { status: 400 }
       );
     }
 
     const fullAddress = `${address}, ${city}, ${state} ${zipCode}`;
-    
+
+    // Create transporter using Gmail
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    });
+
+    // Email content
+    const mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: process.env.CONTACT_EMAIL || process.env.GMAIL_USER,
+      replyTo: email,
+      subject: `🏠 New Home Valuation Request from ${firstName} ${lastName}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333; border-bottom: 2px solid #16a34a; padding-bottom: 10px;">
+            🏠 New Home Valuation Request
+          </h2>
+          
+          <div style="background-color: #f0fdf4; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
+            <h3 style="color: #166534; margin-top: 0;">Contact Information</h3>
+            <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+            <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+          </div>
+          
+          <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #555; margin-top: 0;">Property Address</h3>
+            <p style="font-size: 16px; font-weight: bold;">${fullAddress}</p>
+          </div>
+          
+          <div style="background-color: #fff; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #555; margin-top: 0;">Additional Details</h3>
+            <p style="white-space: pre-wrap; line-height: 1.6;">${additionalDetails || "None provided"}</p>
+          </div>
+          
+          <p style="color: #888; font-size: 12px; margin-top: 30px; text-align: center;">
+            This email was sent from the Hume Group website home valuation form.
+          </p>
+        </div>
+      `,
+      text: `
+New Home Valuation Request
+
+Contact Information
+-------------------
+Name: ${firstName} ${lastName}
+Email: ${email}
+Phone: ${phone || "Not provided"}
+
+Property Address
+----------------
+${fullAddress}
+
+Additional Details
+------------------
+${additionalDetails || "None provided"}
+
+---
+This email was sent from the Hume Group website home valuation form.
+      `,
+    };
+
+    // Send email
+    await transporter.sendMail(mailOptions);
+
     // Log the request
     console.log('Valuation request received:', {
       address: fullAddress,
+      contact: `${firstName} ${lastName} (${email})`,
+      phone: phone || "Not provided",
+      additionalDetails: additionalDetails || "None",
       timestamp: new Date().toISOString(),
     });
 
-    // Try to get valuation from Attom Data API
-    const attomData = await getValuationFromAttom(address, city, state, zipCode);
-    
-    if (attomData) {
-      // Return actual property valuation
-      return NextResponse.json({
-        success: true,
-        hasValuation: true,
-        estimatedValue: {
-          low: Math.round(attomData.value * 0.95),
-          high: Math.round(attomData.value * 1.05),
-          average: attomData.value,
-        },
-        source: attomData.source,
-        address: fullAddress,
-      });
-    }
-
-    // Fallback to area-based estimation
-    const estimation = await getEstimatedValuation(city, state, zipCode);
-    
     return NextResponse.json({
       success: true,
-      hasValuation: true,
-      estimatedValue: estimation,
-      source: estimation.source,
-      isEstimate: estimation.isEstimate,
-      address: fullAddress,
-      disclaimer: 'This is an estimated range based on local market data. For a precise valuation, our agents will contact you with a detailed analysis.',
+      message: 'Valuation request submitted successfully',
     });
 
   } catch (error) {
@@ -135,5 +133,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
-

@@ -11,6 +11,8 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
 } from "@/components/ui/navigation-menu"
 import { Button } from "@/components/ui/button"
 import {
@@ -27,10 +29,6 @@ const mainLinks = [
     href: "/",
   },
   {
-    title: "Listings",
-    href: "/listing-results",
-  },
-  {
     title: "About",
     href: "/about",
   },
@@ -43,12 +41,26 @@ const mainLinks = [
     href: "/buying",
   },
   {
-    title: "Neighborhoods",
-    href: "/neighborhoods",
-  },
-  {
     title: "Blog",
     href: "/blog",
+  }
+]
+
+const listingsDropdown = [
+  {
+    title: "Our Listings",
+    href: "/listings",
+    description: "View properties listed by our team"
+  },
+  {
+    title: "Home Search",
+    href: "/listing-results",
+    description: "Search all available homes"
+  },
+  {
+    title: "Search by Neighborhood",
+    href: "/neighborhoods",
+    description: "Explore homes by area"
   }
 ]
 
@@ -108,10 +120,61 @@ export function Header() {
           <div className="hidden lg:flex items-center">
             <NavigationMenu>
               <NavigationMenuList className="font-sans text-foreground">
-                {mainLinks.map((link) => {
-                  const isActive = link.href === "/" 
-                    ? pathname === "/" 
-                    : pathname === link.href || pathname.startsWith(link.href + "/")
+                {/* Home Link */}
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    href="/"
+                    className={cn(
+                      "inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 font-sans",
+                      pathname === "/" 
+                        ? "text-primary font-semibold bg-primary/5" 
+                        : "text-foreground hover:text-primary"
+                    )}
+                  >
+                    Home
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+
+                {/* Listings Dropdown */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger 
+                    className={cn(
+                      "bg-transparent font-sans text-sm font-medium",
+                      listingsDropdown.some(item => pathname === item.href || pathname.startsWith(item.href + "/"))
+                        ? "text-primary font-semibold" 
+                        : "text-foreground hover:text-primary"
+                    )}
+                  >
+                    Listings
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[280px] gap-1 p-2">
+                      {listingsDropdown.map((item) => {
+                        const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
+                        return (
+                          <li key={item.href}>
+                            <NavigationMenuLink
+                              href={item.href}
+                              className={cn(
+                                "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                                isActive && "bg-accent/50"
+                              )}
+                            >
+                              <div className="text-sm font-medium leading-none">{item.title}</div>
+                              <p className="line-clamp-2 text-xs leading-snug text-muted-foreground mt-1.5">
+                                {item.description}
+                              </p>
+                            </NavigationMenuLink>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                {/* Other Links */}
+                {mainLinks.filter(link => link.href !== "/").map((link) => {
+                  const isActive = pathname === link.href || pathname.startsWith(link.href + "/")
                   return (
                     <NavigationMenuItem key={link.href}>
                       <NavigationMenuLink
@@ -174,10 +237,50 @@ export function Header() {
           
           <div className="overflow-y-auto px-4 py-6">
             <nav className="flex flex-col gap-2">
-              {mainLinks.map((link) => {
-                const isActive = link.href === "/" 
-                  ? pathname === "/" 
-                  : pathname === link.href || pathname.startsWith(link.href + "/")
+              {/* Home Link */}
+              <Link
+                href="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "flex items-center px-4 py-3 rounded-md text-base font-medium transition-colors",
+                  pathname === "/"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-foreground hover:bg-accent"
+                )}
+              >
+                Home
+              </Link>
+
+              {/* Listings Section */}
+              <div className="mt-2">
+                <div className="px-4 py-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                  Listings
+                </div>
+                <div className="flex flex-col gap-1 ml-2">
+                  {listingsDropdown.map((item) => {
+                    const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={cn(
+                          "flex items-center px-4 py-2.5 rounded-md text-sm font-medium transition-colors",
+                          isActive
+                            ? "bg-primary text-primary-foreground"
+                            : "text-foreground hover:bg-accent"
+                        )}
+                      >
+                        {item.title}
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Other Links */}
+              {mainLinks.filter(link => link.href !== "/").map((link) => {
+                const isActive = pathname === link.href || pathname.startsWith(link.href + "/")
                 return (
                   <Link
                     key={link.href}
@@ -196,7 +299,7 @@ export function Header() {
               })}
               
               <div className="pt-4 mt-4 border-t">
-                <Link href="/faqs" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
                   <Button 
                     variant="default" 
                     className="w-full cursor-pointer font-sans bg-primary text-primary-foreground hover:bg-primary/90"
