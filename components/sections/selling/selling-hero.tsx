@@ -12,7 +12,7 @@ export default function SellingHero() {
           Sell Your Home With Confidence
         </h1>
         <p className="text-lg max-w-3xl text-foreground/80">
-        Why List With Us? Selling your home isn't just a transaction! It's one of the biggest financial decisions you'll ever make. We take that seriously! Our clients trust us to apply our experience and strategic thinking to getting the best outcome. 
+        Why List With Us? Selling your home isn&apos;t just a transaction! It&apos;s one of the biggest financial decisions you&apos;ll ever make. We take that seriously! Our clients trust us to apply our experience and strategic thinking to getting the best outcome. 
         </p>
         <div className="w-8 h-[1px] my-4 bg-primary/10"></div>
         <div className="flex gap-4">
