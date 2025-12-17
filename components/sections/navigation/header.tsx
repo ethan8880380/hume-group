@@ -41,6 +41,10 @@ const mainLinks = [
     href: "/buying",
   },
   {
+    title: "Neighborhoods",
+    href: "/neighborhoods",
+  },
+  {
     title: "Blog",
     href: "/blog",
   }
