@@ -29,7 +29,6 @@ export const neighborhoodsData: NeighborhoodData[] = [
     shortDescription: "Urban living at its finest with cultural attractions and vibrant entertainment",
     description: "Hilltop and Downtown Tacoma represent the heart of the city's ongoing transformation. From the bustling waterfront to the vibrant arts scene, this area combines urban convenience with cultural richness. Experience world-class museums, diverse dining, and lively entertainment just steps from your door.",
     heroImage: "/images/neighborhoods/1.png",
-    heroYoutubeUrl: "https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID_1", // Replace with your actual YouTube URL
     stats: [
       { label: "Median Home Price", value: "$450K" },
       { label: "Walk Score", value: "92/100" },
@@ -69,7 +68,6 @@ export const neighborhoodsData: NeighborhoodData[] = [
     shortDescription: "Peaceful residential charm with parks and family-friendly atmosphere",
     description: "West End Tacoma offers quiet, tree-lined streets and a strong sense of community. This family-friendly neighborhood features excellent schools, beautiful parks, and easy access to Point Defiance. It's the perfect blend of suburban tranquility and urban proximity.",
     heroImage: "/images/neighborhoods/2.png",
-    heroYoutubeUrl: "https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID_5", // Replace with your actual YouTube URL
     stats: [
       { label: "Median Home Price", value: "$525K" },
       { label: "Walk Score", value: "65/100" },
@@ -86,13 +84,13 @@ export const neighborhoodsData: NeighborhoodData[] = [
       {
         title: "Point Defiance Park & Zoo",
         content: "Living in West End means having Point Defiance Park as your backyard. With 760 acres of old-growth forest, beaches, hiking trails, and the renowned Point Defiance Zoo & Aquarium, outdoor recreation is always within reach.",
-        image: "/images/neighborhoods/2.png",
+        image: "/images/neighborhoods/west/point.jpg",
         imagePosition: "right",
       },
       {
         title: "Excellent Schools & Family Environment",
         content: "West End is home to some of Tacoma's best schools, making it a top choice for families. The neighborhood's safe streets, parks, and community events create an ideal environment for raising children.",
-        image: "/images/house.png",
+        image: "/images/neighborhoods/west/br.jpg",
         imagePosition: "left",
       },
     ],
@@ -102,8 +100,7 @@ export const neighborhoodsData: NeighborhoodData[] = [
     name: "University Place / Fircrest",
     shortDescription: "Suburban comfort with excellent schools and shopping conveniences",
     description: "University Place and Fircrest offer the best of suburban living with tree-lined streets, excellent schools, and abundant shopping. These neighboring communities provide a peaceful, family-oriented lifestyle while maintaining easy access to Tacoma's urban amenities.",
-    heroImage: "/images/neighborhoods/3.png",
-    heroYoutubeUrl: "https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID_8", // Replace with your actual YouTube URL
+    heroImage: "/images/neighborhoods/up/golf.jpg",
     stats: [
       { label: "Median Home Price", value: "$575K" },
       { label: "Walk Score", value: "52/100" },
@@ -120,13 +117,13 @@ export const neighborhoodsData: NeighborhoodData[] = [
       {
         title: "Top Schools & Safe Communities",
         content: "University Place boasts some of Pierce County's highest-rated schools, making it a magnet for families seeking quality education. The area's well maintained neighborhoods add to its appeal.",
-        image: "/images/neighborhoods/3.png",
+        image: "/images/neighborhoods/up/park.jpg",
         imagePosition: "right",
       },
       {
         title: "Shopping & Dining Convenience",
         content: "From Green Firs Village to the University Place Town Center, residents enjoy easy access to shopping, dining, and entertainment. Everything you need is just minutes away.",
-        image: "/images/cta.png",
+        image: "/images/neighborhoods/up/train.jpg",
         imagePosition: "left",
       },
     ],
@@ -137,7 +134,6 @@ export const neighborhoodsData: NeighborhoodData[] = [
     shortDescription: "Historic charm meets modern urban lifestyle with local shops and cafes",
     description: "The 6th Avenue District blends historic architecture with a modern, walkable urban lifestyle. Known for its local shops, cafes, and restaurants, this neighborhood offers a unique character that attracts young professionals and families alike.",
     heroImage: "/images/neighborhoods/4.png",
-    heroYoutubeUrl: "https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID_6", // Replace with your actual YouTube URL
     stats: [
       { label: "Median Home Price", value: "$485K" },
       { label: "Walk Score", value: "78/100" },
@@ -154,13 +150,13 @@ export const neighborhoodsData: NeighborhoodData[] = [
       {
         title: "Historic Charm & Character",
         content: "6th Avenue is lined with beautifully preserved Craftsman and Victorian homes, offering timeless architectural beauty. The neighborhood's tree-canopied streets create a picturesque setting for urban living.",
-        image: "/images/neighborhoods/4.png",
+        image: "/images/neighborhoods/6th/aly.jpg",
         imagePosition: "right",
       },
       {
         title: "Local Shops, Cafes & Restaurants",
         content: "The 6th Avenue business district is a hub of local activity, featuring independent coffee shops, restaurants, boutiques, and services. It's a walkable neighborhood where you can support local businesses daily.",
-        image: "/images/hero.png",
+        image: "/images/neighborhoods/6th/ff.jpg",
         imagePosition: "left",
       },
     ],
@@ -171,7 +167,7 @@ export const neighborhoodsData: NeighborhoodData[] = [
     shortDescription: "Academic community with historic homes and tree-lined streets",
     description: "The North Slope neighborhood surrounding the University of Puget Sound is one of Tacoma's most desirable areas. Featuring stately historic homes, mature trees, and a strong sense of community, this neighborhood combines academic culture with residential tranquility.",
     heroImage: "/images/neighborhoods/5.png",
-    heroYoutubeUrl: "https://www.youtube.com/watch?v=IIa2GAEDxtc", // Replace with your actual YouTube URL
+    heroYoutubeUrl: "https://www.youtube.com/watch?v=IIa2GAEDxtc",
     stats: [
       { label: "Median Home Price", value: "$650K" },
       { label: "Walk Score", value: "72/100" },
@@ -188,13 +184,13 @@ export const neighborhoodsData: NeighborhoodData[] = [
       {
         title: "Prestigious Academic Atmosphere",
         content: "Living near the University of Puget Sound means access to cultural events, lectures, and athletic facilities. The academic atmosphere enriches the community and creates a vibrant, intellectually engaging environment.",
-        image: "/images/neighborhoods/5.png",
+        image: "/images/neighborhoods/ups/ups.jpg",
         imagePosition: "right",
       },
       {
         title: "Historic Homes with Modern Updates",
         content: "North Slope features some of Tacoma's most beautiful historic homes, many lovingly restored with modern amenities. The neighborhood's architectural diversity—from Tudor to Craftsman—adds to its unique character. Architectural guidelines and requirements ensure the preservation of this area's vintage charm.",
-        image: "/images/house.png",
+        image: "/images/neighborhoods/ups/oh.jpg",
         imagePosition: "left",
       },
     ],
@@ -205,7 +201,7 @@ export const neighborhoodsData: NeighborhoodData[] = [
     shortDescription: "Village atmosphere with walkable shops, farmers market, and community spirit",
     description: "The Proctor District is a beloved neighborhood known for its village-like atmosphere. With a weekly farmers market, local shops, and restaurants all within walking distance, Proctor offers small-town charm within the city. Tree-lined streets and friendly neighbors make this one of Tacoma's most sought-after areas.",
     heroImage: "/images/neighborhoods/6.png",
-    heroYoutubeUrl: "https://www.youtube.com/watch?v=TZacXmvPrC8", // Replace with your actual YouTube URL
+    heroYoutubeUrl: "https://www.youtube.com/watch?v=TZacXmvPrC8",
     stats: [
       { label: "Median Home Price", value: "$625K" },
       { label: "Walk Score", value: "82/100" },
@@ -222,13 +218,13 @@ export const neighborhoodsData: NeighborhoodData[] = [
       {
         title: "Walkable Village Atmosphere",
         content: "Proctor's compact business district features local shops, restaurants, a movie theater, and essential services—all within a pleasant walk from home. The Saturday farmers market is a neighborhood tradition that brings the community together.",
-        image: "/images/neighborhoods/6.png",
+        image: "/images/neighborhoods/pr/gs.jpg",
         imagePosition: "right",
       },
       {
         title: "Strong Community Connection",
         content: "Proctor residents take pride in their neighborhood, organizing events, supporting local businesses, and maintaining beautiful streets and parks. It's a place where neighbors know each other by name.",
-        image: "/images/cta.png",
+        image: "/images/neighborhoods/pr/pr.webp",
         imagePosition: "left",
       },
     ],
@@ -239,7 +235,6 @@ export const neighborhoodsData: NeighborhoodData[] = [
     shortDescription: "Waterfront living with industrial charm and stunning bay views",
     description: "Old Town and Ruston offer unique waterfront living along Commencement Bay. These neighborhoods blend industrial history with modern development, featuring scenic parks, waterfront trails, and stunning views of the Cascade Mountains and Puget Sound.",
     heroImage: "/images/neighborhoods/7.png",
-    heroYoutubeUrl: "https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID_9", // Replace with your actual YouTube URL
     stats: [
       { label: "Median Home Price", value: "$550K" },
       { label: "Walk Score", value: "68/100" },
@@ -256,13 +251,13 @@ export const neighborhoodsData: NeighborhoodData[] = [
       {
         title: "Waterfront Living & Scenic Views",
         content: "Wake up to views of Commencement Bay, majestic mountains, and stunning sunsets. The Ruston Way waterfront trail offers miles of scenic walking and biking with beach access and parks along the way.",
-        image: "/images/neighborhoods/7.png",
+        image: "/images/neighborhoods/ot/sv.jpg",
         imagePosition: "right",
       },
       {
         title: "Historic Character Meets Modern Life",
         content: "Old Town's industrial past is preserved in its architecture and character, while new development brings modern amenities. The area's unique blend of old and new creates a distinctive neighborhood personality.",
-        image: "/images/hero.png",
+        image: "/images/neighborhoods/ot/mk.png",
         imagePosition: "left",
       },
     ],
@@ -272,8 +267,7 @@ export const neighborhoodsData: NeighborhoodData[] = [
     name: "Stadium District",
     shortDescription: "Historic elegance with iconic Stadium High School and urban walkability",
     description: "The Stadium District is one of Tacoma's most iconic and historic neighborhoods. Known for the stunning Stadium High School and its beautiful historic homes, this area offers urban walkability, cultural attractions, and panoramic views. It's where Tacoma's history meets contemporary urban living.",
-    heroImage: "/images/neighborhoods/8.png",
-    heroYoutubeUrl: "https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID_10", // Replace with your actual YouTube URL
+    heroImage: "/images/neighborhoods/st/th.jpg",
     stats: [
       { label: "Median Home Price", value: "$595K" },
       { label: "Walk Score", value: "88/100" },
@@ -290,13 +284,13 @@ export const neighborhoodsData: NeighborhoodData[] = [
       {
         title: "Iconic Architecture & History",
         content: "Stadium High School, featured in the movie '10 Things I Hate About You,' is just one of the neighborhood's architectural treasures. The area is filled with grand historic homes, many meticulously restored, showcasing Tacoma's architectural heritage.",
-        image: "/images/neighborhoods/8.png",
+        image: "/images/neighborhoods/st/hs.jpg",
         imagePosition: "right",
       },
       {
         title: "Urban Walkability & Green Spaces",
         content: "Wright Park's 27 acres provide a green oasis in the heart of the neighborhood. The Seymour Botanical Conservatory, playgrounds, and walking paths make it a community gathering place. Everything from coffee shops to downtown offices is within walking distance.",
-        image: "/images/house.png",
+        image: "/images/neighborhoods/st/prk.jpg",
         imagePosition: "left",
       },
     ],
