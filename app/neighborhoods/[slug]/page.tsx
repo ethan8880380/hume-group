@@ -9,6 +9,7 @@ import { NeighborhoodCard } from "@/components/ui/neighborhood-card";
 import { NeighborhoodBlogPosts } from "@/components/sections/neighborhoods/neighborhood-blog-posts";
 import CTA from "@/components/sections/home/cta";
 import { YouTubeEmbed } from "@/components/ui/youtube-embed";
+import Link from "next/link";
 
 interface NeighborhoodPageProps {
   params: Promise<{
@@ -71,28 +72,24 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
             <div className="h-[1px] bg-muted-foreground/10 w-12 mb-12"></div>
 
             <div className="flex gap-4 mb-12">
-              <Button size="lg">View All Homes in {neighborhood.name}</Button>
-              <Button variant="outline" size="lg">Contact Us</Button>
+              <Button asChild size="lg">
+                <Link href={`/listing-results/${slug}`}>View All Homes in {neighborhood.name}</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link href="/contact">Contact Us</Link>
+              </Button>
             </div>
 
-            {/* Hero Media */}
+            {/* Hero Image */}
             <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mb-8">
-              {neighborhood.heroYoutubeUrl ? (
-                <YouTubeEmbed
-                  videoUrl={neighborhood.heroYoutubeUrl}
-                  title={`${neighborhood.name} neighborhood video`}
-                  className="w-full h-full"
-                />
-              ) : (
-                <Image
-                  src={neighborhood.heroImage}
-                  alt={neighborhood.name}
-                  fill
-                  className="object-cover"
-                  quality={100}
-                  priority
-                />
-              )}
+              <Image
+                src={neighborhood.heroImage}
+                alt={neighborhood.name}
+                fill
+                className="object-cover"
+                quality={100}
+                priority
+              />
             </div>
 
             {/* Highlights 
@@ -177,6 +174,29 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
         ))}
       </div>
 
+      {/* Video Section - Only shown if heroYoutubeUrl exists */}
+      {neighborhood.heroYoutubeUrl && (
+        <section className="py-16">
+          <div className="container mx-auto px-6">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-medium mb-4 text-foreground text-center">
+                Explore {neighborhood.name}
+              </h2>
+              <p className="text-lg text-muted-foreground text-center mb-8">
+                Take a closer look at what makes this neighborhood special.
+              </p>
+              <div className="relative aspect-video rounded-lg overflow-hidden shadow-xl">
+                <YouTubeEmbed
+                  videoUrl={neighborhood.heroYoutubeUrl}
+                  title={`${neighborhood.name} neighborhood video`}
+                  className="w-full h-full"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Homes in Neighborhood Section */}
       <NeighborhoodListings 
         neighborhoodName={neighborhood.name} 
@@ -219,4 +239,3 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
     </div>
   );
 }
-
