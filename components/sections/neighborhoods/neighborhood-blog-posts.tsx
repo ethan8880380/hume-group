@@ -1,19 +1,21 @@
-import { getPosts } from '@/lib/ghost';
+import { getPostsByTag } from '@/lib/ghost';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { BlogCard } from '@/components/ui/blog-card';
 
 interface NeighborhoodBlogPostsProps {
   neighborhoodName: string;
+  neighborhoodSlug: string;
   limit?: number;
 }
 
 export async function NeighborhoodBlogPosts({ 
   neighborhoodName,
+  neighborhoodSlug,
   limit = 3 
 }: NeighborhoodBlogPostsProps) {
-  // Fetch recent posts
-  const posts = await getPosts(limit);
+  // Fetch posts tagged with this neighborhood
+  const posts = await getPostsByTag(neighborhoodSlug, limit);
 
   // Don't render section if no posts found
   if (!posts || posts.length === 0) {
@@ -29,7 +31,7 @@ export async function NeighborhoodBlogPosts({
               Latest news and updates about {neighborhoodName}
             </h2>
           </div>
-          <Link href="/blog">
+          <Link href={`/blog?tag=${neighborhoodSlug}`}>
             <Button size="lg">View All {neighborhoodName} Articles</Button>
           </Link>
         </div>
@@ -43,4 +45,3 @@ export async function NeighborhoodBlogPosts({
     </section>
   );
 }
-

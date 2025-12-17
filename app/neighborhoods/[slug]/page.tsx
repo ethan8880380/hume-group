@@ -207,6 +207,7 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
       {/* Neighborhood Blog Posts */}
       <NeighborhoodBlogPosts
         neighborhoodName={neighborhood.name}
+        neighborhoodSlug={slug}
         limit={3}
       />
 
