@@ -30,7 +30,7 @@ export default function ListingResultsPage() {
       {/* BuyingBuddy ListingResults Widget */}
       <div className="container mx-auto px-6 py-12">
         <div dangerouslySetInnerHTML={{
-          __html: `<bb-widget data-type="ListingResults" data-filter="mls_id:wa555+listing_status:active+city:tacoma"></bb-widget>`,
+          __html: `<bb-widget data-type="ListingResults" data-filter="mls_id:wa555+listing_status:active+city:tacoma+login-panel:false+header-menu:false"></bb-widget>`,
         }} />
       </div>
 
