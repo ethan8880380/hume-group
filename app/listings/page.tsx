@@ -3,6 +3,7 @@
 import { Footer } from "@/components/sections/navigation/footer";
 import CTA from "@/components/sections/home/cta";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function ListingsPage() {
   return (
@@ -19,10 +20,10 @@ export default function ListingsPage() {
           <div className="w-8 h-[1px] my-4 bg-primary/10"></div>
           <div className="flex gap-4">
             <Button asChild size="lg">
-              <a href="/contact">Contact Us</a>
+              <Link href="/contact">Contact Us</Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href="/buying">Learn About Buying</a>
+              <Link href="/buying">Learn About Buying</Link>
             </Button>
           </div>
         </div>
