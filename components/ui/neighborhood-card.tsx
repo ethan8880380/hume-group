@@ -17,6 +17,7 @@ interface NeighborhoodCardProps {
 }
 
 export function NeighborhoodCard({ 
+  id,
   name, 
   description, 
   image, 
@@ -71,12 +72,12 @@ export function NeighborhoodCard({
             }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <Link href={href} className="flex gap-3">
+            <Link href={`/listing-results/${id}`}>
               <Button variant="outline" size={compact ? "sm" : "default"}>
                 View Homes
               </Button>
             </Link>
-            <Link href={href} className="flex-1">
+            <Link href={href}>
               <Button variant="outline" size={compact ? "sm" : "default"}>
                 Explore Neighborhood
               </Button>
