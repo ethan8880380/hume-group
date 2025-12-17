@@ -122,7 +122,7 @@ export default function ListingsPage() {
 
         {/* BuyingBuddy Widget */}
         <div dangerouslySetInnerHTML={{
-          __html: `<bb-widget data-type="QuickSearch"></bb-widget>`,
+          __html: `<bb-widget data-type="FeaturedGallery" data-filter="agent_id:31230+listing_status:active+login-panel:false+header-menu:false"></bb-widget>`,
            }}
         />
         </div>
