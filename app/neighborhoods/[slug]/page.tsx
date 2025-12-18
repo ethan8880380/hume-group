@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/sections/navigation/footer";
-import { NeighborhoodListings } from "@/components/sections/neighborhoods/neighborhood-listings";
 import { NeighborhoodCard } from "@/components/ui/neighborhood-card";
 import { NeighborhoodBlogPosts } from "@/components/sections/neighborhoods/neighborhood-blog-posts";
 import CTA from "@/components/sections/home/cta";
@@ -281,12 +280,24 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
         </section>
       )}
 
-      {/* Homes in Neighborhood Section */}
-      <NeighborhoodListings 
-        neighborhoodName={neighborhood.name} 
-        neighborhoodSlug={slug}
-        limit={3}
-      />
+      {/* Browse Homes Banner */}
+      <section className="py-16">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-8 bg-primary/5 border border-primary/10 rounded-lg">
+            <div>
+              <h2 className="text-2xl font-medium text-foreground mb-1">
+                Homes in {neighborhood.name}
+              </h2>
+              <p className="text-muted-foreground">
+                Browse all available listings in this neighborhood.
+              </p>
+            </div>
+            <Button asChild size="lg">
+              <Link href={`/listing-results/${slug}`}>View All Listings</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
 
       {/* Neighborhood Blog Posts */}
       <NeighborhoodBlogPosts

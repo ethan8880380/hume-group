@@ -87,7 +87,7 @@ export async function Reviews({ reviews: propReviews }: ReviewsProps) {
             ))}
           </div>
           <h2 className="text-2xl md:text-3xl font-medium text-gray-foreground mb-3 md:mb-4">
-            The Best Sellers in Tacoma
+            What Our Clients Say
           </h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-3xl">
             {typeof displayTotal === "number" 

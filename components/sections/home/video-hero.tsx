@@ -34,7 +34,7 @@ const infoCards = [
   {
     title: "Proven Results",
     description:
-      "Consistently successful sales, excellent happy clients, and a reputation built on trust and results.",
+      "Consistently successful sales, happy and satisfied clients, and a reputation built on trust and results.",
     icon: Trophy,
   },
 ];
@@ -160,7 +160,7 @@ export default function VideoHero() {
               variants={itemVariants}
               className="text-lg md:text-xl text-foreground/80 leading-relaxed mb-8"
             >
-              The Hume Group combines decades of local expertise, personalized
+              David Gala and the Hume brothers combine decades of local expertise, personalized
               service, and unmatched professionalism to guide you seamlessly
               through your real estate journey.
             </motion.p>

@@ -71,10 +71,10 @@ export function Footer() {
                 >
                   <path d="M1 22V12L7.5 5.5L14 12V21H20V1H30.5V17H35L43.5 10L51.5 16.5V12H56.5V19L59.5 21" stroke="currentColor" strokeWidth="2"/>
                 </svg>
-                <span className="text-lg md:text-xl font-medium">The Hume Group</span>
+                <span className="text-lg md:text-xl font-medium">Matt Hume — Tom Hume — David Gala</span>
               </div>
               <p className="text-blue-200 text-sm md:text-base leading-relaxed max-w-md">
-                The Hume Group is a full-service real estate team based in Tacoma, WA. We specialize in buying and selling homes in the greater Tacoma area.
+                We are a full-service real estate team based in Tacoma, WA. We specialize in buying and selling homes in the greater Tacoma area.
               </p>
             </div>
 

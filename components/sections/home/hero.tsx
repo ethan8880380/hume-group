@@ -26,7 +26,7 @@ const infoCards = [
   },
   {
     title: "Proven Results",
-    description: "Consistently successful sales, excellent happy clients, and a reputation built on trust and results.",
+    description: "Consistently successful sales, happy and satisfied clients, and a reputation built on trust and results.",
     icon: Trophy,
   },
 ];
@@ -79,7 +79,7 @@ export default function Hero() {
           Meet your Tacoma Real Estate Experts
         </h1>
         <p className="text-base md:text-lg max-w-3xl text-foreground/80">
-          The Hume Group combines decades of local expertise, personalized service, and unmatched professionalism to guide you seamlessly through your real estate journey.
+          David Gala and the Hume brothers combine decades of local expertise, personalized service, and unmatched professionalism to guide you seamlessly through your real estate journey.
         </p>
         <div className="w-8 h-[1px] my-4 md:my-4 bg-primary/10"></div>
         <div className="flex flex-row gap-3 md:gap-4">
