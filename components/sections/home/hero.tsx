@@ -10,7 +10,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/ca
 const teamMembers = [
   { name: "Tom Hume", image: "/images/team/tom.png" },
   { name: "Matt Hume", image: "/images/team/matt.png" },
-  { name: "David Hume", image: "/images/team/david.jpg" },
+  { name: "David Gala", image: "/images/team/david.jpg" },
 ];
 
 const infoCards = [
@@ -83,9 +83,11 @@ export default function Hero() {
         </p>
         <div className="w-8 h-[1px] my-4 md:my-4 bg-primary/10"></div>
         <div className="flex flex-row gap-3 md:gap-4">
-          <Button size="lg" className="text-background cursor-pointer">
-            Contact Us
-          </Button>
+          <Link href="/contact">
+            <Button size="lg" className="text-background cursor-pointer">
+              Contact Us
+            </Button>
+          </Link>
           <Link href="/about">
             <Button size="lg" variant="outline" className="text-foreground cursor-pointer hover:bg-primary/[0.03]">
               About Us

@@ -15,7 +15,7 @@ import {
 const teamMembers = [
   { name: "Tom Hume", image: "/images/team/tom.png" },
   { name: "Matt Hume", image: "/images/team/matt.png" },
-  { name: "David Hume", image: "/images/team/david.jpg" },
+  { name: "David Gala", image: "/images/team/david.jpg" },
 ];
 
 const infoCards = [

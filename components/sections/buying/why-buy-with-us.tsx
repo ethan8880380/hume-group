@@ -59,7 +59,7 @@ export default function WhyBuyWithUs() {
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
               <Image
                 src="/images/buying/why.jpg"
-                alt="Beautiful modern home interior"
+                alt="Happy home buyers in Tacoma with their new home"
                 fill
                 className="object-cover"
               />

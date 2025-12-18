@@ -3,7 +3,22 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import { 
+  Menu, 
+  X, 
+  Home, 
+  Users, 
+  Building2, 
+  ShoppingBag, 
+  MapPin, 
+  FileText,
+  Search,
+  Map,
+  Phone,
+  Mail,
+  ChevronRight,
+  ArrowRight
+} from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import {
@@ -19,34 +34,38 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
 } from "@/components/ui/drawer"
 
 const mainLinks = [
   {
     title: "Home",
     href: "/",
+    icon: Home,
   },
   {
     title: "About",
     href: "/about",
+    icon: Users,
   },
   {
     title: "Selling",
     href: "/selling",
+    icon: Building2,
   },
   {
     title: "Buying",
     href: "/buying",
+    icon: ShoppingBag,
   },
   {
     title: "Neighborhoods",
     href: "/neighborhoods",
+    icon: MapPin,
   },
   {
     title: "Blog",
     href: "/blog",
+    icon: FileText,
   }
 ]
 
@@ -54,17 +73,20 @@ const listingsDropdown = [
   {
     title: "Our Listings",
     href: "/listings",
-    description: "View properties listed by our team"
+    description: "View properties listed by our team",
+    icon: Building2,
   },
   {
     title: "Home Search",
     href: "/listing-results",
-    description: "Search all available homes"
+    description: "Search all available homes",
+    icon: Search,
   },
   {
     title: "Search by Neighborhood",
     href: "/neighborhoods",
-    description: "Explore homes by area"
+    description: "Explore homes by area",
+    icon: Map,
   }
 ]
 
@@ -224,96 +246,160 @@ export function Header() {
 
       {/* Mobile Drawer Menu */}
       <Drawer open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-        <DrawerContent className="max-h-[85vh]">
-          <DrawerHeader className="border-b">
+        <DrawerContent className="h-[100dvh] max-h-[100dvh] rounded-none">
+          {/* Header with Logo */}
+          <div className="border-b border-border px-6 py-5">
             <div className="flex items-center justify-between">
-              <DrawerTitle className="text-xl font-medium">Menu</DrawerTitle>
+              <div className="flex items-center gap-3">
+                <svg 
+                  width="61" 
+                  height="22" 
+                  viewBox="0 0 61 22" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-auto text-primary"
+                >
+                  <path d="M1 22V12L7.5 5.5L14 12V21H20V1H30.5V17H35L43.5 10L51.5 16.5V12H56.5V19L59.5 21" stroke="currentColor" strokeWidth="2"/>
+                </svg>
+                <span className="text-primary font-medium">The Hume Group</span>
+              </div>
               <DrawerClose asChild>
                 <button
-                  className="p-2 hover:bg-accent rounded-md transition-colors"
+                  className="p-2 hover:bg-primary/10 rounded-full transition-colors"
                   aria-label="Close menu"
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-5 w-5 text-white" />
                 </button>
               </DrawerClose>
             </div>
-          </DrawerHeader>
+          </div>
           
-          <div className="overflow-y-auto px-4 py-6">
-            <nav className="flex flex-col gap-2">
-              {/* Home Link */}
-              <Link
-                href="/"
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(
-                  "flex items-center px-4 py-3 rounded-md text-base font-medium transition-colors",
-                  pathname === "/"
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground hover:bg-accent"
-                )}
-              >
-                Home
-              </Link>
+          {/* Menu Content */}
+          <div className="flex-1 overflow-y-auto bg-background">
+            <nav className="px-4 py-6">
+              {/* Main Navigation Links */}
+              <div className="space-y-1">
+                {mainLinks.map((link) => {
+                  const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href + "/"))
+                  const Icon = link.icon
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={cn(
+                        "flex items-center justify-between px-4 py-4 rounded-xl text-base font-medium transition-all",
+                        isActive
+                          ? "bg-primary text-white"
+                          : "text-foreground hover:bg-primary/5 active:bg-primary/10"
+                      )}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className={cn(
+                          "w-10 h-10 rounded-lg flex items-center justify-center",
+                          isActive ? "bg-white/20" : "bg-primary/10"
+                        )}>
+                          <Icon className={cn(
+                            "h-5 w-5",
+                            isActive ? "text-white" : "text-primary"
+                          )} />
+                        </div>
+                        <span>{link.title}</span>
+                      </div>
+                      <ChevronRight className={cn(
+                        "h-5 w-5",
+                        isActive ? "text-white/70" : "text-muted-foreground"
+                      )} />
+                    </Link>
+                  )
+                })}
+              </div>
 
               {/* Listings Section */}
-              <div className="mt-2">
-                <div className="px-4 py-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-                  Listings
+              <div className="mt-8">
+                <div className="px-4 mb-3">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Find Your Home
+                  </p>
                 </div>
-                <div className="flex flex-col gap-1 ml-2">
+                <div className="space-y-1">
                   {listingsDropdown.map((item) => {
                     const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
+                    const Icon = item.icon
                     return (
                       <Link
                         key={item.href}
                         href={item.href}
                         onClick={() => setMobileMenuOpen(false)}
                         className={cn(
-                          "flex items-center px-4 py-2.5 rounded-md text-sm font-medium transition-colors",
+                          "flex items-center gap-4 px-4 py-3 rounded-xl transition-all",
                           isActive
-                            ? "bg-primary text-primary-foreground"
-                            : "text-foreground hover:bg-accent"
+                            ? "bg-primary/10"
+                            : "hover:bg-muted/50 active:bg-muted"
                         )}
                       >
-                        {item.title}
+                        <div className={cn(
+                          "w-9 h-9 rounded-lg flex items-center justify-center",
+                          isActive ? "bg-primary/20" : "bg-muted"
+                        )}>
+                          <Icon className={cn(
+                            "h-4 w-4",
+                            isActive ? "text-primary" : "text-muted-foreground"
+                          )} />
+                        </div>
+                        <div className="flex-1">
+                          <p className={cn(
+                            "text-sm font-medium",
+                            isActive ? "text-primary" : "text-foreground"
+                          )}>
+                            {item.title}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {item.description}
+                          </p>
+                        </div>
                       </Link>
                     )
                   })}
                 </div>
               </div>
-
-              {/* Other Links */}
-              {mainLinks.filter(link => link.href !== "/").map((link) => {
-                const isActive = pathname === link.href || pathname.startsWith(link.href + "/")
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={cn(
-                      "flex items-center px-4 py-3 rounded-md text-base font-medium transition-colors",
-                      isActive
-                        ? "bg-primary text-primary-foreground"
-                        : "text-foreground hover:bg-accent"
-                    )}
-                  >
-                    {link.title}
-                  </Link>
-                )
-              })}
-              
-              <div className="pt-4 mt-4 border-t">
-                <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
-                  <Button 
-                    variant="default" 
-                    className="w-full cursor-pointer font-sans bg-primary text-primary-foreground hover:bg-primary/90"
-                    size="lg"
-                  >
-                    Contact Us
-                  </Button>
-                </Link>
-              </div>
             </nav>
+          </div>
+
+          {/* Footer with CTA and Contact */}
+          <div className="border-t bg-muted/30 px-4 py-5 space-y-4">
+            {/* Contact Info */}
+            <div className="flex items-center justify-center gap-6 text-sm">
+              <a 
+                href="tel:+12533181005" 
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Phone className="h-4 w-4" />
+                <span>(253) 318-1005</span>
+              </a>
+              <a 
+                href="mailto:tom@thehumegroup.com" 
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Mail className="h-4 w-4" />
+                <span>Email Us</span>
+              </a>
+            </div>
+            
+            {/* CTA Button */}
+            <Link 
+              href="/contact" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="block"
+            >
+              <Button 
+                size="lg"
+                className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-6 rounded-xl"
+              >
+                <span>Get in Touch</span>
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </DrawerContent>
       </Drawer>

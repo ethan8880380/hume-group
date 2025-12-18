@@ -14,7 +14,7 @@ const teamMembers: TeamMember[] = [
   {
     name: "Matt Hume",
     image: "/images/team/matt.png",
-    phone: "(253) 555-0101",
+    phone: "(253) 318-1005",
     email: "matt@thehumegroup.com",
   },
   {
@@ -26,7 +26,7 @@ const teamMembers: TeamMember[] = [
   {
     name: "David Gala",
     image: "/images/team/david.jpg",
-    phone: "(253) 555-0103",
+    phone: "(253) 318-1005",
     email: "david@thehumegroup.com",
   },
 ];

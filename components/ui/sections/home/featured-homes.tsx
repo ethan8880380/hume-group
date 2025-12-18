@@ -22,7 +22,7 @@ export default function FeaturedHomes() {
     return (
       <div className="bg-background py-16">
         <div className="container mx-auto px-6">
-          <p className="text-primary text-sm font-bold text-center mb-2">The Hume Group</p>
+          <p className="text-primary text-sm font-medium text-center mb-2">The Hume Group</p>
           <h2 className="text-3xl font-medium text-foreground text-center mb-4">Featured Homes</h2>
           <p className="text-lg text-muted-foreground text-center mb-12">We help Tacoma homeowners sell faster, smarter, and with less stress.</p>
           <div className="text-center">
@@ -41,7 +41,7 @@ export default function FeaturedHomes() {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Home className="h-4 w-4 text-primary" />
-          <p className="text-primary text-sm font-bold">The Hume Group</p>
+          <p className="text-primary text-sm font-medium">The Hume Group</p>
         </div>
         <h2 className="text-3xl font-medium text-foreground text-center mb-4">Featured Homes</h2>
         <p className="text-lg text-muted-foreground text-center mb-12">Discover the latest properties in Tacoma and surrounding areas.</p>

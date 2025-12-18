@@ -59,7 +59,7 @@ export default function WhyListWithUs() {
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
               <Image
                 src="/images/selling/why.jpg"
-                alt="Beautiful modern home interior"
+                alt="Professional real estate photography of a Tacoma home listing"
                 fill
                 className="object-cover"
               />

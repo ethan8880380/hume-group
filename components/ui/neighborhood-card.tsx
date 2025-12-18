@@ -54,7 +54,7 @@ export function NeighborhoodCard({
             }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <h3 className={`font-bold text-white mb-2 ${compact ? 'text-xl' : 'text-2xl'}`}>
+            <h3 className={`font-medium text-white mb-2 ${compact ? 'text-xl' : 'text-2xl'}`}>
               {name}
             </h3>
             <p className="text-white/90 text-sm line-clamp-2">

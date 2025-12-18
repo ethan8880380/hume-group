@@ -84,7 +84,7 @@ export default function ListingDetailClient({ listingId }: ListingDetailClientPr
       <div className="min-h-screen bg-gray-50 py-16">
         <div className="container mx-auto px-6">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Property Not Found</h1>
+            <h1 className="text-3xl font-medium text-gray-900 mb-4">Property Not Found</h1>
             <p className="text-gray-600 mb-8">The property you&apos;re looking for doesn&apos;t exist or has been removed.</p>
             <Button onClick={handleBack} className="bg-blue-600 hover:bg-blue-700">
               Back to Listings
@@ -233,7 +233,7 @@ export default function ListingDetailClient({ listingId }: ListingDetailClientPr
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  <h1 className="text-3xl font-medium text-gray-900 mb-2">
                     {formatPrice(listing.price)}
                   </h1>
                   <div className="flex items-center gap-4 text-lg text-gray-600 mb-2">
@@ -338,7 +338,7 @@ export default function ListingDetailClient({ listingId }: ListingDetailClientPr
                   <div className="bg-blue-50 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-blue-900 font-semibold">Estimated Value</span>
-                      <span className="text-2xl font-bold text-blue-900">{formatPrice(listing.price * 0.95)}</span>
+                      <span className="text-2xl font-medium text-blue-900">{formatPrice(listing.price * 0.95)}</span>
                     </div>
                     <div className="w-full bg-blue-200 rounded-full h-2">
                       <div className="bg-blue-600 h-2 rounded-full" style={{ width: '75%' }}></div>
@@ -372,7 +372,7 @@ export default function ListingDetailClient({ listingId }: ListingDetailClientPr
               <CardContent>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold">${Math.round(listing.price * 0.004).toLocaleString()}/mo</span>
+                    <span className="text-2xl font-medium">${Math.round(listing.price * 0.004).toLocaleString()}/mo</span>
                     <span className="text-sm text-gray-600">30-year fixed, 7.5% interest</span>
                   </div>
                   
@@ -448,7 +448,7 @@ export default function ListingDetailClient({ listingId }: ListingDetailClientPr
             <Card className="sticky top-24">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium">
                     TH
                   </div>
                   <div>
@@ -467,7 +467,7 @@ export default function ListingDetailClient({ listingId }: ListingDetailClientPr
                   Send Message
                 </Button>
                 <div className="text-center text-sm text-gray-600">
-                  <p>Get expert insights, market trends, and vacation tips for buyers and sellers.</p>
+                  <p>Get expert insights on Tacoma real estate from our experienced team.</p>
                 </div>
               </CardContent>
             </Card>
@@ -476,7 +476,7 @@ export default function ListingDetailClient({ listingId }: ListingDetailClientPr
 
         {/* Similar Homes */}
         <div className="mt-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Nearby Similar Homes</h2>
+          <h2 className="text-2xl font-medium text-gray-900 mb-6">Nearby Similar Homes</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((index) => (
               <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
@@ -494,7 +494,7 @@ export default function ListingDetailClient({ listingId }: ListingDetailClientPr
                   </div>
                 </div>
                 <CardContent className="p-4">
-                  <div className="font-bold text-lg mb-1">{formatPrice(listing.price + (index * 50000) - 100000)}</div>
+                  <div className="font-medium text-lg mb-1">{formatPrice(listing.price + (index * 50000) - 100000)}</div>
                   <div className="text-gray-600 text-sm mb-2">
                     {listing.bedrooms} beds • {listing.bathrooms} baths • {formatSquareFeet(listing.squareFeet + (index * 200))} sqft
                   </div>
@@ -513,10 +513,10 @@ export default function ListingDetailClient({ listingId }: ListingDetailClientPr
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-4">Buy or Sell with Confidence</h2>
+              <h2 className="text-3xl font-medium mb-4">Buy or Sell with Confidence</h2>
               <p className="text-slate-300 mb-6">
-                Get expert insights, market trends, and vacation tips for buyers and sellers.
-                We make the right decisions.
+                Get expert insights, market trends, and valuable tips for buyers and sellers.
+                We help you make the right decisions.
               </p>
               <div className="flex gap-4">
                 <Button className="bg-blue-600 hover:bg-blue-700">
@@ -531,7 +531,7 @@ export default function ListingDetailClient({ listingId }: ListingDetailClientPr
               <div className="bg-white/10 backdrop-blur rounded-lg p-8">
                 <h3 className="text-xl font-semibold mb-4">Stay Informed on Tacoma Real Estate</h3>
                 <p className="text-slate-300 mb-4">
-                  Get expert insights, market trends, and vacation tips for buyers and sellers.
+                  Get expert insights, market trends, and valuable tips for buyers and sellers.
                 </p>
                 <NewsletterSubscribe 
                   variant="inline"

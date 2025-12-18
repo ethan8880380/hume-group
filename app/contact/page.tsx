@@ -35,7 +35,7 @@ const jsonLd = {
     '@type': 'RealEstateAgent',
     name: 'The Hume Group',
     url: 'https://thehumegroup.com',
-    telephone: '+1-253-XXX-XXXX', // Update with actual phone
+    telephone: '+1-253-318-1005',
     email: 'info@thehumegroup.com', // Update with actual email
     address: {
       '@type': 'PostalAddress',

@@ -8,7 +8,7 @@ export default function ListingDetailsPage() {
       {/* Header */}
       <div className="bg-primary py-12">
         <div className="container mx-auto px-6">
-          <h1 className="text-4xl font-bold text-white mb-2">Property Details</h1>
+          <h1 className="text-4xl font-medium text-white mb-2">Property Details</h1>
           <p className="text-white/80 text-lg">
             View detailed information about this property
           </p>

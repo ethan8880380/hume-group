@@ -28,7 +28,7 @@ const benefits = [
 export default function WhyBuyWithUs() {
   return (
     <section className="pb-24">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 md:px-6">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           {/* Benefits List */}
@@ -51,7 +51,7 @@ export default function WhyBuyWithUs() {
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
               <Image
                 src="/images/buying/why.jpg"
-                alt="Beautiful modern home interior"
+                alt="Tacoma home buyers touring a property with The Hume Group"
                 fill
                 className="object-cover"
               />
