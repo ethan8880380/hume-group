@@ -137,13 +137,6 @@ export default function VideoHero() {
             initial="hidden"
             animate="visible"
           >
-            {/* Eyebrow */}
-            <motion.div variants={itemVariants} className="mb-6">
-              <span className="inline-flex items-center gap-2 text-sm font-medium text-primary uppercase tracking-widest">
-                <span className="w-8 h-px bg-primary" />
-                The Hume Group
-              </span>
-            </motion.div>
 
             {/* Main Heading */}
             <motion.h1
