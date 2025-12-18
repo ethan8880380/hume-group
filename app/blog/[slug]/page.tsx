@@ -109,11 +109,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     description: post.excerpt || `Read ${post.title} on The Hume Group blog`,
     image: post.feature_image || '',
     datePublished: post.published_at,
-    dateModified: post.updated_at || post.published_at,
+    dateModified: post.published_at,
     author: post.authors?.map(author => ({
       '@type': 'Person',
       name: author.name,
-      url: author.website || 'https://thehumegroup.com/about',
+      url: 'https://thehumegroup.com/about',
     })) || [{
       '@type': 'Organization',
       name: 'The Hume Group',
