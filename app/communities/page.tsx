@@ -1,5 +1,26 @@
+import { Metadata } from "next";
 import { Footer } from "@/components/sections/navigation/footer";
 import { BBWidget } from "@/components/ui/bb-widget";
+
+export const metadata: Metadata = {
+  title: "Communities | Explore Tacoma Area Neighborhoods",
+  description: "Explore communities and neighborhoods throughout the Tacoma area. Find detailed information about local amenities, schools, and real estate in Pierce County communities.",
+  keywords: [
+    'Tacoma communities',
+    'Pierce County neighborhoods',
+    'Tacoma area communities',
+    'Tacoma suburbs',
+    'communities near Tacoma',
+  ],
+  openGraph: {
+    title: 'Tacoma Area Communities | The Hume Group',
+    description: 'Explore communities and neighborhoods throughout the Tacoma area.',
+    url: 'https://thehumegroup.com/communities',
+  },
+  alternates: {
+    canonical: 'https://thehumegroup.com/communities',
+  },
+};
 
 export default function CommunitiesPage() {
 
@@ -24,4 +45,3 @@ export default function CommunitiesPage() {
     </div>
   );
 }
-

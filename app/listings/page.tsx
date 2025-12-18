@@ -1,13 +1,48 @@
-"use client";
-
+import { Metadata } from "next";
 import { Footer } from "@/components/sections/navigation/footer";
 import CTA from "@/components/sections/home/cta";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+export const metadata: Metadata = {
+  title: "Our Listings | Homes for Sale in Tacoma",
+  description: "Browse homes for sale listed by The Hume Group in Tacoma and surrounding areas. View our current listings featuring quality properties throughout Pierce County.",
+  keywords: [
+    'Tacoma homes for sale',
+    'Hume Group listings',
+    'houses for sale Tacoma',
+    'Tacoma property listings',
+    'Pierce County homes for sale',
+    'Tacoma MLS listings',
+  ],
+  openGraph: {
+    title: 'Our Listings | The Hume Group',
+    description: 'Browse homes for sale listed by The Hume Group in Tacoma and surrounding areas.',
+    url: 'https://thehumegroup.com/listings',
+  },
+  alternates: {
+    canonical: 'https://thehumegroup.com/listings',
+  },
+};
+
+// JSON-LD for Real Estate Listings
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'The Hume Group Property Listings',
+  description: 'Current property listings from The Hume Group in Tacoma, WA',
+  url: 'https://thehumegroup.com/listings',
+  itemListOrder: 'https://schema.org/ItemListUnordered',
+  numberOfItems: 12,
+};
+
 export default function ListingsPage() {
   return (
     <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero */}
       <div className="flex flex-col items-center justify-center w-full pt-24">
         <div className="flex flex-col items-start gap-4 text-left w-full container mx-auto px-6 mb-8">

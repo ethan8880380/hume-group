@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { Footer } from "@/components/sections/navigation/footer";
 import { Button } from "@/components/ui/button";
 import CTA from "@/components/sections/home/cta";
@@ -9,7 +10,7 @@ import { neighborhoodsData } from "@/lib/neighborhoods-data";
 const neighborhoodWidgets: Record<string, string> = {
   "hilltop-downtown": `<bb-widget data-type="FeaturedGallery" data-filter="mls_id:wa555+listing_status:active+shapesearch:47.235536622580675 -122.46424431929252,47.23343857867518 -122.45960946211478,47.236002843279344 -122.43094201216361,47.25464830769823 -122.43334527144096,47.26757974287268 -122.43986840376517,47.25592994226891 -122.4635576737847,47.235536622580675 -122.46424431929252+login-panel:false+header-menu:false"></bb-widget>`,
   
-  "west-end-tacoma": `<bb-widget data-type="FeaturedGallery" data-filter="shapesearch:47.2432393417196 -122.50528519175293,47.24304794016512 -122.56355797628231,47.28372894168888 -122.5386687355254,47.315452022833014 -122.55250530177473,47.32301616808247 -122.5511320107591,47.31126218410197 -122.50083522731184,47.29449950726866 -122.49826030665754,47.29065731189398 -122.49499874049543,47.29065731189398 -122.50478343898176,47.2432393417196 -122.50528519175293+mls_id:wa555+listing_status:active+login-panel:false+header-menu:false"></bb-widget>`,
+  "west-end-tacoma": `<bb-widget data-type="FeaturedGallery" data-filter="shapesearch:47.2432393417196 -122.50528519175293,47.24304794016512 -122.56355797628231,47.28372894168888 -122.5386687355254,47.315452022833014 -122.55250530177473,47.32301616808257 -122.5511320107591,47.31126218410197 -122.50083522731184,47.29449950726866 -122.49826030665754,47.29065731189398 -122.49499874049543,47.29065731189398 -122.50478343898176,47.2432393417196 -122.50528519175293+mls_id:wa555+listing_status:active+login-panel:false+header-menu:false"></bb-widget>`,
   
   "university-place-fircrest": `<bb-widget data-type="FeaturedGallery" data-filter="mls_id:wa555+listing_status:active+city:university place+limit:12+order:price+login-panel:false+header-menu:false"></bb-widget>`,
   
@@ -28,6 +29,38 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const neighborhood = neighborhoodsData.find((n) => n.slug === slug);
+  
+  if (!neighborhood) {
+    return {
+      title: 'Neighborhood Not Found',
+    };
+  }
+
+  return {
+    title: `Homes for Sale in ${neighborhood.name}, Tacoma`,
+    description: `Browse homes for sale in ${neighborhood.name}. ${neighborhood.shortDescription}. Find your perfect home in this Tacoma neighborhood with The Hume Group.`,
+    keywords: [
+      `${neighborhood.name} homes for sale`,
+      `${neighborhood.name} Tacoma`,
+      `houses for sale ${neighborhood.name}`,
+      `${neighborhood.name} real estate`,
+      'Tacoma homes for sale',
+    ],
+    openGraph: {
+      title: `Homes for Sale in ${neighborhood.name} | The Hume Group`,
+      description: `Browse homes for sale in ${neighborhood.name}. ${neighborhood.shortDescription}`,
+      url: `https://thehumegroup.com/listing-results/${slug}`,
+      images: [neighborhood.heroImage],
+    },
+    alternates: {
+      canonical: `https://thehumegroup.com/listing-results/${slug}`,
+    },
+  };
+}
+
 export default async function NeighborhoodListingsPage({ params }: PageProps) {
   const { slug } = await params;
   
@@ -40,8 +73,32 @@ export default async function NeighborhoodListingsPage({ params }: PageProps) {
     notFound();
   }
 
+  // JSON-LD for this specific neighborhood listing page
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `Homes for Sale in ${neighborhood.name}`,
+    description: `Real estate listings in ${neighborhood.name}, Tacoma, WA`,
+    url: `https://thehumegroup.com/listing-results/${slug}`,
+    itemListOrder: 'https://schema.org/ItemListUnordered',
+    areaServed: {
+      '@type': 'Place',
+      name: neighborhood.name,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Tacoma',
+        addressRegion: 'WA',
+        addressCountry: 'US',
+      },
+    },
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero */}
       <div className="flex flex-col items-center justify-center w-full pt-24">
         <div className="flex flex-col items-start gap-4 text-left w-full container mx-auto px-6 mb-8">
@@ -86,4 +143,3 @@ export async function generateStaticParams() {
     slug: neighborhood.slug,
   }));
 }
-

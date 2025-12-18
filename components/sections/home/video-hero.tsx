@@ -112,9 +112,11 @@ export default function VideoHero() {
             loop
             playsInline
             preload="auto"
+            poster="/images/hero.png"
             className="w-full h-full object-cover will-change-transform [transform:translateZ(0)] [backface-visibility:hidden]"
           >
             <source src="/videos/hero.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
           {/* Gradient Overlays for depth and readability */}
           <div className="block md:hidden">

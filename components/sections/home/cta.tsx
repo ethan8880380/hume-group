@@ -12,7 +12,7 @@ export default function CTA() {
               <div className="relative aspect-[4/3] border border-primary/10 rounded-md">
                 <Image
                   src="/images/cta.jpg"
-                  alt="Beautiful home"
+                  alt="Beautiful Tacoma home exterior - Buy or sell with The Hume Group"
                   fill
                   className="object-cover rounded-md"
                 />

@@ -13,7 +13,13 @@ export default function BuyingHero() {
         <div className="w-8 h-[1px] my-4 bg-primary/10"></div>
         <div className="flex gap-4">
           <Button asChild size="lg">
-            <a href="https://www.windermere.com/homes/wa/tacoma">Search Listings in Tacoma</a>
+            <a 
+              href="https://www.windermere.com/homes/wa/tacoma" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              Search Listings in Tacoma
+            </a>
           </Button>
           <Button asChild size="lg" variant="outline">
             <a href="/contact">Contact Us</a>

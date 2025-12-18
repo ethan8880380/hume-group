@@ -6,10 +6,10 @@ const footerLinks = {
   resources: [
     { name: "Selling", href: "/selling" },
     { name: "Buying", href: "/buying" },
-    { name: "Home Valuation", href: "/home-valuation" },
-    { name: "Why Us?", href: "/why-us" },
-    { name: "Market Updates", href: "/market-updates" },
-    { name: "Recent Sales", href: "/recent-sales" },
+    { name: "Our Listings", href: "/listings" },
+    { name: "Home Search", href: "/listing-results" },
+    { name: "Blog", href: "/blog" },
+    { name: "Contact Us", href: "/contact" },
   ],
   neighborhoods: [
     { name: "Hilltop/Downtown", href: "/neighborhoods/hilltop-downtown" },

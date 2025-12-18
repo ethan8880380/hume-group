@@ -35,12 +35,36 @@ export async function generateMetadata({ params }: NeighborhoodPageProps): Promi
   }
 
   return {
-    title: `${neighborhood.name} - Tacoma Neighborhoods | The Hume Group`,
+    title: `${neighborhood.name} | Tacoma Neighborhood Guide`,
     description: neighborhood.description,
+    keywords: [
+      `${neighborhood.name} Tacoma`,
+      `${neighborhood.name} homes for sale`,
+      `${neighborhood.name} real estate`,
+      'Tacoma neighborhoods',
+      'Tacoma neighborhood guide',
+    ],
     openGraph: {
-      title: `${neighborhood.name} - Tacoma Neighborhoods`,
+      title: `${neighborhood.name} - Tacoma Neighborhood Guide`,
       description: neighborhood.description,
+      url: `https://thehumegroup.com/neighborhoods/${slug}`,
+      images: neighborhood.heroImage ? [
+        {
+          url: neighborhood.heroImage,
+          width: 1200,
+          height: 630,
+          alt: `${neighborhood.name} neighborhood in Tacoma, WA`,
+        }
+      ] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${neighborhood.name} - Tacoma Neighborhoods`,
+      description: neighborhood.shortDescription,
       images: neighborhood.heroImage ? [neighborhood.heroImage] : [],
+    },
+    alternates: {
+      canonical: `https://thehumegroup.com/neighborhoods/${slug}`,
     },
   };
 }
@@ -55,8 +79,68 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
 
   const relatedNeighborhoods = getRelatedNeighborhoods(slug, 4);
 
+  // JSON-LD for Neighborhood (Place)
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Place',
+    name: neighborhood.name,
+    description: neighborhood.description,
+    url: `https://thehumegroup.com/neighborhoods/${slug}`,
+    image: neighborhood.heroImage,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Tacoma',
+      addressRegion: 'WA',
+      addressCountry: 'US',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 47.2529,
+      longitude: -122.4443,
+    },
+    containedInPlace: {
+      '@type': 'City',
+      name: 'Tacoma',
+      sameAs: 'https://en.wikipedia.org/wiki/Tacoma,_Washington',
+    },
+  };
+
+  // JSON-LD for BreadcrumbList
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://thehumegroup.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Neighborhoods',
+        item: 'https://thehumegroup.com/neighborhoods',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: neighborhood.name,
+        item: `https://thehumegroup.com/neighborhoods/${slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Hero Section */}
       <header className="px-6 mb-8">
         <div className="container mx-auto px-6 pb-12 pt-24">

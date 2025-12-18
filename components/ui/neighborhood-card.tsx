@@ -36,7 +36,7 @@ export function NeighborhoodCard({
         {/* Background Image */}
         <Image
           src={image}
-          alt={name}
+          alt={`${name} neighborhood in Tacoma, WA - homes and community`}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />

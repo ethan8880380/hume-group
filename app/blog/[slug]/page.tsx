@@ -40,12 +40,40 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   return {
-    title: `${post.title} - The Hume Group Blog`,
-    description: post.excerpt || `Read ${post.title} on The Hume Group blog`,
+    title: `${post.title}`,
+    description: post.excerpt || `Read ${post.title} on The Hume Group blog - Tacoma real estate insights and tips.`,
+    keywords: [
+      'Tacoma real estate blog',
+      'Tacoma housing market',
+      'home buying tips Tacoma',
+      'home selling tips Tacoma',
+      ...(post.tags?.map(tag => tag.name) || []),
+    ],
     openGraph: {
+      type: 'article',
+      title: post.title,
+      description: post.excerpt || `Read ${post.title} on The Hume Group blog`,
+      url: `https://thehumegroup.com/blog/${slug}`,
+      images: post.feature_image ? [
+        {
+          url: post.feature_image,
+          width: 1200,
+          height: 630,
+          alt: post.feature_image_alt || post.title,
+        }
+      ] : [],
+      publishedTime: post.published_at,
+      authors: post.authors?.map(author => author.name) || ['The Hume Group'],
+      tags: post.tags?.map(tag => tag.name) || [],
+    },
+    twitter: {
+      card: 'summary_large_image',
       title: post.title,
       description: post.excerpt || `Read ${post.title} on The Hume Group blog`,
       images: post.feature_image ? [post.feature_image] : [],
+    },
+    alternates: {
+      canonical: `https://thehumegroup.com/blog/${slug}`,
     },
   };
 }
@@ -73,8 +101,76 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const processedHtml = processImageLinks(post.html);
 
+  // JSON-LD for Article
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt || `Read ${post.title} on The Hume Group blog`,
+    image: post.feature_image || '',
+    datePublished: post.published_at,
+    dateModified: post.updated_at || post.published_at,
+    author: post.authors?.map(author => ({
+      '@type': 'Person',
+      name: author.name,
+      url: author.website || 'https://thehumegroup.com/about',
+    })) || [{
+      '@type': 'Organization',
+      name: 'The Hume Group',
+      url: 'https://thehumegroup.com',
+    }],
+    publisher: {
+      '@type': 'Organization',
+      name: 'The Hume Group',
+      url: 'https://thehumegroup.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://thehumegroup.com/logo.svg',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://thehumegroup.com/blog/${slug}`,
+    },
+    keywords: post.tags?.map(tag => tag.name).join(', ') || 'Tacoma real estate',
+  };
+
+  // JSON-LD for BreadcrumbList
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://thehumegroup.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://thehumegroup.com/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: `https://thehumegroup.com/blog/${slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Article Header */}
       <header className="px-4 md:px-6">
         <div className="container mx-auto px-0 md:px-6 md:pb-8 pt-8 md:pt-16">

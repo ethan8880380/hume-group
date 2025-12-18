@@ -55,7 +55,7 @@ export default function TeamMembers() {
               >
                 <Image
                   src={member.image}
-                  alt={member.name}
+                  alt={`${member.name} - Tacoma Real Estate Agent at The Hume Group`}
                   fill
                   className="object-cover"
                 />
