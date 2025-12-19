@@ -141,30 +141,30 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       {/* Hero Section */}
-      <header className="px-6 mb-8">
-        <div className="container mx-auto px-6 pb-12 pt-24">
+      <header className="mb-8">
+        <div className="container mx-auto px-4 md:px-6 pb-8 md:pb-12 pt-16 md:pt-24">
           <div className="text-left">
-            <h1 className="text-4xl md:text-5xl font-medium text-foreground mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium text-foreground mb-4 md:mb-6 leading-tight">
               {neighborhood.name}
             </h1>
 
-            <p className="text-xl text-muted-foreground mb-12 leading-relaxed max-w-5xl">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 md:mb-12 leading-relaxed max-w-5xl">
               {neighborhood.description}
             </p>
 
-            <div className="h-[1px] bg-muted-foreground/10 w-12 mb-12"></div>
+            <div className="h-[1px] bg-muted-foreground/10 w-12 mb-8 md:mb-12"></div>
 
-            <div className="flex gap-4 mb-12">
-              <Button asChild size="lg">
-                <Link href={`/listing-results/${slug}`}>View All Homes in {neighborhood.name}</Link>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 md:mb-12">
+              <Button asChild size="lg" className="w-full sm:w-auto">
+                <Link href={`/listing-results/${slug}`}>View Homes in {neighborhood.name}</Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
                 <Link href="/contact">Contact Us</Link>
               </Button>
             </div>
 
             {/* Hero Image */}
-            <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mb-8">
+            <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] rounded-lg overflow-hidden mb-6 md:mb-8">
               <Image
                 src={neighborhood.heroImage}
                 alt={neighborhood.name}
@@ -214,27 +214,27 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
       )}*/}
 
       {/* Content Sections */}
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 md:px-6">
         {neighborhood.sections.map((section, index) => (
           <div
             key={index}
-            className={`grid grid-cols-1 lg:grid-cols-3 gap-6 items-center mb-24 last:mb-0 p-6 bg-primary/[0.03] border border-primary/10 rounded-lg ${
+            className={`grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 items-center mb-8 md:mb-24 last:mb-0 p-4 md:p-6 bg-primary/[0.03] border border-primary/10 rounded-lg ${
               section.imagePosition === "left" ? "lg:grid-flow-dense" : ""
             }`}
           >
             {/* Text Content */}
             <div className={section.imagePosition === "left" ? "lg:col-start-3 lg:col-span-1" : "lg:col-span-1"}>
-              <h2 className="text-2xl font-medium mb-1 text-foreground">
+              <h2 className="text-xl md:text-2xl font-medium mb-2 md:mb-1 text-foreground">
                 {section.title}
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                 {section.content}
               </p>
             </div>
 
             {/* Media */}
             {(section.youtubeUrl || section.image) && (
-              <div className={`relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg ${
+              <div className={`relative aspect-video md:aspect-[4/3] rounded-lg overflow-hidden shadow-lg ${
                 section.imagePosition === "left" ? "lg:col-start-1 lg:row-start-1 lg:col-span-2" : "lg:col-span-2"
               }`}>
                 {section.youtubeUrl ? (
@@ -259,13 +259,13 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
 
       {/* Video Section - Only shown if heroYoutubeUrl exists */}
       {neighborhood.heroYoutubeUrl && (
-        <section className="py-16">
-          <div className="container mx-auto px-6">
+        <section className="py-10 md:py-16">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-medium mb-4 text-foreground text-center">
+              <h2 className="text-2xl md:text-3xl font-medium mb-3 md:mb-4 text-foreground text-center">
                 Explore {neighborhood.name}
               </h2>
-              <p className="text-lg text-muted-foreground text-center mb-8">
+              <p className="text-base md:text-lg text-muted-foreground text-center mb-6 md:mb-8">
                 Take a closer look at what makes this neighborhood special.
               </p>
               <div className="relative aspect-video rounded-lg overflow-hidden shadow-xl">
@@ -281,18 +281,18 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
       )}
 
       {/* Browse Homes Banner */}
-      <section className="py-16">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-8 bg-primary/5 border border-primary/10 rounded-lg">
+      <section className="py-10 md:py-16">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 p-5 md:p-8 bg-primary/5 border border-primary/10 rounded-lg text-center md:text-left">
             <div>
-              <h2 className="text-2xl font-medium text-foreground mb-1">
+              <h2 className="text-xl md:text-2xl font-medium text-foreground mb-1">
                 Homes in {neighborhood.name}
               </h2>
-              <p className="text-muted-foreground">
+              <p className="text-sm md:text-base text-muted-foreground">
                 Browse all available listings in this neighborhood.
               </p>
             </div>
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="w-full md:w-auto">
               <Link href={`/listing-results/${slug}`}>View All Listings</Link>
             </Button>
           </div>
@@ -307,13 +307,13 @@ export default async function NeighborhoodPage({ params }: NeighborhoodPageProps
       />
 
       {/* Related Neighborhoods */}
-      <section className="py-16">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-medium mb-8 text-foreground">
+      <section className="py-10 md:py-16">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-2xl md:text-3xl font-medium mb-6 md:mb-8 text-foreground">
             Explore Other Neighborhoods
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {relatedNeighborhoods.map((related) => (
               <NeighborhoodCard
                 key={related.slug}

@@ -23,20 +23,22 @@ export async function NeighborhoodBlogPosts({
   }
 
   return (
-    <section className="pb-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-8">
+    <section className="py-10 md:pb-24 md:pt-0">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 md:mb-8">
           <div>
-            <h2 className="text-3xl font-medium text-foreground mb-2">
-              Latest news and updates about {neighborhoodName}
+            <h2 className="text-xl md:text-3xl font-medium text-foreground">
+              Latest from {neighborhoodName}
             </h2>
           </div>
-          <Link href={`/blog?tag=${neighborhoodSlug}`}>
-            <Button size="lg">View All {neighborhoodName} Articles</Button>
+          <Link href={`/blog?tag=${neighborhoodSlug}`} className="shrink-0">
+            <Button size="default" className="w-full sm:w-auto md:size-lg">
+              View All Articles
+            </Button>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {posts.map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -25,9 +25,48 @@ export function NeighborhoodCard({
   compact = false 
 }: NeighborhoodCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Intersection Observer for mobile scroll-into-view
+  useEffect(() => {
+    if (!isMobile || !cardRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      {
+        threshold: 0.5, // Trigger when 50% of card is visible
+        rootMargin: '-50px 0px', // Add some offset for better timing
+      }
+    );
+
+    observer.observe(cardRef.current);
+
+    return () => observer.disconnect();
+  }, [isMobile]);
+
+  // Show buttons if hovered (desktop) or in view (mobile)
+  const showButtons = isHovered || (isMobile && isInView);
 
   return (
     <div
+      ref={cardRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="group"
@@ -49,8 +88,8 @@ export function NeighborhoodCard({
           {/* Title and description - animated */}
           <motion.div 
             animate={{
-              y: isHovered ? -16 : 0,
-              marginBottom: isHovered ? 16 : -24
+              y: showButtons ? -16 : 0,
+              marginBottom: showButtons ? 16 : -24
             }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
@@ -67,8 +106,8 @@ export function NeighborhoodCard({
             className="flex gap-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{
-              opacity: isHovered ? 1 : 0,
-              y: isHovered ? 0 : 20
+              opacity: showButtons ? 1 : 0,
+              y: showButtons ? 0 : 20
             }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >

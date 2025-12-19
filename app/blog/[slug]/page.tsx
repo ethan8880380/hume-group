@@ -1,4 +1,4 @@
-import { getSinglePost, getAllPostSlugs } from '@/lib/ghost';
+import { getSinglePost, getAllPostSlugs, getRelatedPosts } from '@/lib/ghost';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Metadata } from 'next';
@@ -7,6 +7,7 @@ import { Footer } from '@/components/sections/navigation/footer';
 import CTA from '@/components/sections/home/cta';
 import { format } from 'date-fns';
 import { NewsletterSubscribe } from '@/components/newsletter-subscribe';
+import { RelatedBlogs } from '@/components/sections/blog/related-blogs';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -100,6 +101,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const processedHtml = processImageLinks(post.html);
+  
+  // Fetch related posts based on the current post's tags
+  const relatedPosts = await getRelatedPosts(slug, post.tags || [], 3);
 
   // JSON-LD for Article
   const jsonLd = {
@@ -329,7 +333,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           />
         </div>
       </div>
-      <div className="my-8 md:my-12 pt-8 md:pt-12">
+      
+      {/* Related Blogs Section */}
+      <RelatedBlogs posts={relatedPosts} />
+      
+      <div className="pt-8 md:pt-12">
         <CTA />
       </div>
       {/* Article Footer */}

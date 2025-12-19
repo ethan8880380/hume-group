@@ -144,4 +144,59 @@ export async function getAllTags(): Promise<GhostTag[]> {
   }
 }
 
+// Fetch related posts based on matching tags, excluding the current post
+export async function getRelatedPosts(
+  currentPostSlug: string,
+  tags: GhostTag[],
+  limit: number = 3
+): Promise<GhostPost[]> {
+  try {
+    if (!tags || tags.length === 0) {
+      // If no tags, just return recent posts excluding current
+      const posts = await api.posts.browse({
+        include: ['tags', 'authors'] as const,
+        limit: limit + 1,
+        order: 'published_at DESC'
+      });
+      return (posts as GhostPost[]).filter(p => p.slug !== currentPostSlug).slice(0, limit);
+    }
+
+    // Build filter for posts with any of the same tags
+    const tagFilters = tags.map(tag => `tag:${tag.slug}`).join(',');
+    
+    const posts = await api.posts.browse({
+      include: ['tags', 'authors'] as const,
+      limit: limit + 1, // Fetch one extra in case current post is included
+      filter: tagFilters,
+      order: 'published_at DESC'
+    });
+    
+    // Filter out the current post and limit to requested amount
+    const relatedPosts = (posts as GhostPost[])
+      .filter(p => p.slug !== currentPostSlug)
+      .slice(0, limit);
+    
+    // If we didn't get enough related posts by tag, fill with recent posts
+    if (relatedPosts.length < limit) {
+      const recentPosts = await api.posts.browse({
+        include: ['tags', 'authors'] as const,
+        limit: limit - relatedPosts.length + 1,
+        order: 'published_at DESC'
+      });
+      
+      const existingSlugs = new Set([currentPostSlug, ...relatedPosts.map(p => p.slug)]);
+      const additionalPosts = (recentPosts as GhostPost[])
+        .filter(p => !existingSlugs.has(p.slug))
+        .slice(0, limit - relatedPosts.length);
+      
+      return [...relatedPosts, ...additionalPosts];
+    }
+    
+    return relatedPosts;
+  } catch (err) {
+    console.error('Error fetching related posts:', err);
+    return [];
+  }
+}
+
 export default api;
