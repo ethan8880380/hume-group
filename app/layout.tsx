@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/sections/navigation/header";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -180,6 +181,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Analytics />
+        <SpeedInsights />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
