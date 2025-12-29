@@ -91,6 +91,12 @@ interface BlogContentProps {
   posts: GhostPost[];
 }
 
+// Tags to hide from category list (internal/system tags)
+const HIDDEN_TAG_SLUGS = [
+  'tom-thehumegroup-com',
+  'hash-tom-thehumegroup-com',
+];
+
 // Neighborhood tag slugs to group together
 const NEIGHBORHOOD_SLUGS = [
   '6th-ave-district',
@@ -104,6 +110,10 @@ const NEIGHBORHOOD_SLUGS = [
   'north-slope',
 ];
 
+function isHiddenTag(slug: string): boolean {
+  return HIDDEN_TAG_SLUGS.some(hs => slug.toLowerCase().includes(hs.toLowerCase()));
+}
+
 const POSTS_PER_PAGE = 11;
 
 function isNeighborhoodTag(slug: string): boolean {
@@ -112,7 +122,8 @@ function isNeighborhoodTag(slug: string): boolean {
 
 // Featured post card - large image with text overlay for hero
 function FeaturedPostCard({ post }: { post: GhostPost }) {
-  const primaryTag = post.tags?.[0];
+  // Get the first visible tag (skip hidden tags)
+  const primaryTag = post.tags?.find(tag => !isHiddenTag(tag.slug));
   
   return (
     <motion.div
@@ -210,7 +221,7 @@ export function BlogContent({ posts }: BlogContentProps) {
     
     posts.forEach(post => {
       const primaryTag = post.tags?.[0];
-      if (primaryTag) {
+      if (primaryTag && !isHiddenTag(primaryTag.slug)) {
         if (isNeighborhoodTag(primaryTag.slug)) {
           if (!neighborhoodMap.has(primaryTag.slug)) {
             neighborhoodMap.set(primaryTag.slug, primaryTag);

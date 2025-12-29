@@ -7,8 +7,16 @@ interface BlogCardProps {
   post: GhostPost;
 }
 
+// Tags to hide from display (internal/system tags)
+const HIDDEN_TAG_SLUGS = ['tom-thehumegroup-com'];
+
+function isHiddenTag(slug: string): boolean {
+  return HIDDEN_TAG_SLUGS.some(hs => slug.toLowerCase().includes(hs.toLowerCase()));
+}
+
 export function BlogCard({ post }: BlogCardProps) {
-  const primaryTag = post.tags?.[0];
+  // Get the first visible tag (skip hidden tags)
+  const primaryTag = post.tags?.find(tag => !isHiddenTag(tag.slug));
 
   return (
     <Link href={`/blog/${post.slug}`} className="group block h-full">

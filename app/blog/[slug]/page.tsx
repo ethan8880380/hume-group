@@ -223,7 +223,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="flex flex-row items-center justify-between md:justify-start gap-3">
                 {post.tags && post.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
+                    {post.tags
+                      .filter((tag) => !tag.slug.toLowerCase().includes('tom-thehumegroup-com'))
+                      .map((tag) => (
                       <span
                         key={tag.id}
                         className="inline-block border text-xs sm:text-sm px-2.5 sm:px-3 py-1 rounded-md"
