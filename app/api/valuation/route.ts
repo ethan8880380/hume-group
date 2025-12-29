@@ -49,10 +49,18 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Build recipient list - supports multiple emails via CONTACT_EMAIL and CONTACT_EMAIL_2
+    const recipients: string[] = [];
+    if (process.env.CONTACT_EMAIL) recipients.push(process.env.CONTACT_EMAIL);
+    if (process.env.CONTACT_EMAIL_2) recipients.push(process.env.CONTACT_EMAIL_2);
+    if (recipients.length === 0 && process.env.GMAIL_USER) {
+      recipients.push(process.env.GMAIL_USER);
+    }
+
     // Email content
     const mailOptions = {
       from: process.env.GMAIL_USER,
-      to: process.env.CONTACT_EMAIL || process.env.GMAIL_USER,
+      to: recipients,
       replyTo: email,
       subject: `🏠 New Home Valuation Request from ${firstName} ${lastName}`,
       html: `
