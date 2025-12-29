@@ -3,8 +3,68 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
-      // Redirect old blog URLs from /:category/:slug to /blog/:slug
-      // Examples: /uncategorized/what-is-the-wedge-in-tacoma -> /blog/what-is-the-wedge-in-tacoma
+      // ============================================
+      // SPECIFIC REDIRECTS (must come before general patterns)
+      // ============================================
+      
+      // Slug changes within /blog
+      {
+        source: '/blog/what-is-the-wedge-in-tacoma-2',
+        destination: '/blog/what-is-the-wedge-in-tacoma',
+        permanent: true,
+      },
+      {
+        source: '/blog/should-sellers-pay-buyer-brokers',
+        destination: '/blog/should-sellers-pay-buyer-brokers-2',
+        permanent: true,
+      },
+      
+      // One-off page redirect
+      {
+        source: '/west-end',
+        destination: '/blog/westgate-tacoma',
+        permanent: true,
+      },
+      
+      // Deep attachment/nested redirects
+      {
+        source: '/listing-your-tacoma-home/is-staging-worth-the-investment/attachment/37-web-or-mls-pana5406',
+        destination: '/blog/is-staging-worth-the-investment-2',
+        permanent: true,
+      },
+      {
+        source: '/listing-your-tacoma-home/is-staging-worth-the-investment/attachment/35-web-or-mls-pana5396',
+        destination: '/blog/is-staging-worth-the-investment-2',
+        permanent: true,
+      },
+      {
+        source: '/listing-your-tacoma-home/is-there-tax-on-real-estate-sales-in-tacoma/attachment/real-estate-tax-uncle-sam',
+        destination: '/blog/is-there-tax-on-real-estate-sales-in-tacoma',
+        permanent: true,
+      },
+      {
+        source: '/listing-your-tacoma-home/real-estate-contingencies-defined/attachment/contingency-shroud-in-mystery',
+        destination: '/blog/real-estate-contingencies-defined',
+        permanent: true,
+      },
+      
+      // Specific slug mappings (different destination slug)
+      {
+        source: '/listing-your-tacoma-home/avoid-these-6-costly-mistakes-when-selling-your-home',
+        destination: '/blog/avoid-these-6-costly-mistakes-when-selling-your-home-2',
+        permanent: true,
+      },
+      {
+        source: '/listing-your-tacoma-home/can-a-seller-back-out-of-the-deal',
+        destination: '/blog/can-a-seller-back-out-of-the-deal-2',
+        permanent: true,
+      },
+      
+      // ============================================
+      // CATEGORY PATTERN REDIRECTS
+      // ============================================
+      
+      // Original categories
       {
         source: '/uncategorized/:slug',
         destination: '/blog/:slug',
@@ -35,14 +95,33 @@ const nextConfig: NextConfig = {
         destination: '/blog/:slug',
         permanent: true,
       },
-      // Catch-all for any other category patterns (two-segment paths that aren't known routes)
-      // Note: Be careful with this - it will redirect any /something/something-else pattern
-      // Only uncomment if needed:
-      // {
-      //   source: '/:category((?!blog|about|buying|selling|contact|listings|neighborhoods|communities|api|_next).[^/]+)/:slug',
-      //   destination: '/blog/:slug',
-      //   permanent: true,
-      // },
+      
+      // Additional categories from old site
+      {
+        source: '/best-tacoma-places/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/6th-ave-district/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/making-tacoma-a-better-place/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/info-for-buyers/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/listing-your-tacoma-home/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
     ];
   },
   images: {
