@@ -1,6 +1,50 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      // Redirect old blog URLs from /:category/:slug to /blog/:slug
+      // Examples: /uncategorized/what-is-the-wedge-in-tacoma -> /blog/what-is-the-wedge-in-tacoma
+      {
+        source: '/uncategorized/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/real-estate/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/news/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/market-updates/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/tips/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/neighborhoods/:category/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      // Catch-all for any other category patterns (two-segment paths that aren't known routes)
+      // Note: Be careful with this - it will redirect any /something/something-else pattern
+      // Only uncomment if needed:
+      // {
+      //   source: '/:category((?!blog|about|buying|selling|contact|listings|neighborhoods|communities|api|_next).[^/]+)/:slug',
+      //   destination: '/blog/:slug',
+      //   permanent: true,
+      // },
+    ];
+  },
   images: {
     remotePatterns: [
       {
