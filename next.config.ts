@@ -14,8 +14,23 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/blog/should-sellers-pay-buyer-brokers-2',
+        destination: '/blog/should-sellers-pay-buyer-brokers',
+        permanent: true,
+      },
+      {
+        source: '/blog/avoid-these-6-costly-mistakes-when-selling-your-home-2',
+        destination: '/blog/avoid-these-6-costly-mistakes-when-selling-your-home',
+        permanent: true,
+      },
+      {
+        source: '/blog/can-a-seller-back-out-of-the-deal-2',
+        destination: '/blog/can-a-seller-back-out-of-the-deal',
+        permanent: true,
+      },
+      {
         source: '/blog/should-sellers-pay-buyer-brokers',
-        destination: '/blog/should-sellers-pay-buyer-brokers-2',
+        destination: '/blog/seller-paying-buyer-closing-costs',
         permanent: true,
       },
       
@@ -29,12 +44,12 @@ const nextConfig: NextConfig = {
       // Deep attachment/nested redirects
       {
         source: '/listing-your-tacoma-home/is-staging-worth-the-investment/attachment/37-web-or-mls-pana5406',
-        destination: '/blog/is-staging-worth-the-investment-2',
+        destination: '/blog/is-staging-worth-the-investment',
         permanent: true,
       },
       {
         source: '/listing-your-tacoma-home/is-staging-worth-the-investment/attachment/35-web-or-mls-pana5396',
-        destination: '/blog/is-staging-worth-the-investment-2',
+        destination: '/blog/is-staging-worth-the-investment',
         permanent: true,
       },
       {
@@ -51,7 +66,7 @@ const nextConfig: NextConfig = {
       // Specific slug mappings (different destination slug)
       {
         source: '/listing-your-tacoma-home/avoid-these-6-costly-mistakes-when-selling-your-home',
-        destination: '/blog/avoid-these-6-costly-mistakes-when-selling-your-home-2',
+        destination: '/blog/should-sellers-pay-buyer-brokers',
         permanent: true,
       },
       {
