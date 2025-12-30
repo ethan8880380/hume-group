@@ -37,7 +37,7 @@ const nextConfig: NextConfig = {
       // One-off page redirect
       {
         source: '/west-end',
-        destination: '/blog/westgate-tacoma',
+        destination: '/neighborhoods/west-end-tacoma',
         permanent: true,
       },
       
