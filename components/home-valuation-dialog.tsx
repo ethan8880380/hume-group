@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Home, CheckCircle2, Loader2 } from "lucide-react";
+import { track } from "@vercel/analytics";
 
 interface HomeValuationDialogProps {
   trigger?: React.ReactNode;
@@ -86,6 +87,7 @@ export function HomeValuationDialog({
         throw new Error(data.error || 'Failed to submit valuation request');
       }
 
+      track("form_submit", { form: "valuation" });
       setIsSubmitted(true);
     } catch (err) {
       console.error('Valuation request error:', err);
@@ -97,7 +99,10 @@ export function HomeValuationDialog({
 
   function handleOpenChange(newOpen: boolean) {
     setOpen(newOpen);
-    if (!newOpen) {
+    if (newOpen) {
+      // Track form open as high-intent signal
+      track("form_start", { form: "valuation" });
+    } else {
       // Reset state when dialog closes
       setTimeout(() => {
         setIsSubmitted(false);

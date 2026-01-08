@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { track } from "@vercel/analytics";
 
 interface NewsletterSubscribeProps {
   variant?: "inline" | "card";
@@ -82,6 +83,7 @@ export function NewsletterSubscribe({
       const data = await response.json();
 
       if (response.ok) {
+        track("form_submit", { form: "newsletter", source });
         setStatus("success");
         setMessage(data.message || "Successfully subscribed!");
         setSubscribedEmail(email);

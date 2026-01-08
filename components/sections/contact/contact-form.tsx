@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2, CheckCircle2 } from "lucide-react";
+import { track } from "@vercel/analytics";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,6 +66,7 @@ export default function ContactForm() {
         throw new Error(data.error || "Failed to send message");
       }
 
+      track("form_submit", { form: "contact" });
       setIsSubmitted(true);
 
       // Reset form after delay

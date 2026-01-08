@@ -5,6 +5,7 @@ import "./globals.css";
 import { Header } from "@/components/sections/navigation/header";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { EngagementTracker } from "@/components/analytics";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -224,6 +225,7 @@ export default function RootLayout({
 
         <Header />
         {children}
+        <EngagementTracker />
       </body>
     </html>
   );
