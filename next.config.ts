@@ -28,11 +28,6 @@ const nextConfig: NextConfig = {
         destination: '/blog/can-a-seller-back-out-of-the-deal',
         permanent: true,
       },
-      {
-        source: '/blog/should-sellers-pay-buyer-brokers',
-        destination: '/blog/seller-paying-buyer-closing-costs',
-        permanent: true,
-      },
       
       // One-off page redirect
       {
