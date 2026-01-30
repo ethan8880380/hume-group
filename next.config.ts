@@ -4,6 +4,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       // ============================================
+      // DOMAIN REDIRECT (www → non-www)
+      // ============================================
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.thehumegroup.com' }],
+        destination: 'https://thehumegroup.com/:path*',
+        permanent: true,
+      },
+
+      // ============================================
       // SPECIFIC REDIRECTS (must come before general patterns)
       // ============================================
       
