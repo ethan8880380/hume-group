@@ -101,6 +101,7 @@ export const neighborhoodsData: NeighborhoodData[] = [
     shortDescription: "Suburban comfort with excellent schools and shopping conveniences",
     description: "University Place and Fircrest offer the best of suburban living with tree-lined streets, excellent schools, and abundant shopping. These neighboring communities provide a peaceful, family-oriented lifestyle while maintaining easy access to Tacoma's urban amenities.",
     heroImage: "/images/neighborhoods/up/golf.jpg",
+    heroYoutubeUrl: "https://www.youtube.com/watch?v=_GfGuS5YwEA",
     stats: [
       { label: "Median Home Price", value: "$575K" },
       { label: "Walk Score", value: "52/100" },
