@@ -193,6 +193,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'storage.ghost.io',
+        port: '',
+        pathname: '/**',
+      },
       // Your actual Ghost site domains
       {
         protocol: 'https',
