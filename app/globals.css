@@ -135,3 +135,15 @@ bb-widget,
   --primary: oklch(0.325 0.1054 254.57) !important;
   --primary-foreground: oklch(0.985 0 0) !important;
 }
+
+/* Hide the FeaturedGallery "show more listings" control on the homepage */
+.featured-homes-widget .mbb-more,
+.featured-homes-widget .mbb-more-listings,
+.featured-homes-widget .mbb-showmore,
+.featured-homes-widget .mbb-show-more,
+.featured-homes-widget .mbb-widget-footer,
+.featured-homes-widget [class*="more-listing"],
+.featured-homes-widget [class*="show-more"],
+.featured-homes-widget [class*="showmore"] {
+  display: none !important;
+}

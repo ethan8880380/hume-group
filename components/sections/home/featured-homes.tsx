@@ -15,18 +15,21 @@ export default function FeaturedHomes() {
               Discover the latest properties in Tacoma and surrounding areas.
             </p>
           </div>
-          <Link href="/listing-results" className="w-full md:w-auto shrink-0">
-            <Button size="lg" className="group w-full md:w-auto">
-              View All Listings
+          <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto shrink-0">
+            <Button asChild size="lg" variant="outline" className="w-full md:w-auto">
+              <Link href="/listings">Our Listings</Link>
             </Button>
-          </Link>
+            <Button asChild size="lg" className="w-full md:w-auto">
+              <Link href="/listing-results">View All Listings</Link>
+            </Button>
+          </div>
         </div>
         
         {/* Official BuyingBuddy Widget - Shows MLS Listings */}
-        <div className="overflow-hidden">
+        <div className="featured-homes-widget overflow-hidden">
         <div
           dangerouslySetInnerHTML={{
-          __html: `<bb-widget data-type="FeaturedGallery" data-filter="agent_id:31230+listing_status:active,coming-soon+login-panel:false+header-menu:false+limit:4+order:create_dt desc"></bb-widget>`,
+          __html: `<bb-widget data-type="FeaturedGallery" data-filter="agent_id:31230+listing_status:active,coming-soon+login-panel:false+header-menu:false+more-listings:false+limit:4+order:create_dt desc"></bb-widget>`,
            }}
         />
         </div>
