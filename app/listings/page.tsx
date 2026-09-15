@@ -33,7 +33,6 @@ const jsonLd = {
   description: 'Current property listings from The Hume Group in Tacoma, WA',
   url: 'https://thehumegroup.com/listings',
   itemListOrder: 'https://schema.org/ItemListUnordered',
-  numberOfItems: 12,
 };
 
 export default function ListingsPage() {
@@ -67,7 +66,7 @@ export default function ListingsPage() {
       {/* Listings Widget */}
       <div className="container mx-auto px-6 py-12">
         <div dangerouslySetInnerHTML={{
-          __html: `<bb-widget data-type="FeaturedGallery" data-filter="agent_id:31230+mls_id:wa555+listing_status:active,under-contract,coming-soon+login-panel:false+header-menu:false+limit:12+order:create_dt desc"></bb-widget>`,
+          __html: `<bb-widget data-type="FeaturedGallery" data-filter="agent_id:31230+mls_id:wa555+listing_status:active,under-contract,coming-soon+login-panel:false+header-menu:false+order:create_dt desc"></bb-widget>`,
         }} />
       </div>
 
