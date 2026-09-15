@@ -26,7 +26,7 @@ export default function FeaturedHomes() {
         <div className="overflow-hidden">
         <div
           dangerouslySetInnerHTML={{
-          __html: `<bb-widget data-type="FeaturedGallery" data-filter="agent_id:31230+listing_status:active+login-panel:false+header-menu:false+limit:4+order:price"></bb-widget>`,
+          __html: `<bb-widget data-type="FeaturedGallery" data-filter="agent_id:31230+listing_status:active,coming-soon+login-panel:false+header-menu:false+limit:4+order:price"></bb-widget>`,
            }}
         />
         </div>
